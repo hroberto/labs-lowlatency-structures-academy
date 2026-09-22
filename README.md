@@ -37,6 +37,15 @@ contrato, na mesma máquina. O par `std` → `custom` é a unidade de trabalho, 
 **regra de decisão** — o volume, a cardinalidade ou o percentil a partir do qual
 a troca compensa — é o entregável.
 
+## Governança
+
+| Documento | Para quê |
+|---|---|
+| [Norma do projeto](docs/padrao-do-projeto.md) | método, medição, contrato, arquitetura, fontes |
+| [Política de segurança](SECURITY.md) | o ativo protegido é a **procedência do conteúdo** |
+| [Como citar](CITATION.cff) | se você usar uma regra de decisão, um programa ou um número |
+| [CLAUDE.md](CLAUDE.md) | instruções para o assistente; o par `std` e `custom` é a unidade de trabalho |
+
 ## Origem
 
 Este repositório absorveu a fundação do `labs_cpp_performance_tuning_academy`

@@ -62,6 +62,18 @@ ORIGEM_PRESERVADA = "origem"
 # gera é `scripts/compor-medicao.py`, que emite `tabela.md` e `tabela.en.md`,
 # porque ela entra nos dois READMEs do tópico.
 ARQUIVO_DE_MEDICAO = "medicoes"
+# Arquivos que não são material do leitor, e por isso não têm par.
+#
+# `CLAUDE.md` é CONFIGURAÇÃO DE FERRAMENTA, endereçada ao assistente, e escrita
+# em inglês por essa razão. Exigir `CLAUDE.en.md` produziria a tradução de um
+# arquivo de instrução para um público que não existe -- e, pior, duas cópias
+# de instrução que divergem em silêncio é um defeito maior do que a ausência de
+# par.
+#
+# A lista é por NOME EXATO e não por padrão: uma exceção que se estende por
+# padrão cresce sozinha, e a próxima isenção deve custar uma linha aqui e uma
+# justificativa como esta.
+SEM_PAR = {"CLAUDE.md"}
 
 NAV_PT = re.compile(r"^>\s*🇧🇷\s*Português\s*\|\s*\[🇺🇸\s*English\]\(([^)]+)\)\s*$", re.M)
 NAV_EN = re.compile(r"^>\s*\[🇧🇷\s*Português\]\(([^)]+)\)\s*\|\s*🇺🇸\s*English\s*$", re.M)
@@ -147,6 +159,8 @@ def coletar(raiz):
                 continue
             caminho = os.path.join(base, nome)
             if preservado(caminho):
+                continue
+            if nome in SEM_PAR:
                 continue
             if nome.endswith(".en.md"):
                 en[caminho[: -len(".en.md")]] = caminho
@@ -353,6 +367,11 @@ def autoteste():
           "d.en.md": EN.replace("# t\n", "# t\n\n```markdown\n"
                                 "> [🇧🇷 Português](README.md) | 🇺🇸 English\n```\n")},
          False)
+
+    # 12d. `CLAUDE.md` é configuração de ferramenta, não material do leitor, e
+    #      fica fora da regra do par por decisão declarada.
+    caso("12d", "CLAUDE.md exigido em ingles",
+         {"CLAUDE.md": "# instrucoes\n", "d.md": PT, "d.en.md": EN}, False)
 
     # 12c. ISCA: o mesmo valor com separador de milhar por ESPAÇO no português e
     #      por vírgula no inglês. Foi uma acusação falsa real, no ROADMAP.

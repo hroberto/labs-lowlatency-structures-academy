@@ -56,6 +56,11 @@ not started, **zero commits and no remote** — was absorbed by this repository 
       beside it, one output per repetition
 - [x] the `language ↔ compiler ↔ generated code` axis became section 36, and the
       cross-cutting module `10-codigo-gerado` is planned in the track
+- [x] `SECURITY.md` in both languages, `CITATION.cff` at 0.01.00 citing the
+      absorbed project as an unpublished reference, and `CLAUDE.md` — the latter
+      exempt from the pair rule by a decision declared in the checker: it is tool
+      configuration, and two copies of instructions diverging silently are a
+      worse defect than a missing pair
 - [ ] the `CPP_ACADEMY_*` prefix on the measurement ruler's environment
       variables: kept as-is during absorption, to be decided against the new identity
 - [x] `pre-commit.sh` — syntax, the six checkers plus their six self-tests, a

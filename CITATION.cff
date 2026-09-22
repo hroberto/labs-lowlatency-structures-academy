@@ -1,0 +1,123 @@
+# Como citar este trabalho / How to cite this work
+#
+# POR QUE ESTE ARQUIVO EXISTE
+#
+# O nome do autor já é público em três lugares independentes: a linha de
+# copyright da licença MIT, o cabeçalho dos fontes e a autoria de todo commit.
+# Este arquivo não expõe nada novo; ele responde uma pergunta que antes não
+# tinha resposta mecânica: "se eu usar uma regra de decisão, um programa de
+# medição ou um número deste projeto, o que exatamente eu cito?"
+#
+# O QUE ELE DELIBERADAMENTE NÃO TEM
+#
+#   email  — o campo é opcional, e um endereço aqui é colhido por agregador.
+#            Contato é pelo GitHub.
+#   orcid  — é a única parte que criaria ligação NOVA, entre este repositório e
+#            o histórico acadêmico do autor, nos dois sentidos. Acrescentar
+#            depois é trivial; a ligação, uma vez colhida, não é retirável.
+#   doi    — um DOI é permanente por construção, e arquivar hoje carimbaria um
+#            repositório com UM tópico medido e oito módulos não escritos.
+#            Entra quando o estado for um que não se queira corrigir na semana
+#            seguinte.
+#
+# A série é 0.0x e não 1.x de propósito, e aqui há uma razão a mais do que no
+# projeto a montante: a fundação deste repositório foi ABSORVIDA de outro
+# (ver o ROADMAP, Etapa 1), e numerar a partir de 1 sugeriria maturidade que a
+# trilha não tem. O 1.00.00 vem quando os débitos declarados no ROADMAP
+# fecharem.
+#
+# `verificar-citacao.py`, que confere este `version` contra a tag mais recente,
+# é um dos doze verificadores ainda não portados do DPDK Academy — está no
+# ROADMAP. Até ele existir, este campo é promessa de autor, e esta nota é o
+# lugar onde isso fica dito em vez de ficar implícito.
+
+cff-version: 1.2.0
+message: >-
+  If you use this material — a method, a decision rule, a measurement program or
+  a published number — please cite it as below.
+
+# TÍTULO EM UMA LÍNGUA SÓ, E EM INGLÊS -- a decisão tem motivo técnico.
+#
+# O CFF não tem mecanismo multilíngue: `title`, `abstract` e `message` são
+# strings únicas. Um título com os dois idiomas separados por barra vai VERBATIM
+# para a lista de referências de quem citar, o que não aumenta alcance:
+# inutiliza a citação. Inglês porque é a língua das bases de citação e das
+# listas de referência, que é onde este campo aparece.
+#
+# O bilinguismo da obra não se perde: fica declarado em `languages`, que é o
+# campo do esquema para isso, e no `abstract`, que é metadado de agregador e NÃO
+# entra na citação -- ali os dois idiomas dobram a cobertura de termos de graça.
+title: "Low-Latency Structures Academy: where the C++ standard library stops and the hot path begins"
+
+abstract: >-
+  Estudo experimental de onde a biblioteca padrão de C++ para. Cada tópico mede
+  o mecanismo que a linguagem entrega, mede o ponto em que ele deixa de servir,
+  e constrói o complemento sob o mesmo contrato e no mesmo harness — publicando
+  também os casos em que a biblioteca padrão basta. A entrega de cada
+  comparação é a regra de decisão: o volume, a cardinalidade ou o percentil a
+  partir do qual a troca compensa. Prosa em português, código em inglês, com
+  paridade pt/en verificada por máquina. / An experimental study of where the
+  C++ standard library stops. Every topic measures what the language ships,
+  measures the point where it stops serving, and builds the complement under the
+  same contract and harness — publishing the cases where the standard library
+  suffices too. What each comparison delivers is the decision rule: the volume,
+  cardinality or percentile beyond which the swap pays off.
+
+type: software
+
+# A obra é bilíngue, e este é o campo do esquema que diz isso. ISO 639-1.
+languages:
+  - pt
+  - en
+
+authors:
+  - given-names: Henrique
+    family-names: Martins Roberto
+    alias: hroberto
+
+repository-code: "https://github.com/hroberto/labs-lowlatency-structures-academy"
+url: "https://github.com/hroberto/labs-lowlatency-structures-academy"
+license: MIT
+version: 0.01.00
+date-released: "2026-09-22"
+
+keywords:
+  - cpp23
+  - data-structures
+  - low-latency
+  - lock-free
+  - cache-friendly
+  - memory-allocation
+  - benchmarking
+  - performance-engineering
+  - reproducible-research
+  - percentile-latency
+  - systems-programming
+  - meson
+  - learning-resources
+  - portuguese
+
+references:
+  # A fundação deste repositório foi absorvida do projeto abaixo, que nunca foi
+  # publicado -- e é por isso que ele aparece como referência e não como
+  # repositório irmão: não há URL a citar. A régua de apuração, a biblioteca de
+  # contratos, a norma de 36 seções e cinco dos seis verificadores vêm dele.
+  - type: software
+    title: "C++ Performance Academy (unpublished; absorbed into this repository)"
+    authors:
+      - given-names: Henrique
+        family-names: Martins Roberto
+        alias: hroberto
+    notes: >-
+      Absorbed on 2026-09-21. See ROADMAP.md, stage 1.
+  - type: software
+    title: "DPDK Academy: a reproducible experimental study of data-plane performance"
+    authors:
+      - given-names: Henrique
+        family-names: Martins Roberto
+        alias: hroberto
+    repository-code: "https://github.com/hroberto/labs-dpdk-academy"
+    notes: >-
+      Authority for already-measured hardware and OS mechanism costs, the
+      measurement ruler and the quality tooling. See the project standard,
+      section 30.

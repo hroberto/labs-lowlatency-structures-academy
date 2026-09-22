@@ -37,6 +37,15 @@ the same contract, on the same machine. The `std` → `custom` pair is the unit 
 work, and the **decision rule** — the volume, cardinality or percentile beyond
 which the swap pays off — is the deliverable.
 
+## Governance
+
+| Document | What for |
+|---|---|
+| [Project standard](docs/padrao-do-projeto.en.md) | method, measurement, contract, architecture, sources |
+| [Security policy](SECURITY.en.md) | the protected asset is the **provenance of the content** |
+| [How to cite](CITATION.cff) | if you use a decision rule, a program or a number |
+| [CLAUDE.md](CLAUDE.md) | instructions for the assistant; the `std` and `custom` pair is the unit of work |
+
 ## Origin
 
 This repository absorbed the foundation of `labs_cpp_performance_tuning_academy`

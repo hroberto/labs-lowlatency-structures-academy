@@ -55,6 +55,11 @@ repositório em 2026-09-21. Veio o que já era executável:
       saída por repetição
 - [x] o eixo `linguagem ↔ compilador ↔ código gerado` virou a seção 36, e o
       módulo transversal `10-codigo-gerado` está previsto na trilha
+- [x] `SECURITY.md` nos dois idiomas, `CITATION.cff` em 0.01.00 com o projeto
+      absorvido citado como referência não publicada, e `CLAUDE.md` — este
+      último isento da regra do par por decisão declarada no verificador:
+      é configuração de ferramenta, e duas cópias de instrução que divergem em
+      silêncio são pior defeito que a ausência de par
 - [ ] prefixo `CPP_ACADEMY_*` das variáveis de ambiente da régua de apuração:
       mantido na absorção, decidir se acompanha a identidade nova
 - [x] `pre-commit.sh` — sintaxe, os seis verificadores mais os seis autotestes,
