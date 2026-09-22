@@ -1017,6 +1017,7 @@ Política sem portão não vale. Os verificadores em
 | `verificar-aritmetica.py` | percentual que o texto torna conferível fecha |
 | `verificar-suposicao.py` | a pré-condição da porta R chega ao otimizador, conferida no assembly, com braço de controle |
 | `verificar-paridade.py` | o par de idiomas existe, a navegação aponta para ele, a estrutura é a mesma e nenhum número publicado falta num dos idiomas |
+| `verificar-autodescricao.py` | o que o material afirma **sobre si** corresponde ao disco: censo da norma, da trilha, dos verificadores e da suíte, e o rótulo de estado da seção 5 |
 
 Os quatro primeiros vêm do DPDK Academy, onde **cada um nasceu de um defeito
 medido**; o quinto nasceu no projeto absorvido, de um defeito dele — o Clang
@@ -1027,17 +1028,24 @@ não era verificada. Todos têm autoteste. A razão de portar em vez de escrever
 sabia da regra, tinha acabado de enunciá-la, e ainda assim deixou o valor
 derrubado circulando em outras páginas. **Correção manual não escala.**
 
-**Faltam doze, e a conta é para ser lida.** O DPDK Academy tem 16 verificadores
+**Faltam onze, e a conta é para ser lida.** O DPDK Academy tem 16 verificadores
 em `ferramental/qualidade/`, dentro de 23 programas de qualidade e 6.827 linhas.
-Quatro deles foram portados: faltam doze. Os dois que mais importam, com o
-acoplamento já medido, são `verificar-promessa.py` (todo programa citado existe e
-entra na compilação, 18 pontos de acoplamento) e `verificar-autodescricao.py` (o
-que o material afirma sobre si corresponde ao disco, 838 linhas e 34 pontos) —
-este último é o que sustenta a rotulagem de estado da seção 5, e enquanto ele não
-existir a seção 5 é promessa de autor, não portão. Falta também o **gerador de
-gráficos**, porque dispersão de percentil alto se lê em gráfico e a paridade
-PT/EN vale para as imagens. Estado: **não portados** — registrado no
-[ROADMAP.md](../ROADMAP.md).
+Cinco deles foram portados: faltam onze. O que mais importa, com o acoplamento já
+medido, é `verificar-promessa.py` — todo programa citado existe e entra na
+compilação, 18 pontos de acoplamento.
+
+O `verificar-autodescricao.py` **saiu dessa lista**, e a forma como saiu vale
+registrar: ele não foi portado, foi reescrito para as afirmações que *este*
+repositório faz sobre si — censo, rótulo de estado e contagem de suíte. Na
+primeira execução contra a árvore ele acusou nove problemas, dos quais **oito
+eram reais**: o censo dizia 31 tópicos previstos onde o disco tem 23, e seis
+verificadores com autoteste onde havia sete. O nono era dele, e virou a regra do
+*registro de mudança* — uma frase que diz o antes **e** o depois não é contagem
+envelhecida.
+
+Falta também o **gerador de gráficos**, porque dispersão de percentil alto se lê
+em gráfico e a paridade PT/EN vale para as imagens. Estado: **não portados** —
+registrado no [ROADMAP.md](../ROADMAP.md).
 
 A ordem de portar é por necessidade real, não em bloco: portar 6.800 linhas
 antes de existir conteúdo a verificar é promessa sem código, que é o que esta

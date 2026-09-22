@@ -35,7 +35,7 @@ gate R precondition reaches the optimizer. It was born from a measured defect â€
 Clang discarding the assumption silently â€” and it is the proof that on this axis
 a claim about generated code is verified by reading generated code.
 
-It is the only one of the six checkers that needs a compiler, which is why it
+It is the only one of the seven checkers that needs a compiler, which is why it
 does not run in the fast mode of the
 [gate](../../ferramental/qualidade/pre-commit.sh): it runs in the suite, where
 the compilers exist.

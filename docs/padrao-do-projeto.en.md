@@ -1038,6 +1038,7 @@ Policy without a gate is worthless. The verifiers in
 | `verificar-aritmetica.py` | a percentage the text makes checkable adds up |
 | `verificar-suposicao.py` | the Gate R precondition reaches the optimizer, checked in the assembly, with a control arm |
 | `verificar-paridade.py` | the language pair exists, the navigation points at it, the structure matches, and no published number is missing from either language |
+| `verificar-autodescricao.py` | what the material claims **about itself** matches the disk: the census of the standard, the track, the checkers and the suite, plus the state label of section 5 |
 
 The first four come from the DPDK Academy, where **each was born from a measured
 defect**; the fifth was born in the absorbed project, from a defect of its own —
@@ -1049,14 +1050,21 @@ whoever wrote the retraction knew the rule, had just stated it, and still left
 the retracted value circulating on other pages. **Manual correction does not
 scale.**
 
-**Twelve are missing, and the count is meant to be read.** The DPDK Academy has
+**Eleven are missing, and the count is meant to be read.** The DPDK Academy has
 16 checkers in `ferramental/qualidade/`, inside 23 quality programs and 6,827
-lines. Four of them were ported: twelve are missing. The two that matter most,
-with their coupling already measured, are `verificar-promessa.py` (every cited
-program exists and enters the build, 18 coupling points) and
-`verificar-autodescricao.py` (what the material claims about itself matches the
-disk, 838 lines and 34 points) — the latter is what sustains the state labelling
-of section 5, and until it exists section 5 is an author's promise, not a gate.
+lines. Five of them were ported: eleven are missing. The one that matters most,
+with its coupling already measured, is `verificar-promessa.py` — every cited
+program exists and enters the build, 18 coupling points.
+
+`verificar-autodescricao.py` **left that list**, and how it left is worth
+recording: it was not ported, it was rewritten for the claims *this* repository
+makes about itself — census, state label and suite count. On its first run
+against the tree it reported nine problems, of which **eight were real**: the
+census said 31 planned topics where the disk has 23, and six checkers with
+self-tests where there were seven. The ninth was its own, and became the
+*change-record* rule — a sentence stating the before **and** the after is not a
+stale count.
+
 Also missing is the **chart generator**, because high-percentile dispersion is
 read in a chart and the PT/EN parity applies to images. State: **not ported** —
 recorded in the [ROADMAP.en.md](../ROADMAP.en.md).

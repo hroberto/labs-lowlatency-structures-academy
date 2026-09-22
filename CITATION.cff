@@ -101,7 +101,7 @@ references:
   # A fundação deste repositório foi absorvida do projeto abaixo, que nunca foi
   # publicado -- e é por isso que ele aparece como referência e não como
   # repositório irmão: não há URL a citar. A régua de apuração, a biblioteca de
-  # contratos, a norma de 36 seções e cinco dos seis verificadores vêm dele.
+  # contratos, a norma de 36 seções e cinco dos sete verificadores vêm dele.
   - type: software
     title: "C++ Performance Academy (unpublished; absorbed into this repository)"
     authors:

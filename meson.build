@@ -118,6 +118,10 @@ verificadores = [
   # A regra do radical identico (norma, secao 2) existe para ser verificavel por
   # maquina, e ate agora nao era -- a propria secao 31 registrava a lacuna.
   ['paridade', 'par de idiomas: existencia, navegacao, estrutura e numeros'],
+  # O que o material afirma SOBRE SI corresponde ao disco. Ele nasceu de uma
+  # varredura manual que procurou por `graficos` e devolveu zero arquivos,
+  # porque o texto diz `graficos` com acento.
+  ['autodescricao', 'o que o material afirma sobre si corresponde ao disco'],
 ]
 
 foreach v : verificadores

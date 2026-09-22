@@ -24,8 +24,9 @@ not started, **zero commits and no remote** — was absorbed by this repository 
       `.clang-tidy`
 - [x] **both** origin documents preserved intact under
       [`docs/origem/`](docs/origem/)
-- [x] [standard](docs/padrao-do-projeto.en.md): 33 sections, 6 parts, with the 14
-      divergences from its own origin recorded auditably
+- [x] [standard](docs/padrao-do-projeto.en.md) — it arrived with 33 sections, 6
+      parts and today has 36 and 7, with the 14 divergences from its own origin
+      recorded auditably
 - [x] [reference catalogue](docs/referencias.en.md) with stable identifiers
 - [x] `lib/measurement/` — the C++23 measurement ruler, header-only on purpose:
       a call across a translation boundary would measure the call together with
@@ -76,7 +77,7 @@ not started, **zero commits and no remote** — was absorbed by this repository 
       document and contradicted by the entire history of both projects, now says
       **Portuguese**, with the reason recorded: the commit subject is the
       finding, and a finding is prose
-- [x] `pre-commit.sh` — syntax, the six checkers plus their six self-tests, a
+- [x] `pre-commit.sh` — syntax, the seven checkers plus their seven self-tests, a
       secret scan with a declared scope, and a check that the pinned CI action
       SHA is still the top of the major declared in the comment. The `--rapido`
       mode is the CI's; the local hook also runs the suite
@@ -171,9 +172,9 @@ not started, **zero commits and no remote** — was absorbed by this repository 
       each row against an existing `metadata.json` — **it only makes sense from
       the first topic that compares**, and 08.01 does not compare
 - [x] **decided: GoogleTest wherever it is needed, and TAP where it does not
-      reach.** The suite has 20 tests hiding more than a hundred assertions —
+      reach.** The suite has 22 tests hiding more than a hundred assertions —
       `tail-sanity` is one test with eleven cases, and a regression in one of
-      them reports "1 of 20". The deficit did not come from the absence of GTest:
+      them reports "1 of 22". The deficit did not come from the absence of GTest:
       it came from `protocol: 'exitcode'`, Meson's default, which also accepts
       `tap` and `gtest`. So: **GoogleTest** (`protocol: 'gtest'`) for C++ tests
       with several cases, with Portuguese case names because they are prose;
@@ -198,13 +199,16 @@ These four were **promised by the material and tracked nowhere** — the standar
 and the READMEs cited them as known work, and they were items of no stage. A debt
 that exists only in prose is not a debt: it is forgetting with a date on it.
 
-- [ ] `verificar-autodescricao.py` (838 lines, 34 coupling points) — **the most
-      valuable of the twelve not ported**, and the argument is measured: the
-      manual pendency sweep of 2026-09-22 searched for `graficos` and returned
-      zero files, because the text says `gráficos`. This checker compares what the
-      material claims about itself against the disk, and would catch on its own
-      the five unbacked promises of this stage — including the stale paragraph
-      stage 4 carried until now
+- [x] `verificar-autodescricao.py` — **rewritten, not ported**. The original's
+      838 lines carry 34 coupling points with the origin project's structure;
+      what gets ported is the idea, not the file. It checks five censuses against
+      the disk — the standard, the track, the checkers, the suite and the state
+      label of section 5 — and it understands spelled-out numerals, because the
+      standard writes "the seven have a self-test", not "the 7".
+      **On its first run it reported eleven problems; nine were real**: the census
+      said 31 planned topics where the disk has 23, six checkers with self-tests
+      where there are seven, and a suite of 20 tests where Meson registers 22.
+      Two were its own, and became the *change-record* rule
 - [ ] `verificar-promessa.py` (18 coupling points) — every cited program exists
       in the tree and enters the build
 - [ ] the **chart generator**, ported from `ferramental/graficos/` of the DPDK
@@ -220,7 +224,7 @@ that exists only in prose is not a debt: it is forgetting with a date on it.
 
 The ten modules have been reconciled with the standard and have an index under
 [`docs/`](docs/README.en.md), with a question, a failure question and the `std` →
-`custom` pair. **31 planned topics, 1 written.**
+`custom` pair. **23 planned topics, 1 written.**
 
 The done criterion is the same in all of them: every topic with `std/`,
 `custom/`, `spec.hpp`, a parameterized L1, an archived campaign and a **decision

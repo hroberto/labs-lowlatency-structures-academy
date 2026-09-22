@@ -32,7 +32,7 @@ every chapter. The **study order** is a separate document, not yet written.
 | [09 capstone](09-capstone/README.en.md) | what is the end-to-end difference, and which topic accounted for it? | not started |
 | [10 generated code](10-codigo-gerado/README.en.md) | what does the compiler do with `custom/` that it does not do with `std/`? | not started |
 
-**1 topic out of 31.** The table says "not started" where there is no content
+**1 topic out of 23.** The table says "not started" where there is no content
 because an index announcing what does not exist is the defect
 [section 5](padrao-do-projeto.en.md#5-state-labelling) exists to prevent.
 

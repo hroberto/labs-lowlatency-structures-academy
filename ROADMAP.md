@@ -24,8 +24,9 @@ repositório em 2026-09-21. Veio o que já era executável:
       `.clang-tidy`
 - [x] os **dois** documentos de origem preservados intactos em
       [`docs/origem/`](docs/origem/)
-- [x] [norma](docs/padrao-do-projeto.md): 33 seções, 6 partes, com as 14
-      divergências em relação à sua própria origem registradas de forma auditável
+- [x] [norma](docs/padrao-do-projeto.md) — chegou com 33 seções, 6 partes e hoje
+      tem 36 e 7, com as 14 divergências em relação à sua própria origem
+      registradas de forma auditável
 - [x] [catálogo de referências](docs/referencias.md) com identificadores estáveis
 - [x] `lib/measurement/` — régua de apuração em C++23, *header-only* de
       propósito: uma chamada através de fronteira de tradução mediria a chamada
@@ -75,7 +76,7 @@ repositório em 2026-09-21. Veio o que já era executável:
       origem e contrariada por todo o histórico dos dois projetos, passou a
       dizer **português**, com a razão registrada: o assunto do commit é o
       achado, e achado é prosa
-- [x] `pre-commit.sh` — sintaxe, os seis verificadores mais os seis autotestes,
+- [x] `pre-commit.sh` — sintaxe, os sete verificadores mais os sete autotestes,
       varredura de segredo com escopo declarado, e conferência de que o SHA
       fixado da ação de CI ainda é o topo do major declarado no comentário. O
       modo `--rapido` é o da CI; o gancho local roda a suíte também
@@ -166,8 +167,8 @@ repositório em 2026-09-21. Veio o que já era executável:
       cada linha contra um `metadata.json` existente — **só faz sentido a partir
       do primeiro tópico que compara**, e 08.01 não compara
 - [x] **decidido: GoogleTest onde for necessário, e TAP onde ele não alcança.**
-      A suíte tem 20 testes que escondem mais de cem asserções — `tail-sanity` é
-      um teste com onze casos, e uma regressão em um deles reporta "1 de 20".
+      A suíte tem 22 testes que escondem mais de cem asserções — `tail-sanity` é
+      um teste com onze casos, e uma regressão em um deles reporta "1 de 22".
       O déficit não vinha da ausência do GTest: vinha de `protocol: 'exitcode'`,
       o padrão do Meson, que também aceita `tap` e `gtest`. Então:
       **GoogleTest** (`protocol: 'gtest'`) para teste de C++ com vários casos,
@@ -193,13 +194,16 @@ os READMEs os citavam como se fossem trabalho conhecido, e não eram item de
 nenhuma etapa. Uma dívida que só existe em prosa não é dívida: é esquecimento
 com data marcada.
 
-- [ ] `verificar-autodescricao.py` (838 linhas, 34 pontos de acoplamento) — **é
-      o mais valioso dos doze não portados**, e o argumento é medido: a varredura
-      manual de pendências feita em 2026-09-22 procurou por `graficos` e devolveu
-      zero arquivos, porque o texto diz `gráficos`. Este verificador compara o
-      que o material afirma sobre si contra o disco, e pegaria sozinho as cinco
-      promessas sem lastro desta etapa — inclusive o parágrafo obsoleto que a
-      Etapa 4 tinha até agora
+- [x] `verificar-autodescricao.py` — **reescrito, não portado**. As 838 linhas
+      do original têm 34 pontos de acoplamento com a estrutura do projeto de
+      origem; o que se porta é a ideia, não o arquivo. Ele confere cinco censos
+      contra o disco — norma, trilha, verificadores, suíte e o rótulo de estado
+      da seção 5 — e entende numeral por extenso, porque a norma escreve "os
+      sete têm autoteste", não "os 7".
+      **Na primeira execução acusou onze problemas; nove eram reais**: o censo
+      dizia 31 tópicos previstos onde o disco tem 23, seis verificadores com
+      autoteste onde há sete, e a suíte com 20 testes onde o Meson registra 22.
+      Dois eram dele, e viraram a regra do *registro de mudança*
 - [ ] `verificar-promessa.py` (18 pontos de acoplamento) — todo programa citado
       existe na árvore e entra na compilação
 - [ ] **gerador de gráficos**, portado de `ferramental/graficos/` do DPDK
@@ -215,7 +219,7 @@ com data marcada.
 
 Os dez módulos foram reconciliados com a norma e têm índice em
 [`docs/`](docs/README.md), com pergunta, pergunta de falha e par `std` →
-`custom`. **31 tópicos previstos, 1 escrito.**
+`custom`. **23 tópicos previstos, 1 escrito.**
 
 O critério de pronto é o mesmo em todas: cada tópico com `std/`, `custom/`,
 `spec.hpp`, L1 parametrizado, campanha arquivada e **regra de decisão**.

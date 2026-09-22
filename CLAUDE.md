@@ -151,6 +151,10 @@ This is the part that differs most from the sibling projects.
 - **Run the gate: `./ferramental/qualidade/pre-commit.sh`.** It is the local hook
   and, as `--rapido`, the CI's first job. Do not work around it; if it is wrong,
   fix the checker and add a bait to its self-test.
+- **`verificar-autodescricao.py` now guards the counts.** Any sentence claiming
+  how many sections, topics, checkers or tests exist is compared against the
+  disk. A sentence that states the before **and** the after is accepted as a
+  change record; a stale count alone is not.
 - **One coupling has no checker yet, so check it by hand:** a number published in
   a README versus the campaign it cites. Re-running a campaign changes the
   numbers, and nothing goes red. After any re-run, diff the README table against
@@ -169,9 +173,9 @@ Meson suites carry both labels: `l1+docs`, `l1+contract`, `l1+measurement`,
 `l1+scripts`, `l2+harness`. A new test picks its level by what it needs, not by
 what it tests.
 
-**The suite must count what it verifies.** Today 20 Meson tests hide more than a
+**The suite must count what it verifies.** Today 22 Meson tests hide more than a
 hundred assertions — `tail-sanity` is one test with eleven cases. A regression in
-one of them reports "1 of 20 failed", which understates what broke. Two
+one of them reports "1 of 22 failed", which understates what broke. Two
 mechanisms fix it, and Meson supports both:
 
 - **GoogleTest for C++ tests**, registered with `protocol: 'gtest'`, so every

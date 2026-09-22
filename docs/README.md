@@ -32,7 +32,7 @@ cada capítulo. A **ordem de estudo** é outro documento, ainda não escrito.
 | [09 capstone](09-capstone/README.md) | qual a diferença ponta a ponta, e qual tópico respondeu por ela? | não iniciado |
 | [10 código gerado](10-codigo-gerado/README.md) | o que o compilador faz com `custom/` que não faz com `std/`? | não iniciado |
 
-**1 tópico de 31.** A tabela diz "não iniciado" onde não há conteúdo porque
+**1 tópico de 23.** A tabela diz "não iniciado" onde não há conteúdo porque
 índice que anuncia o que não existe é o defeito que a
 [seção 5](padrao-do-projeto.md#5-rotulagem-de-estado) existe para impedir.
 
