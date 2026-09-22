@@ -846,9 +846,9 @@ Variável não conhecida é documentada como não conhecida.
 ## 29. Ambiente de referência
 
 O registro é **gerado** por `scripts/ambiente.sh`, em vez de descrito em prosa
-pelo autor. Estado do script neste repositório: **não iniciado** — a régua de
-apuração existe, o gerador de ambiente ainda não, e nenhum número pode ser
-publicado antes dele. A razão está no script de origem: descrição em prosa diverge
+pelo autor. Estado do script neste repositório: **código existe, não medido** —
+ele coleta em três modos (`texto`, `--markdown`, `--json`), e o `--json` é o que
+alimenta o `metadata.json` de cada medição. A razão está no script de origem: descrição em prosa diverge
 entre arquivos sem que ninguém perceba, envelhece em silêncio quando o kernel ou
 o compilador mudam, e não diz a quem reproduz o que comparar.
 

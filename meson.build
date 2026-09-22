@@ -197,3 +197,25 @@ test('l1 - regua de apuracao coleta resultado publicavel', sanidade_medicao,
      # programa EXECUTA, não coletar estatística que ninguém vai ler. Medição
      # publicável não define estas variáveis.
      env : {'CPP_ACADEMY_AMOSTRAS': '5', 'CPP_ACADEMY_RODADAS': '20000'})
+
+# ---------------------------------------------------------------------------
+# Scripts de ambiente, na suite `l1+scripts`.
+#
+# O autoteste de `ambiente.sh` entra na suite, e nao a execucao dele: o
+# ambiente e COLETA, e uma coleta nao passa nem falha -- ela descreve a
+# maquina. O que pode falhar, e o que a suite verifica, e o script devolver
+# campo vazio EM SILENCIO, perder um dominio de L3 no resumo, ou produzir JSON
+# invalido para o metadata da medicao. Ver a secao 29 da norma.
+#
+# O caso do agrupamento de L3 tem BRACO SINTETICO, com dois dominios na
+# entrada: numa maquina de um unico CCD, um teste que olhasse so a saida real
+# passaria com o defeito presente. Verificacao que nunca dispara e
+# indistinguivel de verificacao ausente.
+# ---------------------------------------------------------------------------
+test('l1 - ambiente.sh nao devolve campo vazio em silencio', bash,
+     args : [meson.project_source_root() / 'scripts/tests/l1_ambiente.sh'],
+     suite : ['l1', 'scripts'], timeout : 120)
+
+test('l1 - check-env.sh acusa dependencia ausente', bash,
+     args : [meson.project_source_root() / 'scripts/tests/l1_check_env.sh'],
+     suite : ['l1', 'scripts'], timeout : 120)

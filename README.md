@@ -21,7 +21,7 @@ máquina nomeada.
 | [Ferramental de qualidade](ferramental/qualidade/) | **código existe, não medido** — 5 verificadores, autotestes passando |
 | [Régua de apuração](lib/measurement/) | **código existe, não medido** — compila nas três configurações |
 | [Biblioteca de contratos](lib/contract/) | **código existe, não medido** — três portas, suíte nas três configurações |
-| `scripts/ambiente.sh` | **não iniciado** |
+| [`scripts/`](scripts/) | **código existe, não medido** — `check-env.sh`, `ambiente.sh` (texto, markdown, JSON), `build-all.sh`, `test-all.sh`, com autotestes na suíte |
 | Trilha de módulos | **não iniciado** |
 | Capstone (motor de livro de ofertas) | **não iniciado** |
 

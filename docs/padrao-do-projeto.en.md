@@ -864,9 +864,9 @@ An unknown variable is documented as unknown.
 ## 29. Reference environment
 
 The record is **generated** by `scripts/ambiente.sh` instead of described in
-prose by the author. State of that script in this repository: **not started** —
-the measurement ruler exists, the environment generator does not yet, and no
-number may be published before it. The reason is in the origin script: a prose
+prose by the author. State of that script in this repository: **code exists, not
+measured** — it collects in three modes (`texto`, `--markdown`, `--json`), and
+`--json` is what feeds each measurement's `metadata.json`. The reason is in the origin script: a prose
 description diverges between files without anyone noticing, ages silently when
 the kernel or the compiler changes, and does not tell whoever reproduces it what
 to compare.

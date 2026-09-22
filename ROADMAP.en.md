@@ -62,15 +62,31 @@ not started, **zero commits and no remote** — was absorbed by this repository 
 - [ ] a **language-pair** checker: the identical-stem rule (standard, section 2)
       exists to be verifiable, and today it is not
 
-## Stage 2 — Environment
+## Stage 2 — Environment · **partial**
 
-- [ ] `scripts/ambiente.sh`, ported **without rewriting the parsing**: the
+- [x] `scripts/ambiente.sh`, ported **without rewriting the parsing**: the
       upstream version uses `lscpu -p=` and sysfs because parsing `lscpu` text
       silently yields empty fields on a machine with a translated locale — and
-      this machine has one
-- [ ] recording PMU availability (`perf_event_paranoid`)
-- [ ] recording which of the three configurations produced the number
-- [ ] the CCD and SMT sibling of the core used, not just its id
+      this machine has one. Three modes: text, `--markdown`, `--json`
+- [x] recording PMU availability (`perf_event_paranoid`)
+- [x] recording which build configurations exist in the tree
+- [x] the CCD and SMT sibling of every logical CPU, one line each
+- [x] `scripts/check-env.sh` — a diagnosis with a real C++23 probe (it compiles
+      `<expected>`, `<print>`, `<span>` and
+      `hardware_destructive_interference_size` instead of reading the compiler
+      version), and every warning saying what stops being possible
+- [x] `scripts/build-all.sh`, `scripts/test-all.sh` and
+      `scripts/lib-configuracoes.sh`, with the configuration matrix in one place
+- [x] self-tests in the `l1+scripts` suite: a synthetic two-L3-domain arm for
+      the grouping, and a control arm that hides Meson from `PATH` and requires
+      `check-env.sh` to report it
+- [ ] **`perf_event_paranoid=4` on this machine blocks hardware counters.** The
+      `perf` and cache-miss module cannot measure without `sysctl
+      kernel.perf_event_paranoid=0`, which is a system change and stays a
+      declared decision, not a silent prerequisite
+- [ ] `governor=powersave` on the reference machine: the campaign must declare
+      whether it pins `performance` before measuring, or publishes the variation
+      the governor introduces
 
 ## Stage 3 — Harness and the full cycle
 

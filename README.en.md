@@ -21,7 +21,7 @@ a named machine.
 | [Quality tooling](ferramental/qualidade/) | **code exists, not measured** — 5 checkers, self-tests passing |
 | [Measurement ruler](lib/measurement/) | **code exists, not measured** — builds in all three configurations |
 | [Contract library](lib/contract/) | **code exists, not measured** — three gates, suite in all three configurations |
-| `scripts/ambiente.sh` | **not started** |
+| [`scripts/`](scripts/) | **code exists, not measured** — `check-env.sh`, `ambiente.sh` (text, markdown, JSON), `build-all.sh`, `test-all.sh`, with self-tests in the suite |
 | Module track | **not started** |
 | Capstone (order book engine) | **not started** |
 

@@ -61,15 +61,31 @@ repositório em 2026-09-21. Veio o que já era executável:
 - [ ] verificador de **par de idiomas**: a regra do radical idêntico (seção 2 da
       norma) existe para ser verificável, e hoje não é
 
-## Etapa 2 — Ambiente
+## Etapa 2 — Ambiente · **parcial**
 
-- [ ] `scripts/ambiente.sh`, portado **sem reescrever o parsing**: a versão a
+- [x] `scripts/ambiente.sh`, portado **sem reescrever o parsing**: a versão a
       montante usa `lscpu -p=` e sysfs porque parsing do texto do `lscpu`
       devolve campo vazio em silêncio em máquina com locale traduzido — e esta
-      máquina tem
-- [ ] registro de disponibilidade do PMU (`perf_event_paranoid`)
-- [ ] registro de qual das três configurações produziu o número
-- [ ] CCD e *SMT sibling* do núcleo usado, não só o id
+      máquina tem. Três modos: texto, `--markdown`, `--json`
+- [x] registro de disponibilidade do PMU (`perf_event_paranoid`)
+- [x] registro de quais configurações de build existem na árvore
+- [x] CCD e *SMT sibling* de cada CPU lógica, com uma linha por CPU
+- [x] `scripts/check-env.sh` — diagnóstico com sonda de C++23 real (compila
+      `<expected>`, `<print>`, `<span>` e `hardware_destructive_interference_size`
+      em vez de olhar a versão do compilador), e cada aviso dizendo o que deixa
+      de ser possível
+- [x] `scripts/build-all.sh`, `scripts/test-all.sh` e `scripts/lib-configuracoes.sh`,
+      com a matriz de configurações num lugar só
+- [x] autotestes na suíte `l1+scripts`: braço sintético de dois domínios de L3
+      para o agrupamento, e braço de controle que esconde o Meson do `PATH` e
+      exige que o `check-env.sh` acuse
+- [ ] **`perf_event_paranoid=4` nesta máquina bloqueia contador de hardware.**
+      O módulo de `perf` e *cache misses* não mede sem `sysctl
+      kernel.perf_event_paranoid=0`, que é mudança de sistema e fica como
+      decisão declarada, não como pré-requisito silencioso
+- [ ] `governor=powersave` na máquina de referência: a campanha precisa declarar
+      se fixa `performance` antes de medir, ou publica a variação que o governor
+      introduz
 
 ## Etapa 3 — Harness e o ciclo completo
 
