@@ -1,6 +1,6 @@
 > 🇧🇷 Português | [🇺🇸 English](README.en.md)
 
-# 04 — Livro de ofertas
+# 04 — Índice de chave densa
 
 > **Estado: não iniciado.** Nenhum tópico deste módulo foi escrito, e nenhum
 > número foi publicado. Esta página existe para dar o mapa, não para anunciar
@@ -8,19 +8,37 @@
 
 ## A pergunta do módulo
 
-> qual o custo de *best bid/ask* em p50/p99/p99,9 sob carga real de mensagens?
+> qual o custo de encontrar o **extremo ocupado** em p50/p99/p99,9, sob uma
+> carga real de atualizações?
 
 ## A pergunta de falha
 
-> o que acontece com preço fora da faixa do array?
+> o que acontece com chave fora da faixa do array?
 
 Ela é obrigatória e se responde com **programa**, nunca em prosa — e a
 invariante que ela ataca tem teste negativo: a versão que a viola existe, e a
 suíte exige que ela falhe.
 
+## O que é uma chave densa, e por que ela muda a estrutura
+
+Uma chave é **densa** quando o domínio dela é discreto, limitado e conhecido: um
+identificador que anda de um em um dentro de uma faixa, e não um inteiro
+qualquer de 64 bits. Nesse caso o índice não precisa de árvore nem de hash — a
+chave **é** o índice, e o que sobra é descobrir quais posições estão ocupadas.
+
+É a mesma restrição que o [módulo 03](../03-conteineres/README.md) não tem. Lá a
+estrutura é genérica porque a chave é qualquer coisa; aqui a estrutura ganha
+porque a chave é pouca coisa. O módulo existe para medir **quanto** essa
+restrição vale, e a partir de que ponto.
+
+O módulo 03 vem antes de propósito: ler este primeiro faz o array plano parecer
+mágica, em vez de parecer o que ele é — uma troca que só cabe porque a chave tem
+faixa e passo.
+
 ## O par `std` → `custom`
 
-`std::map<Price,Level>` → array por *tick* + bitmap; `unordered_map` de ordens → hash sem alocação por nó
+`std::map<Key, Value>` → array por chave + bitmap de ocupação; `unordered_map`
+de registros → hash sem alocação por nó
 
 A ordem é fixa: **primeiro o que a linguagem dá.** Nenhum `custom/` se escreve
 antes de o `std/` correspondente estar medido e publicado.
@@ -29,9 +47,9 @@ antes de o `std/` correspondente estar medido e publicado.
 
 | Tópico | Estado |
 |---|---|
-| `01-map-de-precos` — `map` de preços | **não iniciado** |
-| `02-array-plano-com-bitmap` — array plano com bitmap | **não iniciado** |
-| `03-hash-de-ordens` — hash de ordens | **não iniciado** |
+| `01-map-de-chaves` — `std::map` como índice | **não iniciado** |
+| `02-array-plano-com-bitmap` — array por chave + bitmap de ocupação | **não iniciado** |
+| `03-hash-de-registros` — hash sem alocação por nó | **não iniciado** |
 
 Os diretórios nascem com o primeiro arquivo real. Diretório vazio é promessa,
 e promessa é o que a seção 5 da norma existe para impedir.

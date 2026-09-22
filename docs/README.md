@@ -25,7 +25,7 @@ cada capítulo. A **ordem de estudo** é outro documento, ainda não escrito.
 | [01 memória](01-memoria/README.md) | a que taxa de alocação o alocador global passa a dominar o p99? | **um tópico medido** |
 | [02 layout](02-layout/README.md) | quantos *cache misses* por elemento cada layout custa? | não iniciado |
 | [03 contêineres](03-conteineres/README.md) | em que cardinalidade a busca em array plano perde para a árvore? | não iniciado |
-| [04 livro de ofertas](04-livro-de-ofertas/README.md) | qual o custo de *best bid/ask* em p50/p99/p99,9? | não iniciado |
+| [04 índice de chave densa](04-indice-de-chave-densa/README.md) | qual o custo de encontrar o extremo ocupado em p50/p99/p99,9? | não iniciado |
 | [05 filas e concorrência](05-filas-e-concorrencia/README.md) | quando o lock deixa de ser o gargalo e passa a ser a linha de cache? | não iniciado |
 | [06 tempo e erros](06-tempo-e-erros/README.md) | quanto custa medir, e quanto custa o caminho de erro? | não iniciado |
 | [07 parsing](07-parsing/README.md) | quando a STL moderna já basta, e quando não? | não iniciado |

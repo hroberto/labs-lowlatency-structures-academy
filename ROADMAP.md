@@ -258,14 +258,18 @@ O critério de pronto é o mesmo em todas: cada tópico com `std/`, `custom/`,
       são decisões de desenho que só se firmam com código na frente
 - [ ] é também onde `docs/regras-de-decisao.md` nasce, com a primeira regra real
 
-### Etapa 5 — Contêineres e livro de ofertas · módulos [03](docs/03-conteineres/README.md) e [04](docs/04-livro-de-ofertas/README.md)
+### Etapa 5 — Contêineres e índice de chave densa · módulos [03](docs/03-conteineres/README.md) e [04](docs/04-indice-de-chave-densa/README.md)
 
 - [ ] 6 tópicos. O módulo 04 é onde a `spec.hpp` é posta à prova: `std::map` e
-      array plano por *tick* **não** cumprem a mesma lei, e a divergência é o
+      array plano por chave **não** cumprem a mesma lei, e a divergência é o
       assunto do tópico
-- [ ] pendente de decisão editorial: o livro de ofertas é cenário ou
-      protagonista? A §1.2 do documento de origem diz cenário, e a trilha lhe dá
-      um módulo inteiro mais o capstone (divergência 12 da norma)
+- [x] **decisão editorial tomada: o domínio saiu.** O módulo 04 era *livro de
+      ofertas* e passou a ser *índice de chave densa*; o capstone, *motor de
+      índice em memória*. Nenhuma medição se perdeu — array plano por chave,
+      bitmap de ocupação e hash sem alocação por nó continuam sendo o assunto.
+      O que se perde é o vocabulário de um mercado; o que se ganha é que a
+      regra de decisão serve a quem indexa sensor, log ou pacote
+      (divergência 12 da norma)
 
 ### Etapa 6 — Filas e tempo · módulos [05](docs/05-filas-e-concorrencia/README.md) e [06](docs/06-tempo-e-erros/README.md)
 

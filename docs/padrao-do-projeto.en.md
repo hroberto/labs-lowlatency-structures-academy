@@ -72,7 +72,7 @@ In each topic:
 
 ```text
 docs/
-└── 04-livro-de-ofertas/
+└── 04-indice-de-chave-densa/
     └── 02-array-plano-com-bitmap/
         ├── README.md
         ├── README.en.md
@@ -1286,7 +1286,7 @@ before entering the standard.
 | 9 | §10 planned extracting `ferramental/bench/` as a final stage, consumed by the DPDK Academy too | the DPDK Academy is C; the boundary has to be a C ABI **from the start**, or the extraction does not happen (section 33) |
 | 10 | §5 called the shared interface of `std/` and `custom/` `contract.hpp` | collision with the three-gate mechanism; a topic's law is `spec.hpp` (section 34) |
 | 11 | §4 planned `ferramental/bench/` for the harness | the absorbed harness is `lib/measurement/`, and `lib/` is the extraction boundary. `ferramental/` is left to quality and charts (section 15) |
-| 12 | §1.2 said the order book is a "recurring scenario, not an object of study", while the track gives it a whole module plus the capstone | pending an editorial decision, recorded in the ROADMAP: either the README owns the book as the protagonist, or module 04 shrinks |
+| 12 | §1.2 said the order book is a "recurring scenario, not an object of study", while the track gave it a whole module plus the capstone | **the domain left, the mechanism stayed.** Module 04 became *dense-key index*, and the capstone, *in-memory index engine*. No measurement was lost: a flat array indexed by key, an occupancy bitmap and a hash with no per-node allocation are still the subject, and the constraint that makes them possible — a discrete, bounded, known key — is the same, stated without the domain. What is lost is one market's vocabulary; what is gained is that the decision rule now serves whoever indexes sensors, logs or packets. Owning the order book as the protagonist was considered and refused: it would narrow the audience without adding a single measurement |
 
 ## Navigation
 

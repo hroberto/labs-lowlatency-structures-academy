@@ -28,11 +28,17 @@ contract is the same, the load is the same, the machine is the same.
 
 | Topic | State |
 |---|---|
-| `order-book-engine` — the full engine, fed by a reproducible synthetic feed | **not started** |
+| `motor-de-indice` — the full engine, fed by a reproducible synthetic feed | **not started** |
 
-The feed is synthetic and reproducible **by decision**: no proprietary exchange
-data enters this repository, and no strategy, signal or decision logic — only
-infrastructure.
+The engine is **an in-memory index fed by a message stream**: messages arrive
+through a queue, are decoded, become records, and the index answers queries
+about them. It is the scenario that runs through the track, and it is generic by
+decision — see divergence 12 in the
+[standard](../padrao-do-projeto.en.md#divergences-from-the-tracks-origin-document).
+
+The feed is synthetic and reproducible **by decision**: a generator with a
+declared seed, in the repository, rather than a dataset downloaded from
+somewhere nobody can re-derive later.
 
 ## The layered architecture belongs here
 

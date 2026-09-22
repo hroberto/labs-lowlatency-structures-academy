@@ -59,12 +59,12 @@ Onde o dado **mora** antes de onde ele é **organizado**. Alocação vem primeir
 porque o custo de layout só aparece depois que o de alocação para de dominar —
 medir SoA contra AoS sob pressão de alocador mede o alocador.
 
-### 3. [Contêineres](03-conteineres/README.md) → 4. [Livro de ofertas](04-livro-de-ofertas/README.md)
+### 3. [Contêineres](03-conteineres/README.md) → 4. [Índice de chave densa](04-indice-de-chave-densa/README.md)
 
-O módulo 03 dá as estruturas genéricas; o 04 é o mesmo problema com **um domínio
+O módulo 03 dá as estruturas genéricas; o 04 é o mesmo problema com **uma chave
 que restringe**, e a restrição é o que permite bater a estrutura genérica. Ler o
 04 antes do 03 faz o array plano parecer mágica, em vez de parecer o que ele é:
-uma troca que só cabe porque o preço tem faixa e passo.
+uma troca que só cabe porque a chave tem faixa e passo.
 
 ### 5. [Filas e concorrência](05-filas-e-concorrencia/README.md) → 6. [Tempo e erros](06-tempo-e-erros/README.md)
 

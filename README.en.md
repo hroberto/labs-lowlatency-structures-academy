@@ -24,7 +24,7 @@ a named machine.
 | [`scripts/`](scripts/) | **code exists, not measured** — `check-env.sh`, `ambiente.sh` (text, markdown, JSON), `build-all.sh`, `test-all.sh`, `arquivar-medicao.sh`, with self-tests in the suite |
 | [CI](.github/workflows/ci.yml) and [pre-commit](ferramental/qualidade/pre-commit.sh) | **code exists, not measured** — consistency before build; GCC 14 × Clang 18 × three configurations matrix |
 | [Module track](docs/README.en.md) | **2 topics out of 23** — [01.01, the arena allocator](docs/01-memoria/01-alocador-arena/README.en.md) and [08.01, the harness measuring itself](docs/08-medicao/01-harness/README.en.md); the ten modules have an index |
-| Capstone (order book engine) | **not started** |
+| [Capstone](docs/09-capstone/README.en.md) (in-memory index engine) | **not started** |
 
 State labels are normative — see
 [project standard, section 5](docs/padrao-do-projeto.en.md#5-state-labelling).

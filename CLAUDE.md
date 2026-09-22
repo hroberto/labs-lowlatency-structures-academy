@@ -98,8 +98,15 @@ This is the part that differs most from the sibling projects.
   sustains it — standard, section 35.
 - **Cite the C++ memory model by clause** whenever the text asserts something
   about ordering. ISO/IEC 14882, not a blog post.
-- **The order book is illustration.** No strategy, signal or decision logic from
-  any trading system enters this repository — only infrastructure.
+- **The recurring scenario is generic, and deliberately so.** It is an
+  in-memory index fed by a message stream: messages arrive on a queue, get
+  decoded, become records, and the index answers queries about them. It needs
+  every module — allocation (01), layout (02), a lookup structure (03, 04), an
+  input queue (05), a timestamp (06) and decoding (07).
+  It is **not** tied to any domain. An earlier draft made it an order book, and
+  the domain narrowed the audience without adding a single measurement — see
+  divergence 12 in the standard. If a concept is clearer with another example,
+  use the other example.
 - **Publishing that the standard library suffices is a result.** Module 07
   exists partly to publish it. Do not treat a negative result as a failed topic.
 

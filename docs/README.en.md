@@ -25,7 +25,7 @@ every chapter. The **study order** is a separate document, not yet written.
 | [01 memory](01-memoria/README.en.md) | at what allocation rate does the global allocator start dominating p99? | **one measured topic** |
 | [02 layout](02-layout/README.en.md) | how many cache misses per element does each layout cost? | not started |
 | [03 containers](03-conteineres/README.en.md) | at what cardinality does a flat-array search lose to the tree? | not started |
-| [04 order book](04-livro-de-ofertas/README.en.md) | what does best bid/ask cost at p50/p99/p99.9? | not started |
+| [04 dense-key index](04-indice-de-chave-densa/README.en.md) | what does finding the occupied extreme cost at p50/p99/p99.9? | not started |
 | [05 queues and concurrency](05-filas-e-concorrencia/README.en.md) | when does the lock stop being the bottleneck and the cache line start? | not started |
 | [06 time and errors](06-tempo-e-erros/README.en.md) | what does measuring cost, and what does the error path cost? | not started |
 | [07 parsing](07-parsing/README.en.md) | when does the modern STL already suffice, and when not? | not started |

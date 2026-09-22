@@ -200,7 +200,7 @@ which is module [08.02](../../08-medicao/README.en.md).
 ## When to use
 
 When the batch is born and dies whole, and the maximum size is known — which is
-the case of the message decoder and the order book.
+the case of the message decoder and the in-memory index it feeds.
 
 ## When not to use
 

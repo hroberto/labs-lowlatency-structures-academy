@@ -24,7 +24,7 @@ máquina nomeada.
 | [`scripts/`](scripts/) | **código existe, não medido** — `check-env.sh`, `ambiente.sh` (texto, markdown, JSON), `build-all.sh`, `test-all.sh`, `arquivar-medicao.sh`, com autotestes na suíte |
 | [CI](.github/workflows/ci.yml) e [pre-commit](ferramental/qualidade/pre-commit.sh) | **código existe, não medido** — consistência antes de build; matriz GCC 14 × Clang 18 × três configurações |
 | [Trilha de módulos](docs/README.md) | **2 tópicos de 23** — [01.01, alocador de arena](docs/01-memoria/01-alocador-arena/README.md) e [08.01, o harness medindo a si mesmo](docs/08-medicao/01-harness/README.md); os dez módulos têm índice |
-| Capstone (motor de livro de ofertas) | **não iniciado** |
+| [Capstone](docs/09-capstone/README.md) (motor de índice em memória) | **não iniciado** |
 
 As etiquetas de estado são normativas — ver
 [padrão do projeto, seção 5](docs/padrao-do-projeto.md#5-rotulagem-de-estado).

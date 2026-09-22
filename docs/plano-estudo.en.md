@@ -60,12 +60,12 @@ Where the data **lives** before how it is **organized**. Allocation comes first
 because the cost of layout only shows up once allocation stops dominating —
 measuring SoA against AoS under allocator pressure measures the allocator.
 
-### 3. [Containers](03-conteineres/README.en.md) → 4. [Order book](04-livro-de-ofertas/README.en.md)
+### 3. [Containers](03-conteineres/README.en.md) → 4. [Dense-key index](04-indice-de-chave-densa/README.en.md)
 
-Module 03 gives the generic structures; 04 is the same problem with **a domain
-that constrains**, and the constraint is what allows beating the generic
-structure. Reading 04 before 03 makes the flat array look like magic instead of
-what it is: a trade that only fits because the price has a range and a tick.
+Module 03 gives the generic structures; 04 is the same problem with **a key that
+constrains**, and the constraint is what allows beating the generic structure.
+Reading 04 before 03 makes the flat array look like magic instead of what it is:
+a trade that only fits because the key has a range and a step.
 
 ### 5. [Queues and concurrency](05-filas-e-concorrencia/README.en.md) → 6. [Time and errors](06-tempo-e-erros/README.en.md)
 

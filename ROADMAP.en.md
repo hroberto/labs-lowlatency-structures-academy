@@ -198,7 +198,7 @@ not started, **zero commits and no remote** — was absorbed by this repository 
 - [x] [`docs/plano-estudo.en.md`](docs/plano-estudo.en.md) — the reading order,
       in both languages, with its divergence from this order justified module by
       module: allocation before layout because measuring SoA under allocator
-      pressure measures the allocator; containers before the order book because
+      pressure measures the allocator; containers before the dense-key index because
       the flat array only stops looking like magic once you have seen the generic
       structure it beats; parsing near the end because the uncomfortable result
       weighs more after six modules where the alternative paid off
@@ -265,14 +265,17 @@ rule**.
 - [ ] it is also where `docs/regras-de-decisao.md` is born, with the first real
       rule
 
-### Stage 5 — Containers and order book · modules [03](docs/03-conteineres/README.en.md) and [04](docs/04-livro-de-ofertas/README.en.md)
+### Stage 5 — Containers and dense-key index · modules [03](docs/03-conteineres/README.en.md) and [04](docs/04-indice-de-chave-densa/README.en.md)
 
 - [ ] 6 topics. Module 04 is where `spec.hpp` is put to the test: `std::map` and
-      a flat array by tick do **not** fulfil the same law, and the divergence is
+      a flat array by key do **not** fulfil the same law, and the divergence is
       the topic's subject
-- [ ] pending an editorial decision: is the order book a scenario or the
-      protagonist? §1.2 of the origin document says scenario, and the track gives
-      it a whole module plus the capstone (divergence 12 in the standard)
+- [x] **editorial decision taken: the domain left.** Module 04 was *order book*
+      and became *dense-key index*; the capstone, *in-memory index engine*. No
+      measurement was lost — a flat array by key, an occupancy bitmap and a hash
+      with no per-node allocation are still the subject. What is lost is one
+      market's vocabulary; what is gained is that the decision rule serves
+      whoever indexes sensors, logs or packets (divergence 12 in the standard)
 
 ### Stage 6 — Queues and time · modules [05](docs/05-filas-e-concorrencia/README.en.md) and [06](docs/06-tempo-e-erros/README.en.md)
 
@@ -290,7 +293,7 @@ rule**.
 
 ### Stage 8 — Capstone · module [09](docs/09-capstone/README.en.md)
 
-- [ ] the order-book engine in two versions, with a reproducible synthetic feed
+- [ ] the in-memory index engine in two versions, with a reproducible synthetic feed
 - [ ] the table that **attributes** the end-to-end difference to each topic —
       without it the capstone is a demo, not a closing
 

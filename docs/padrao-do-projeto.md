@@ -67,7 +67,7 @@ Em cada tópico:
 
 ```text
 docs/
-└── 04-livro-de-ofertas/
+└── 04-indice-de-chave-densa/
     └── 02-array-plano-com-bitmap/
         ├── README.md
         ├── README.en.md
@@ -1261,7 +1261,7 @@ antes de entrar na norma.
 | 9 | §10 previa a extração de `ferramental/bench/` como etapa final, consumida também pelo DPDK Academy | o DPDK Academy é C; a fronteira tem de ser ABI C **desde já**, ou a extração não acontece (seção 33) |
 | 10 | §5 chamava de `contract.hpp` a interface comum de `std/` e `custom/` | colisão com o mecanismo das três portas; a lei do tópico é `spec.hpp` (seção 34) |
 | 11 | §4 previa `ferramental/bench/` para o harness | o harness absorvido é `lib/measurement/`, e `lib/` é a fronteira de extração. `ferramental/` fica só para qualidade e gráficos (seção 15) |
-| 12 | §1.2 dizia que o livro de ofertas é "cenário recorrente, não objeto de estudo", e a trilha lhe dá um módulo inteiro mais o capstone | pendente de decisão editorial, registrada no ROADMAP: ou o README assume o livro como protagonista, ou o módulo 04 encolhe |
+| 12 | §1.2 dizia que o livro de ofertas é "cenário recorrente, não objeto de estudo", e a trilha lhe dava um módulo inteiro mais o capstone | **o domínio saiu, e o mecanismo ficou.** O módulo 04 passou a ser *índice de chave densa*, e o capstone, *motor de índice em memória*. Nenhuma medição se perdeu: array plano indexado por chave, bitmap de ocupação e hash sem alocação por nó continuam sendo o assunto, e a restrição que os torna possíveis — chave discreta, limitada e conhecida — é a mesma, dita sem o domínio. O que se perde é o vocabulário de um mercado; o que se ganha é que a regra de decisão passa a servir a quem indexa sensor, log ou pacote. A alternativa de assumir o livro como protagonista foi considerada e recusada: ela estreitaria o público sem acrescentar uma medição |
 
 ## Navegação
 

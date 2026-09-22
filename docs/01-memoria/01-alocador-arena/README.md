@@ -195,7 +195,7 @@ módulo [08.02](../../08-medicao/README.md).
 ## Quando utilizar
 
 Quando o lote nasce e morre inteiro, e o tamanho máximo é conhecido — que é o
-caso do decodificador de mensagens e do livro de ofertas.
+caso do decodificador de mensagens e do índice em memória que ele alimenta.
 
 ## Quando não utilizar
 

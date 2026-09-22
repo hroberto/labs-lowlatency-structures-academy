@@ -27,11 +27,17 @@ contrato é o mesmo, a carga é a mesma, a máquina é a mesma.
 
 | Tópico | Estado |
 |---|---|
-| `order-book-engine` — o motor completo, alimentado por *feed* sintético reproduzível | **não iniciado** |
+| `motor-de-indice` — o motor completo, alimentado por *feed* sintético reproduzível | **não iniciado** |
 
-O *feed* é sintético e reproduzível **por decisão**: nenhum dado proprietário de
-bolsa entra neste repositório, e nenhuma lógica de estratégia, sinal ou decisão
-— só infraestrutura.
+O motor é **um índice em memória alimentado por um fluxo de mensagens**: as
+mensagens chegam por uma fila, são decodificadas, viram registros, e o índice
+responde consultas sobre eles. É o cenário que atravessa a trilha, e ele é
+genérico por decisão — ver a divergência 12 da
+[norma](../padrao-do-projeto.md#divergências-em-relação-ao-documento-de-origem-da-trilha).
+
+O *feed* é sintético e reproduzível **por decisão**: um gerador com semente
+declarada, no repositório, e não um conjunto de dados baixado de algum lugar que
+ninguém consegue rebaixar depois.
 
 ## A arquitetura em camadas é daqui
 
