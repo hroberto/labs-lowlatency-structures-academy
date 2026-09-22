@@ -222,3 +222,34 @@ test('l1 - ambiente.sh nao devolve campo vazio em silencio', bash,
 test('l1 - check-env.sh acusa dependencia ausente', bash,
      args : [meson.project_source_root() / 'scripts/tests/l1_check_env.sh'],
      suite : ['l1', 'scripts'], timeout : 120)
+
+# ---------------------------------------------------------------------------
+# Sanidade do coletor de cauda.
+#
+# Como nos outros alvos de sanidade, compilar isto já avalia os `static_assert`
+# de tail.hpp -- inclusive o que exige que a formula de percentil de la coincida
+# com a de statistics.hpp. Essa divergencia nao apareceria em teste de runtime:
+# os dois numeros continuariam plausiveis, e duas tabelas do mesmo repositorio
+# passariam a ser incomparaveis em silencio.
+# ---------------------------------------------------------------------------
+sanidade_cauda = executable(
+  'tail-sanity',
+  'lib/tests/tail_sanity.cpp',
+  dependencies : [measurement_dep, contract_dep],
+)
+
+test('l1 - cauda: descarte declarado e percentil exato', sanidade_cauda,
+     suite : ['l1', 'measurement'], timeout : 60)
+
+# Pedir publicacao de percentil que a amostra nao sustenta DEVE abortar. Em
+# release o programa devolve 77 e o Meson reporta PULADO, pela mesma razao do
+# alvo de contratos: violar `[[assume]]` e comportamento indefinido, nao abort.
+test('l1 - cauda: publicar percentil sem sustentacao aborta', sanidade_cauda,
+     args : ['--violar'],
+     should_fail : true,
+     suite : ['l1', 'measurement'], timeout : 60)
+
+# ---------------------------------------------------------------------------
+# A trilha.
+# ---------------------------------------------------------------------------
+subdir('trilha/08-medicao/01-harness')

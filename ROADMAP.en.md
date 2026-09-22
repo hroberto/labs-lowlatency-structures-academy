@@ -105,14 +105,36 @@ not started, **zero commits and no remote** — was absorbed by this repository 
       whether it pins `performance` before measuring, or publishes the variation
       the governor introduces
 
-## Stage 3 — Harness and the full cycle
+## Stage 3 — Harness and the full cycle · **partial**
 
-- [ ] `trilha/08-medicao/01-harness/`: a minimal topic that builds, runs and
-      archives a trivial measurement with `metadata.json` — to prove the whole
-      cycle **before** any content is written
-- [ ] HdrHistogram versus raw samples in a preallocated buffer
+- [x] **decided: raw samples in a preallocated buffer, not HdrHistogram.**
+      `lib/measurement/tail.hpp`, exact percentile, with no precision to declare
+      because there is no loss to declare. Two verified reasons: HdrHistogram_c
+      is not in WrapDB and its log writer pulls in zlib, against section 16; and
+      the problem it solves — an unbounded stream in constant space — is not the
+      problem of a laboratory that chooses how many operations to measure. What
+      is lost is written in the file's header
+- [x] the convention for how many samples a percentile requires:
+      `min_samples_for(p)`, with 10 observations beyond the percentile — 1000
+      samples for p99, 10,000 for p99.9 — and `tail_statistics` carrying the
+      highest supported percentile so that publishing above it is a visible error
+- [x] `trilha/08-medicao/01-harness/`: it builds, runs, and archives a campaign
+      of 5 runs with `metadata.json`, `ambiente.json`, a publishable table in
+      both languages and the raw output of every repetition
+- [x] `scripts/arquivar-medicao.sh` and `scripts/compor-medicao.py`: they require
+      `release` checked against Meson's real configuration (not the directory
+      name), refuse a single-run campaign, and publish the **spread across runs**
+      of every metric
+- [x] `trilha/README.en.md` as an index that does not announce topics that do
+      not exist
 - [ ] `docs/regras-de-decisao.md` with a data schema and a checker that verifies
-      each row against an existing `metadata.json`
+      each row against an existing `metadata.json` — **it only makes sense from
+      the first topic that compares**, and 08.01 does not compare
+- [ ] pending decision: **GoogleTest**. The track's origin document planned GTest
+      1.17.0 pinned by wrap; the absorbed foundation tests with sanity programs
+      and `static_assert`, with no dependency. The L1 tests parameterized by
+      `spec.hpp` (section 34) are the first case where GTest would pay its own
+      way
 
 ## Stage 4 onwards — the track
 

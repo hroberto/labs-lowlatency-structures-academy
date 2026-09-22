@@ -354,13 +354,33 @@ enum class collection_state
 // `std::string_view` NÃO tem construtor (contagem, caractere) -- a primeira
 // versão deste arquivo o chamou e não compilou. Fatiar uma constante é a forma
 // correta, e é `constexpr`.
+//
+// A RÉGUA CRESCEU, E O MOTIVO É UM TRUNCAMENTO SILENCIOSO
+//
+// Ela tinha 56 traços, e `dashes()` devolve `rule.size()` quando se pede mais
+// do que isso. A tabela de cauda do tópico 08.01 pediu 92 e recebeu 56, sem
+// aviso: a linha saiu curta, e ninguém foi notificado de que o pedido não foi
+// atendido. Nenhum teste pegaria -- a saída continua parecendo uma régua.
+//
+// Agora são 128 traços, e `dashes_fits()` torna o limite verificável em
+// compilação, para que o próximo pedido maior falhe no build em vez de sair
+// torto.
 inline constexpr std::string_view rule =
+    "------------------------------------------------------------------------"
     "--------------------------------------------------------";
+
+[[nodiscard]] constexpr bool dashes_fits(std::size_t n) noexcept
+{
+    return n <= rule.size();
+}
 
 [[nodiscard]] constexpr std::string_view dashes(std::size_t n) noexcept
 {
     return rule.substr(0, n <= rule.size() ? n : rule.size());
 }
+
+static_assert(rule.size() == 128);
+static_assert(dashes(92).size() == 92, "a regua nao cobre a tabela de cauda do topico 08.01");
 
 inline void print_header()
 {

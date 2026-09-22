@@ -104,14 +104,35 @@ repositório em 2026-09-21. Veio o que já era executável:
       se fixa `performance` antes de medir, ou publica a variação que o governor
       introduz
 
-## Etapa 3 — Harness e o ciclo completo
+## Etapa 3 — Harness e o ciclo completo · **parcial**
 
-- [ ] `trilha/08-medicao/01-harness/`: um tópico mínimo que compila, roda e
-      arquiva uma medição trivial com `metadata.json` — para provar o ciclo
-      inteiro **antes** de escrever conteúdo
-- [ ] decisão HdrHistogram versus amostras cruas em buffer pré-alocado
+- [x] **decidido: amostras cruas em buffer pré-alocado, não HdrHistogram.**
+      `lib/measurement/tail.hpp`, percentil exato, sem precisão a declarar
+      porque não há perda a declarar. Duas razões verificadas: o HdrHistogram_c
+      não está no WrapDB e seu escritor de log arrasta zlib, contra a seção 16;
+      e o problema que ele resolve — fluxo ilimitado em espaço constante — não é
+      o de um laboratório que escolhe quantas operações medir. O que se perde
+      está escrito no cabeçalho do arquivo
+- [x] a convenção de quantas amostras um percentil exige: `min_samples_for(p)`,
+      com 10 observações além do percentil — 1000 amostras para p99, 10 000 para
+      p99,9 —, e `tail_statistics` carregando o percentil máximo sustentado para
+      que publicar acima dele seja erro visível
+- [x] `trilha/08-medicao/01-harness/`: compila, roda, e arquiva campanha de 5
+      execuções com `metadata.json`, `ambiente.json`, tabela publicável nos dois
+      idiomas e a saída crua de cada repetição
+- [x] `scripts/arquivar-medicao.sh` e `scripts/compor-medicao.py`: exigem
+      `release` conferido na configuração real do Meson (não no nome do
+      diretório), recusam campanha de uma execução só, e publicam a **amplitude
+      entre execuções** de cada métrica
+- [x] `trilha/README.md` como índice que não anuncia tópico inexistente
 - [ ] `docs/regras-de-decisao.md` com esquema de dados e verificador que confira
-      cada linha contra um `metadata.json` existente
+      cada linha contra um `metadata.json` existente — **só faz sentido a partir
+      do primeiro tópico que compara**, e 08.01 não compara
+- [ ] decisão pendente: **GoogleTest**. O documento de origem da trilha previa
+      GTest 1.17.0 fixado por wrap; a fundação absorvida testa com programas de
+      sanidade e `static_assert`, sem dependência. Os testes L1 parametrizados
+      por `spec.hpp` (seção 34) são o primeiro caso em que o GTest pagaria a
+      própria entrada
 
 ## Etapas 4 em diante — a trilha
 

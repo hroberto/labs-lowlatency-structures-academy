@@ -21,9 +21,9 @@ máquina nomeada.
 | [Ferramental de qualidade](ferramental/qualidade/) | **código existe, não medido** — 5 verificadores, autotestes passando |
 | [Régua de apuração](lib/measurement/) | **código existe, não medido** — compila nas três configurações |
 | [Biblioteca de contratos](lib/contract/) | **código existe, não medido** — três portas, suíte nas três configurações |
-| [`scripts/`](scripts/) | **código existe, não medido** — `check-env.sh`, `ambiente.sh` (texto, markdown, JSON), `build-all.sh`, `test-all.sh`, com autotestes na suíte |
+| [`scripts/`](scripts/) | **código existe, não medido** — `check-env.sh`, `ambiente.sh` (texto, markdown, JSON), `build-all.sh`, `test-all.sh`, `arquivar-medicao.sh`, com autotestes na suíte |
 | [CI](.github/workflows/ci.yml) e [pre-commit](ferramental/qualidade/pre-commit.sh) | **código existe, não medido** — consistência antes de build; matriz GCC 14 × Clang 18 × três configurações |
-| Trilha de módulos | **não iniciado** |
+| [Trilha de módulos](trilha/README.md) | **um tópico medido** — [08.01, o harness medindo a si mesmo](trilha/08-medicao/01-harness/README.md); os outros oito módulos não iniciados |
 | Capstone (motor de livro de ofertas) | **não iniciado** |
 
 As etiquetas de estado são normativas — ver

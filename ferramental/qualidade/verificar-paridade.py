@@ -48,15 +48,42 @@ import sys
 
 IGNORAR = {".git", "build", "builddir", "subprojects", "temp", "__pycache__"}
 ORIGEM_PRESERVADA = "origem"
+# Arquivo de campanha arquivada: `bench/medicoes/`.
+#
+# A EXEÇÃO É DECLARADA, E O MOTIVO NÃO É "DÁ TRABALHO TRADUZIR"
+#
+# O que mora ali é GERADO -- `ambiente.md` sai de `scripts/ambiente.sh
+# --markdown`, `r0.csv` sai do próprio programa. Exigir par em inglês de saída
+# gerada significa gerar duas vezes o mesmo registro de máquina, e um registro
+# de máquina não tem idioma: o modelo da CPU, o mapa de CCDs e a versão do
+# kernel são os mesmos nos dois.
+#
+# A tabela PUBLICÁVEL da campanha é outra coisa, e continua tendo par: quem a
+# gera é `scripts/compor-medicao.py`, que emite `tabela.md` e `tabela.en.md`,
+# porque ela entra nos dois READMEs do tópico.
+ARQUIVO_DE_MEDICAO = "medicoes"
 
 NAV_PT = re.compile(r"^>\s*🇧🇷\s*Português\s*\|\s*\[🇺🇸\s*English\]\(([^)]+)\)\s*$", re.M)
 NAV_EN = re.compile(r"^>\s*\[🇧🇷\s*Português\]\(([^)]+)\)\s*\|\s*🇺🇸\s*English\s*$", re.M)
 TITULO = re.compile(r"^#{1,6}\s+\S", re.M)
 CERCA = re.compile(r"^\s*```", re.M)
 
-# Número com separador de milhar e/ou decimal. O `\b` no fim evita casar o "1"
-# de "1x" como número isolado quando ele faz parte de um identificador.
-NUMERO = re.compile(r"(?<![\w.,])(\d+(?:[.,]\d+)*)(?![\w])")
+# Número com separador de milhar e/ou decimal.
+#
+# O ESPAÇO TAMBÉM É SEPARADOR DE MILHAR, e ignorá-lo produziu acusação falsa.
+#
+# `10 000` é grafia correta em português, e o inglês do par escreve `10,000`.
+# Sem a primeira alternativa abaixo, o português rendia os tokens `10` e `000`
+# e o inglês rendia `10000`: três divergências onde havia zero. A saída seria
+# obrigar o texto a escrever `10.000` para agradar ao verificador -- deixar uma
+# convenção tipográfica decidir a prosa é o contrário do que ele serve.
+#
+# RISCO ACEITO: uma sequência como "seção 4 123 vezes" tem a forma de milhar
+# agrupado e seria lida como `4123`. Exige grupo de exatamente três dígitos
+# depois do espaço, o que é raro em prosa técnica, e o efeito é um falso
+# NEGATIVO -- dois tokens virando um nos dois idiomas --, não uma acusação
+# falsa.
+NUMERO = re.compile(r"(?<![\w.,])(\d{1,3}(?: \d{3})+|\d+(?:[.,]\d+)*)(?![\w])")
 
 
 def sem_cercas(texto):
@@ -97,7 +124,7 @@ def normalizar(bruto):
     verificador que acusa o que está correto ensina a ignorá-lo, e aí não acusa
     mais nada.
     """
-    return bruto.replace(".", "").replace(",", "")
+    return bruto.replace(".", "").replace(",", "").replace(" ", "")
 
 
 def numeros(texto):
@@ -107,7 +134,8 @@ def numeros(texto):
 
 
 def preservado(caminho):
-    return ORIGEM_PRESERVADA in os.path.normpath(caminho).split(os.sep)[:-1]
+    partes = os.path.normpath(caminho).split(os.sep)[:-1]
+    return ORIGEM_PRESERVADA in partes or ARQUIVO_DE_MEDICAO in partes
 
 
 def coletar(raiz):
@@ -299,6 +327,22 @@ def autoteste():
          {"docs/origem/setup.md": "# so em portugues, de proposito\n",
           "docs/d.md": PT, "docs/d.en.md": EN}, False)
 
+    # 12a. Arquivo de campanha arquivada fica fora da regra do par, por decisão
+    #      declarada: o que está lá é gerado, e registro de máquina não tem
+    #      idioma. A tabela publicável, essa sim, tem par -- e a isca abaixo
+    #      exige que a exceção NÃO se estenda a ela.
+    caso("12a", "arquivo gerado de medicao exigido em ingles",
+         {"t/bench/medicoes/historico/2026-01-01-c/ambiente.md": "# maquina\n",
+          "t/bench/medicoes/historico/2026-01-01-c/tabela.md": "# tabela\n",
+          "t/d.md": PT, "t/d.en.md": EN}, False)
+
+    # 12b. ISCA NO SENTIDO CONTRÁRIO: a exceção é do diretório de medição, e não
+    #      de qualquer documento que o mencione. Um README de tópico continua
+    #      exigindo par, mesmo falando de medição.
+    caso("12b", "README de topico dispensado do par por falar de medicao",
+         {"t/README.md": PT.replace("Medimos", "As medicoes em bench/medicoes/ mostram que medimos")},
+         True)
+
     # 12. ISCA: a navegação de EXEMPLO, dentro de bloco de código, não é a
     #     navegação do documento. A seção 4 da norma ensina a regra mostrando-a,
     #     e ler o exemplo como se fosse cumprimento produzia acusação falsa nos
@@ -309,6 +353,12 @@ def autoteste():
           "d.en.md": EN.replace("# t\n", "# t\n\n```markdown\n"
                                 "> [🇧🇷 Português](README.md) | 🇺🇸 English\n```\n")},
          False)
+
+    # 12c. ISCA: o mesmo valor com separador de milhar por ESPAÇO no português e
+    #      por vírgula no inglês. Foi uma acusação falsa real, no ROADMAP.
+    caso("12c", "separador de milhar por espaco tratado como divergencia",
+         {"d.md": PT.replace("99,9 por cento", "10 000 amostras"),
+          "d.en.md": EN.replace("99.9 per cent", "10,000 samples")}, False)
 
     # 13. ISCA: número de VERSÃO e identificador de norma não trocam de
     #     separador entre idiomas. Interpretar `.` como milhar no português
