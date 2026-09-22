@@ -182,12 +182,92 @@ repositório em 2026-09-21. Veio o que já era executável:
       único acoplamento hoje sem portão: número publicado num README contra a
       campanha que ele cita. Refazer uma campanha muda os números e nada fica
       vermelho
+- [ ] `docs/plano-estudo.md` — **a ordem de estudo**, que é outro documento que
+      a ordem de construção deste arquivo. Ele é citado em seis arquivos e não
+      existe; pode ser escrito já, porque os índices de módulo existem
+
+## Etapa 3.5 — Dívida de ferramental, declarada
+
+Estes quatro eram **prometidos pelo material e não rastreados aqui** — a norma e
+os READMEs os citavam como se fossem trabalho conhecido, e não eram item de
+nenhuma etapa. Uma dívida que só existe em prosa não é dívida: é esquecimento
+com data marcada.
+
+- [ ] `verificar-autodescricao.py` (838 linhas, 34 pontos de acoplamento) — **é
+      o mais valioso dos doze não portados**, e o argumento é medido: a varredura
+      manual de pendências feita em 2026-09-22 procurou por `graficos` e devolveu
+      zero arquivos, porque o texto diz `gráficos`. Este verificador compara o
+      que o material afirma sobre si contra o disco, e pegaria sozinho as cinco
+      promessas sem lastro desta etapa — inclusive o parágrafo obsoleto que a
+      Etapa 4 tinha até agora
+- [ ] `verificar-promessa.py` (18 pontos de acoplamento) — todo programa citado
+      existe na árvore e entra na compilação
+- [ ] **gerador de gráficos**, portado de `ferramental/graficos/` do DPDK
+      Academy. A seção 31 da norma o cita como faltante; nenhum item o rastreava.
+      Dispersão de percentil alto se lê em gráfico, e a paridade PT/EN vale para
+      as imagens — o projeto a montante mantém `.svg` e `.en.svg` em par
+- [ ] decidir se existe um documento **para o leitor** sobre como ler os números,
+      distinto da norma, que é para o autor. O `docs/00-visao-geral/` do
+      documento de origem saiu com a fusão das duas árvores e não deixou
+      substituto declarado
 
 ## Etapas 4 em diante — a trilha
 
-Os nove módulos, o cenário do livro de ofertas e o capstone estão descritos em
-[`docs/origem/setup-lowlatency-structures-academy.md`](docs/origem/setup-lowlatency-structures-academy.md),
-seções 4 a 6, e entram aqui quando reconciliados com a norma.
+Os dez módulos foram reconciliados com a norma e têm índice em
+[`docs/`](docs/README.md), com pergunta, pergunta de falha e par `std` →
+`custom`. **31 tópicos previstos, 1 escrito.**
+
+O critério de pronto é o mesmo em todas: cada tópico com `std/`, `custom/`,
+`spec.hpp`, L1 parametrizado, campanha arquivada e **regra de decisão**.
+
+### Etapa 4 — Memória e layout · módulos [01](docs/01-memoria/README.md) e [02](docs/02-layout/README.md)
+
+- [ ] 6 tópicos. É a etapa que estreia o par `std` → `custom` de verdade, e com
+      ele o `spec.hpp`, os `traits` de invariante e o L1 parametrizado — os três
+      são decisões de desenho que só se firmam com código na frente
+- [ ] é também onde `docs/regras-de-decisao.md` nasce, com a primeira regra real
+
+### Etapa 5 — Contêineres e livro de ofertas · módulos [03](docs/03-conteineres/README.md) e [04](docs/04-livro-de-ofertas/README.md)
+
+- [ ] 6 tópicos. O módulo 04 é onde a `spec.hpp` é posta à prova: `std::map` e
+      array plano por *tick* **não** cumprem a mesma lei, e a divergência é o
+      assunto do tópico
+- [ ] pendente de decisão editorial: o livro de ofertas é cenário ou
+      protagonista? A §1.2 do documento de origem diz cenário, e a trilha lhe dá
+      um módulo inteiro mais o capstone (divergência 12 da norma)
+
+### Etapa 6 — Filas e tempo · módulos [05](docs/05-filas-e-concorrencia/README.md) e [06](docs/06-tempo-e-erros/README.md)
+
+- [ ] 6 tópicos. TSan limpo é critério, e o perfil `sanitize-thread` existe para
+      isso — mas o que o TSan **não** reporta não é prova de correção, e o
+      argumento vem da norma citada por cláusula
+- [ ] teste negativo em cada invariante de fila
+
+### Etapa 7 — Parsing e medição · módulos [07](docs/07-parsing/README.md) e [08.02](docs/08-medicao/README.md)
+
+- [ ] 3 tópicos. Inclui o resultado incômodo que dá crédito ao resto: os casos
+      em que `string_view` com `from_chars` já é a resposta
+- [ ] o 08.02 depende de PMU, que a máquina de referência já tem em
+      `perf_event_paranoid=2`
+
+### Etapa 8 — Capstone · módulo [09](docs/09-capstone/README.md)
+
+- [ ] o motor de livro em duas versões, com *feed* sintético reproduzível
+- [ ] a tabela que **atribui** a diferença ponta a ponta a cada tópico — sem ela
+      o capstone é demonstração, não fecho
+
+### Etapa 9 — Código gerado · módulo [10](docs/10-codigo-gerado/README.md)
+
+- [ ] transversal, e alimentado pelos outros: onde o `custom/` ganhar por geração
+      de código e não por layout, o achado vira tópico aqui
+
+### Etapa 10 — Extração de `lib/`
+
+- [ ] `lib/measurement` e `lib/contract` viram repositório próprio, consumido por
+      este projeto, pelo DPDK Academy e pelo Messaging Academy
+- [ ] a fronteira tem de ser **ABI C**, e isso é restrição desde já: o DPDK
+      Academy é escrito em C, e um harness em `<expected>` e *template* não é
+      consumível de lá (norma, seção 33)
 
 ## Navegação
 

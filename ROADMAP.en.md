@@ -188,12 +188,93 @@ not started, **zero commits and no remote** — was absorbed by this repository 
       and today's only coupling with no gate: a number published in a README
       against the campaign it cites. Re-running a campaign changes the numbers
       and nothing goes red
+- [ ] `docs/plano-estudo.md` — **the study order**, which is a different document
+      from this file's build order. It is cited in six files and does not exist;
+      it can be written now, because the module indexes exist
 
-## Stage 4 onwards — the track
+## Stage 3.5 — Tooling debt, declared
 
-The nine modules, the order-book scenario and the capstone are described in
-[`docs/origem/setup-lowlatency-structures-academy.md`](docs/origem/setup-lowlatency-structures-academy.md),
-sections 4 to 6, and enter here once reconciled with the standard.
+These four were **promised by the material and tracked nowhere** — the standard
+and the READMEs cited them as known work, and they were items of no stage. A debt
+that exists only in prose is not a debt: it is forgetting with a date on it.
+
+- [ ] `verificar-autodescricao.py` (838 lines, 34 coupling points) — **the most
+      valuable of the twelve not ported**, and the argument is measured: the
+      manual pendency sweep of 2026-09-22 searched for `graficos` and returned
+      zero files, because the text says `gráficos`. This checker compares what the
+      material claims about itself against the disk, and would catch on its own
+      the five unbacked promises of this stage — including the stale paragraph
+      stage 4 carried until now
+- [ ] `verificar-promessa.py` (18 coupling points) — every cited program exists
+      in the tree and enters the build
+- [ ] the **chart generator**, ported from `ferramental/graficos/` of the DPDK
+      Academy. Section 31 of the standard cites it as missing; no item tracked it.
+      High-percentile dispersion is read in a chart, and PT/EN parity applies to
+      images — the upstream project keeps `.svg` and `.en.svg` in pairs
+- [ ] decide whether a document **for the reader** on how to read the numbers
+      exists, distinct from the standard, which is for the author. The
+      `docs/00-visao-geral/` of the origin document left with the merge of the two
+      trees and left no declared replacement
+
+## Stages 4 onwards — the track
+
+The ten modules have been reconciled with the standard and have an index under
+[`docs/`](docs/README.en.md), with a question, a failure question and the `std` →
+`custom` pair. **31 planned topics, 1 written.**
+
+The done criterion is the same in all of them: every topic with `std/`,
+`custom/`, `spec.hpp`, a parameterized L1, an archived campaign and a **decision
+rule**.
+
+### Stage 4 — Memory and layout · modules [01](docs/01-memoria/README.en.md) and [02](docs/02-layout/README.en.md)
+
+- [ ] 6 topics. This is the stage where the `std` → `custom` pair really debuts,
+      and with it `spec.hpp`, the invariant `traits` and the parameterized L1 —
+      all three are design decisions that only settle with code in front of them
+- [ ] it is also where `docs/regras-de-decisao.md` is born, with the first real
+      rule
+
+### Stage 5 — Containers and order book · modules [03](docs/03-conteineres/README.en.md) and [04](docs/04-livro-de-ofertas/README.en.md)
+
+- [ ] 6 topics. Module 04 is where `spec.hpp` is put to the test: `std::map` and
+      a flat array by tick do **not** fulfil the same law, and the divergence is
+      the topic's subject
+- [ ] pending an editorial decision: is the order book a scenario or the
+      protagonist? §1.2 of the origin document says scenario, and the track gives
+      it a whole module plus the capstone (divergence 12 in the standard)
+
+### Stage 6 — Queues and time · modules [05](docs/05-filas-e-concorrencia/README.en.md) and [06](docs/06-tempo-e-erros/README.en.md)
+
+- [ ] 6 topics. A clean TSan is a criterion, and the `sanitize-thread` profile
+      exists for that — but what TSan does **not** report is no proof of
+      correctness, and the argument comes from the standard cited by clause
+- [ ] a negative test on every queue invariant
+
+### Stage 7 — Parsing and measurement · modules [07](docs/07-parsing/README.en.md) and [08.02](docs/08-medicao/README.en.md)
+
+- [ ] 3 topics. Includes the uncomfortable result that gives the rest its credit:
+      the cases where `string_view` with `from_chars` is already the answer
+- [ ] 08.02 depends on the PMU, which the reference machine already has at
+      `perf_event_paranoid=2`
+
+### Stage 8 — Capstone · module [09](docs/09-capstone/README.en.md)
+
+- [ ] the order-book engine in two versions, with a reproducible synthetic feed
+- [ ] the table that **attributes** the end-to-end difference to each topic —
+      without it the capstone is a demo, not a closing
+
+### Stage 9 — Generated code · module [10](docs/10-codigo-gerado/README.en.md)
+
+- [ ] cross-cutting, and fed by the others: wherever `custom/` wins by code
+      generation rather than by layout, the finding becomes a topic here
+
+### Stage 10 — Extracting `lib/`
+
+- [ ] `lib/measurement` and `lib/contract` become their own repository, consumed
+      by this project, by the DPDK Academy and by the Messaging Academy
+- [ ] the boundary has to be a **C ABI**, and that is a constraint from now: the
+      DPDK Academy is written in C, and a harness built on `<expected>` and
+      templates is not consumable from there (standard, section 33)
 
 ## Navigation
 

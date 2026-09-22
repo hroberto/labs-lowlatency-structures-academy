@@ -23,7 +23,7 @@ máquina nomeada.
 | [Biblioteca de contratos](lib/contract/) | **código existe, não medido** — três portas, suíte nas três configurações |
 | [`scripts/`](scripts/) | **código existe, não medido** — `check-env.sh`, `ambiente.sh` (texto, markdown, JSON), `build-all.sh`, `test-all.sh`, `arquivar-medicao.sh`, com autotestes na suíte |
 | [CI](.github/workflows/ci.yml) e [pre-commit](ferramental/qualidade/pre-commit.sh) | **código existe, não medido** — consistência antes de build; matriz GCC 14 × Clang 18 × três configurações |
-| [Trilha de módulos](docs/README.md) | **um tópico medido** — [08.01, o harness medindo a si mesmo](docs/08-medicao/01-harness/README.md); os outros oito módulos não iniciados |
+| [Trilha de módulos](docs/README.md) | **1 tópico de 31** — [08.01, o harness medindo a si mesmo](docs/08-medicao/01-harness/README.md) está medido; os dez módulos têm índice, e os outros 30 tópicos não foram iniciados |
 | Capstone (motor de livro de ofertas) | **não iniciado** |
 
 As etiquetas de estado são normativas — ver
