@@ -27,4 +27,4 @@
 | perf | perf version 7.0.14 |
 | Configurações de build na árvore | build-clang-release-checked (release b_ndebug=false); build-debug (debug b_ndebug=false); build-release (release b_ndebug=true); build-release-checked (release b_ndebug=false) |
 | Commit / árvore suja | de7f73a / sim |
-| Coletado em | 2026-09-22T19:26:39-03:00 |
+| Coletado em | 2026-09-22T19:26:38-03:00 |

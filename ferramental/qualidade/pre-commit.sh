@@ -69,7 +69,7 @@ fi
 # Quem estava errado era a lista, não ele. A cobertura não se perde: o job de
 # build roda `test-all.sh`, e a suíte registra `verificar-suposicao` com os
 # compiladores instalados.
-VERIFICADORES_DOC="links ancoras aritmetica retratacoes paridade autodescricao promessa"
+VERIFICADORES_DOC="links ancoras aritmetica retratacoes paridade autodescricao promessa medicao"
 VERIFICADORES_COMPILADOR="suposicao"
 if [ "$RAPIDO" -eq 1 ]; then
     VERIFICADORES="$VERIFICADORES_DOC"

@@ -35,7 +35,7 @@ pré-condição da porta R chega ao otimizador. Ele nasceu de um defeito medido 
 Clang descartava a suposição em silêncio — e é a prova de que neste eixo a
 afirmação sobre código gerado se verifica lendo código gerado.
 
-Ele é o único dos oito verificadores que precisa de compilador, e por isso não
+Ele é o único dos nove verificadores que precisa de compilador, e por isso não
 roda no modo rápido do
 [portão](../../ferramental/qualidade/pre-commit.sh): roda na suíte, onde os
 compiladores existem.

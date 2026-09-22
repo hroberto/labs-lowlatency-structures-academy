@@ -59,6 +59,39 @@ CABECALHO = {
 }
 
 
+def publicaveis(destino):
+    """A lista de métricas da tabela, declarada PELO TÓPICO.
+
+    Cada tópico publica o que sustenta a conclusão dele: o harness publica piso
+    e relógio; o tópico da arena publica um ponto por tamanho de lote. Uma lista
+    única no compositor obrigaria todo tópico a caber no formato do primeiro.
+
+    O arquivo é `bench/publicaveis.tsv`, ao lado do programa:
+    `chave<TAB>rótulo pt<TAB>rótulo en<TAB>unidade`. Sem ele, vale a lista do
+    harness -- que é onde ela nasceu.
+    """
+    # `destino` é .../bench/medicoes/historico/<campanha>; o tsv fica em bench/.
+    bench = os.path.abspath(os.path.join(destino, "..", "..", ".."))
+    tsv = os.path.join(bench, "publicaveis.tsv")
+    if not os.path.isfile(tsv):
+        return PUBLICAVEIS
+    fora = []
+    with open(tsv, encoding="utf-8") as f:
+        for n, linha in enumerate(f, start=1):
+            linha = linha.rstrip("\n")
+            if not linha or linha.startswith("#"):
+                continue
+            campos = linha.split("\t")
+            if len(campos) != 4:
+                sys.exit(f"ERRO: {tsv}:{n} tem {len(campos)} campos, esperados 4")
+            chave, pt, en, unidade = campos
+            braco, _, metrica = chave.partition(".")
+            fora.append((braco, metrica, pt, en, unidade))
+    if not fora:
+        sys.exit(f"ERRO: {tsv} nao declara nenhuma metrica publicavel")
+    return fora
+
+
 def ler_csv(caminho):
     """CSV -> {(braco, metrica): (valor, unidade)}."""
     fora = {}
@@ -143,7 +176,7 @@ def main():
 
     meta = {
         "campanha": os.path.basename(os.path.abspath(destino)),
-        "programa": "docs/08-medicao/01-harness/bench/bench_harness.cpp",
+        "programa": os.environ.get("MEDICAO_PROGRAMA"),
         "repeticoes": len(execucoes),
         # OS CSVs SAO LOCAIS, E O METADATA DIZ ISSO.
         #
@@ -193,13 +226,28 @@ def main():
         f.write("\n")
 
     # --- tabela publicável, nos dois idiomas ------------------------------
-    teto = metricas.get("per_op_floor.highest_supported", {}).get("mediana")
-    descartadas = metricas.get("per_op_floor.discarded", {}).get("max")
-    amostras_cauda = int(metricas.get("per_op_floor.samples", {}).get("mediana") or 0)
+    # AGREGA POR SUFIXO, E NÃO POR NOME DE BRAÇO.
+    #
+    # A primeira versão procurava `per_op_floor.samples` -- o braço do tópico
+    # do harness. O tópico da arena tem oito braços, nenhum com esse nome, e o
+    # rodapé saiu dizendo "0 amostras por execução": um número que o compositor
+    # não encontrou, publicado como se fosse um número medido.
+    #
+    # O pior dos dois defeitos não é o zero: é ele não ter acusado nada.
+    def agregar(sufixo, reduz=max):
+        vals = [v.get("mediana") for k, v in metricas.items()
+                if k.endswith("." + sufixo) and v.get("mediana") is not None]
+        return reduz(vals) if vals else None
+
+    teto = agregar("highest_supported", min)
+    descartadas = agregar("discarded", max)
+    amostras_cauda = int(agregar("samples", max) or 0)
+
+    lista = publicaveis(destino)
 
     def tabela(idioma):
         linhas = [CABECALHO[idioma], "|---|---:|---:|---|"]
-        for braco, metrica, rotulo_pt, rotulo_en, unidade in PUBLICAVEIS:
+        for braco, metrica, rotulo_pt, rotulo_en, unidade in lista:
             m = metricas.get(f"{braco}.{metrica}")
             if not m:
                 continue

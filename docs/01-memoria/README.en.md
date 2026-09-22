@@ -2,9 +2,9 @@
 
 # 01 — Memory
 
-> **State: not started.** No topic in this module has been written, and no
-> number has been published. This page exists to give the map, not to announce
-> content — see [state labelling](../padrao-do-projeto.en.md#5-state-labelling).
+> **State: one measured topic.** [01.01](01-alocador-arena/README.en.md) has a
+> published number with an archived campaign; the other two have not been
+> started. See [state labelling](../padrao-do-projeto.en.md#5-state-labelling).
 
 ## The module's question
 
@@ -29,7 +29,7 @@ before the corresponding `std/` has been measured and published.
 
 | Topic | State |
 |---|---|
-| `01-alocador-arena` — arena allocator | **not started** |
+| [`01-alocador-arena`](01-alocador-arena/README.en.md) — arena allocator | **measured** |
 | `02-pool-freelist` — pool with a free list | **not started** |
 | `03-pmr-o-meio-termo` — `std::pmr` as the middle ground | **not started** |
 

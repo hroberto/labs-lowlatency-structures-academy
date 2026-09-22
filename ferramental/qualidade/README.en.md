@@ -32,7 +32,7 @@ stated it, and still left the retracted value circulating on other pages.
 | `verificar-suposicao.py` | the Gate R precondition reaches the optimizer in release | Clang was discarding the assumption silently, because the predicate is a function call |
 | `verificar-paridade.py` | the language pair: existence, navigation, structure and numbers | the identical-stem rule existed to be verifiable and was not verified |
 
-The first is the only one of the eight that looks at **generated code**. It exists
+The first is the only one of the nine that looks at **generated code**. It exists
 because `PERF_EXPECTS` promises two things — costing nothing in release AND
 handing the precondition to the optimizer — and the second can stop holding
 without anything breaking: the code stays correct, it compiles, and the suite
@@ -55,7 +55,7 @@ does not reduce to arithmetic and shows up in the assembly of any architecture.
 
 ## Self-test
 
-**All eight have a self-test**, and it checks the checker itself against
+**All nine have a self-test**, and it checks the checker itself against
 constructed cases, including false-positive baits:
 
 ```bash
@@ -121,7 +121,7 @@ existing, it only fails it afterwards.
 | Step | What it checks |
 |---|---|
 | syntax | `bash -n` on every script and `compileall` on every `.py` |
-| documentation | the eight checkers **and their eight self-tests** |
+| documentation | the nine checkers **and their nine self-tests** |
 | secrets | private keys and recognisable token patterns in tracked files |
 | CI pin | the action's pinned SHA is still the top of the major declared in the comment |
 | suite | full mode only, which is the local hook's |

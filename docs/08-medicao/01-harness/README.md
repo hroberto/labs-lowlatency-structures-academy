@@ -93,13 +93,13 @@ de L3, `governor=powersave` com *boost* ativo, e resolução de `steady_clock` d
 
 | Métrica | Mediana entre execuções | Amplitude entre execuções | Unidade |
 |---|---:|---:|---|
-| ler o relógio (mediana) | 16,09 | 4,6% | ns |
-| ler o relógio (mínimo) | 16,06 | 0,1% | ns |
-| registrar amostra (mediana) | 0,12 | 0,3% | ns |
+| ler o relógio (mediana) | 16,08 | 2,7% | ns |
+| ler o relógio (mínimo) | 16,05 | 0,1% | ns |
+| registrar amostra (mediana) | 0,12 | 0,4% | ns |
 | piso por operação p50 | 20,00 | 0,0% | ns |
 | piso por operação p99 | 21,00 | 0,0% | ns |
 | piso por operação p99,9 | 21,00 | 0,0% | ns |
-| piso por operação máximo | 21,00 | 10681,0% | ns |
+| piso por operação máximo | 21,00 | 6052,4% | ns |
 
 
 <picture>
@@ -108,7 +108,7 @@ de L3, `governor=powersave` com *boost* ativo, e resolução de `steady_clock` d
 </picture>
 
 A figura é o argumento: três linhas retas e uma serrilhada. A amplitude de
-**10681%** do máximo não mede o instrumento — mede **quais execuções colheram
+**6052,4%** do máximo não mede o instrumento — mede **quais execuções colheram
 uma interrupção**.
 
 ## O que esta medição não mostra
@@ -156,8 +156,8 @@ aproximadamente o que uma leitura isolada custa em lote, o que é coerente com o
 custo estar na própria chamada e não no que ela mede.
 
 O **máximo** é a exceção, e ela é instrutiva. A série por execução é
-`[2264, 21, 21, 21, 1864]`: duas das cinco execuções pegaram uma interrupção, e
-as outras três não. A amplitude de **10681%** não descreve variação do
+`[21, 1292, 21, 360, 21]`: duas das cinco execuções pegaram uma interrupção, e
+as outras três não. A amplitude de **6052,4%** não descreve variação do
 instrumento — descreve **quantas amostras isoladas cada execução colheu**. O
 máximo é uma amostra, e publicá-lo sem a série ao lado convida à conclusão
 errada. Fica na tabela porque esconder a extensão do que se observou é pior que
@@ -170,7 +170,7 @@ o braço do relógio ~26% mais caro em `r0` e `r1`. Concluímos ali que a campan
 tinha **aquecimento**: a máquina levando dois segundos para assentar em
 frequência de *boost*.
 
-Esta campanha refuta isso. O desvio do relógio caiu para 4,6% e está em `r3`, não
+Esta campanha refuta isso. O desvio do relógio caiu para 2,7% e está em `r4`, não
 nas primeiras; os percentis não variaram nada. O que havia era **interferência
 esporádica**, que atinge execuções ao acaso — não um transiente de aquecimento,
 que atingiria sempre as primeiras.

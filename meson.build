@@ -128,6 +128,10 @@ verificadores = [
   # nada -- nem pelo compilador, nem pela suite, nem pelo portao que anuncia
   # "build limpo".
   ['promessa', 'programa citado existe e entra na compilacao'],
+  # A tabela publicada num README e a tabela arquivada pela campanha, caractere
+  # a caractere. Este acoplamento ja divergiu tres vezes nesta arvore, sempre em
+  # silencio: refazer a campanha muda os numeros e o documento fica para tras.
+  ['medicao', 'a tabela publicada e a tabela arquivada'],
 ]
 
 foreach v : verificadores
@@ -262,4 +266,5 @@ test('l1 - cauda: publicar percentil sem sustentacao aborta', sanidade_cauda,
 # ---------------------------------------------------------------------------
 # A trilha.
 # ---------------------------------------------------------------------------
+subdir('docs/01-memoria/01-alocador-arena')
 subdir('docs/08-medicao/01-harness')

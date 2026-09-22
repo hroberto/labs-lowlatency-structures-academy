@@ -77,7 +77,7 @@ repositório em 2026-09-21. Veio o que já era executável:
       origem e contrariada por todo o histórico dos dois projetos, passou a
       dizer **português**, com a razão registrada: o assunto do commit é o
       achado, e achado é prosa
-- [x] `pre-commit.sh` — sintaxe, os oito verificadores mais os oito autotestes,
+- [x] `pre-commit.sh` — sintaxe, os nove verificadores mais os nove autotestes,
       varredura de segredo com escopo declarado, e conferência de que o SHA
       fixado da ação de CI ainda é o topo do major declarado no comentário. O
       modo `--rapido` é o da CI; o gancho local roda a suíte também
@@ -209,7 +209,7 @@ com data marcada.
       origem; o que se porta é a ideia, não o arquivo. Ele confere cinco censos
       contra o disco — norma, trilha, verificadores, suíte e o rótulo de estado
       da seção 5 — e entende numeral por extenso, porque a norma escreve "os
-      oito têm autoteste", não "os 7".
+      nove têm autoteste", não "os 7".
       **Na primeira execução acusou onze problemas; nove eram reais**: o censo
       dizia 31 tópicos previstos onde o disco tem 23, seis verificadores com
       autoteste onde há sete, e a contagem da suíte defasada.
@@ -246,7 +246,7 @@ com data marcada.
 
 Os dez módulos foram reconciliados com a norma e têm índice em
 [`docs/`](docs/README.md), com pergunta, pergunta de falha e par `std` →
-`custom`. **23 tópicos previstos, 1 escrito.**
+`custom`. **23 tópicos previstos, 2 escritos.**
 
 O critério de pronto é o mesmo em todas: cada tópico com `std/`, `custom/`,
 `spec.hpp`, L1 parametrizado, campanha arquivada e **regra de decisão**.

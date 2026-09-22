@@ -78,7 +78,7 @@ not started, **zero commits and no remote** — was absorbed by this repository 
       document and contradicted by the entire history of both projects, now says
       **Portuguese**, with the reason recorded: the commit subject is the
       finding, and a finding is prose
-- [x] `pre-commit.sh` — syntax, the eight checkers plus their eight self-tests, a
+- [x] `pre-commit.sh` — syntax, the nine checkers plus their nine self-tests, a
       secret scan with a declared scope, and a check that the pinned CI action
       SHA is still the top of the major declared in the comment. The `--rapido`
       mode is the CI's; the local hook also runs the suite
@@ -251,7 +251,7 @@ that exists only in prose is not a debt: it is forgetting with a date on it.
 
 The ten modules have been reconciled with the standard and have an index under
 [`docs/`](docs/README.en.md), with a question, a failure question and the `std` →
-`custom` pair. **23 planned topics, 1 written.**
+`custom` pair. **23 planned topics, 2 written.**
 
 The done criterion is the same in all of them: every topic with `std/`,
 `custom/`, `spec.hpp`, a parameterized L1, an archived campaign and a **decision

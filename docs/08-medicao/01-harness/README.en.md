@@ -95,13 +95,13 @@ domains, `governor=powersave` with boost on, and a `steady_clock` resolution of
 
 | Metric | Median across runs | Spread across runs | Unit |
 |---|---:|---:|---|
-| reading the clock (median) | 16.09 | 4.6% | ns |
-| reading the clock (minimum) | 16.06 | 0.1% | ns |
-| recording a sample (median) | 0.12 | 0.3% | ns |
+| reading the clock (median) | 16.08 | 2.7% | ns |
+| reading the clock (minimum) | 16.05 | 0.1% | ns |
+| recording a sample (median) | 0.12 | 0.4% | ns |
 | per-operation floor p50 | 20.00 | 0.0% | ns |
 | per-operation floor p99 | 21.00 | 0.0% | ns |
 | per-operation floor p99.9 | 21.00 | 0.0% | ns |
-| per-operation floor maximum | 21.00 | 10681.0% | ns |
+| per-operation floor maximum | 21.00 | 6052.4% | ns |
 
 
 <picture>
@@ -110,7 +110,7 @@ domains, `governor=powersave` with boost on, and a `steady_clock` resolution of
 </picture>
 
 The figure is the argument: three straight lines and one jagged. The maximum's
-**10681%** spread does not measure the instrument — it measures **which runs
+**6052.4%** spread does not measure the instrument — it measures **which runs
 caught an interrupt**.
 
 ## What this measurement does not show
@@ -161,8 +161,8 @@ reads costs roughly what a single read costs in batch, which is consistent with
 the cost being in the call itself rather than in what it measures.
 
 The **maximum** is the exception, and an instructive one. The per-run series is
-`[2264, 21, 21, 21, 1864]`: two of the five runs caught an interrupt and the
-other three did not. The **10681%** spread does not describe variation of the
+`[21, 1292, 21, 360, 21]`: two of the five runs caught an interrupt and the
+other three did not. The **6052.4%** spread does not describe variation of the
 instrument — it describes **how many isolated samples each run collected**. The
 maximum is one sample, and publishing it without the series beside it invites
 the wrong conclusion. It stays in the table because hiding the extent of what was
@@ -175,7 +175,7 @@ clock arm about 26% more expensive on `r0` and `r1`. We concluded there that the
 campaign had a **warm-up**: the machine taking two seconds to settle at boost
 frequency.
 
-This campaign refutes that. The clock's spread fell to 4.6% and sits on `r3`, not
+This campaign refutes that. The clock's spread fell to 2.7% and sits on `r4`, not
 on the first runs; the percentiles did not vary at all. What there was is
 **sporadic interference**, hitting runs at random — not a warm-up transient,
 which would always hit the first ones.

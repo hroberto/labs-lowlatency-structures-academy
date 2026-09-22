@@ -1,0 +1,21 @@
+# As métricas que entram na tabela publicada deste tópico.
+#
+# Um ponto por tamanho de lote, e só o p50 e o p99: o p99,9 e o máximo ficam no
+# metadata. A tabela existe para sustentar a REGRA DE DECISÃO, e a regra se
+# decide no p50 (custo típico) e no p99 (o que o caminho quente sente).
+#
+# chave<TAB>rótulo pt<TAB>rótulo en<TAB>unidade
+std::allocator_L8.p50	std::allocator, lote 8 — p50	std::allocator, batch 8 — p50	ns
+arena_L8.p50	arena, lote 8 — p50	arena, batch 8 — p50	ns
+std::allocator_L64.p50	std::allocator, lote 64 — p50	std::allocator, batch 64 — p50	ns
+arena_L64.p50	arena, lote 64 — p50	arena, batch 64 — p50	ns
+std::allocator_L64.p99	std::allocator, lote 64 — p99	std::allocator, batch 64 — p99	ns
+arena_L64.p99	arena, lote 64 — p99	arena, batch 64 — p99	ns
+std::allocator_L512.p50	std::allocator, lote 512 — p50	std::allocator, batch 512 — p50	ns
+arena_L512.p50	arena, lote 512 — p50	arena, batch 512 — p50	ns
+std::allocator_L512.p99	std::allocator, lote 512 — p99	std::allocator, batch 512 — p99	ns
+arena_L512.p99	arena, lote 512 — p99	arena, batch 512 — p99	ns
+std::allocator_L4096.p50	std::allocator, lote 4096 — p50	std::allocator, batch 4096 — p50	ns
+arena_L4096.p50	arena, lote 4096 — p50	arena, batch 4096 — p50	ns
+std::allocator_L4096.p99	std::allocator, lote 4096 — p99	std::allocator, batch 4096 — p99	ns
+arena_L4096.p99	arena, lote 4096 — p99	arena, batch 4096 — p99	ns

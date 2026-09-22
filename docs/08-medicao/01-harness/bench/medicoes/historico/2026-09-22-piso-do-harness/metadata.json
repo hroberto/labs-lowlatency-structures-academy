@@ -1,6 +1,6 @@
 {
   "campanha": "2026-09-22-piso-do-harness",
-  "programa": "docs/08-medicao/01-harness/bench/bench_harness.cpp",
+  "programa": "docs/08-medicao/01-harness/bench",
   "repeticoes": 5,
   "saida_crua_por_execucao": {
     "arquivos": [
@@ -23,66 +23,66 @@
     "compilador": "gcc 15.2.0",
     "flags_efetivas": "cpp_std=c++23 warning_level=3 buildtype=release b_ndebug=true"
   },
-  "commit": "b0380a56cf0b12c36972fa509b16e2a0e1f42bd3",
+  "commit": "de7f73a4b3e75b0396fa263187110b6cf0fb5857",
   "arvore_suja": true,
-  "coletado_em": "2026-09-22T11:38:54-03:00",
-  "duracao_s": 1.0,
+  "coletado_em": "2026-09-22T19:26:39-03:00",
+  "duracao_s": null,
   "metricas": {
     "clock_read.disp": {
       "unidade": "percent",
       "por_execucao": [
-        0.66,
-        0.22,
-        0.18,
-        4.36,
-        0.74
+        0.25,
+        0.31,
+        0.25,
+        0.38,
+        4.39
       ],
-      "min": 0.18,
-      "max": 4.36,
-      "mediana": 0.66,
-      "amplitude_pct": 633.3333333333334
+      "min": 0.25,
+      "max": 4.39,
+      "mediana": 0.31,
+      "amplitude_pct": 1335.4838709677417
     },
     "clock_read.median": {
       "unidade": "ns",
       "por_execucao": [
-        16.1212,
-        16.0798,
-        16.0656,
-        16.8015,
-        16.0936
+        16.0793,
+        16.0765,
+        16.0678,
+        16.0938,
+        16.4968
       ],
-      "min": 16.0656,
-      "max": 16.8015,
-      "mediana": 16.0936,
-      "amplitude_pct": 4.572625142913959
+      "min": 16.0678,
+      "max": 16.4968,
+      "mediana": 16.0793,
+      "amplitude_pct": 2.6680265931974776
     },
     "clock_read.minimum": {
       "unidade": "ns",
       "por_execucao": [
-        16.0655,
-        16.0567,
-        16.0507,
-        16.0576,
-        16.0517
+        16.0597,
+        16.0505,
+        16.0514,
+        16.049,
+        16.0532
       ],
-      "min": 16.0507,
-      "max": 16.0655,
-      "mediana": 16.0567,
-      "amplitude_pct": 0.09217336065319172
+      "min": 16.049,
+      "max": 16.0597,
+      "mediana": 16.0514,
+      "amplitude_pct": 0.0666608520129081
     },
     "clock_read.p99": {
       "unidade": "ns",
       "por_execucao": [
-        16.8487,
-        17.2093,
-        17.8042,
-        19.4321,
-        18.3171
+        16.4642,
+        16.124,
+        16.1388,
+        16.1799,
+        18.496
       ],
-      "min": 16.8487,
-      "max": 19.4321,
-      "mediana": 17.8042,
-      "amplitude_pct": 14.510059424180795
+      "min": 16.124,
+      "max": 18.496,
+      "mediana": 16.1799,
+      "amplitude_pct": 14.660164772340991
     },
     "parameters.clock_period": {
       "unidade": "ns",
@@ -157,16 +157,16 @@
     "per_op_floor.maximum": {
       "unidade": "ns",
       "por_execucao": [
-        2264.0,
         21.0,
+        1292.0,
         21.0,
-        21.0,
-        1864.0
+        360.0,
+        21.0
       ],
       "min": 21.0,
-      "max": 2264.0,
+      "max": 1292.0,
       "mediana": 21.0,
-      "amplitude_pct": 10680.952380952382
+      "amplitude_pct": 6052.380952380952
     },
     "per_op_floor.p50": {
       "unidade": "ns",
@@ -227,58 +227,58 @@
     "record_sample.disp": {
       "unidade": "percent",
       "por_execucao": [
-        0.25,
-        0.08,
-        0.16,
-        0.08,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
         0.21
       ],
-      "min": 0.08,
-      "max": 0.25,
-      "mediana": 0.16,
-      "amplitude_pct": 106.25
+      "min": 0.12,
+      "max": 0.21,
+      "mediana": 0.12,
+      "amplitude_pct": 75.0
     },
     "record_sample.median": {
       "unidade": "ns",
       "por_execucao": [
+        0.1218,
         0.1216,
+        0.1214,
         0.1213,
-        0.1216,
-        0.1212,
-        0.1213
+        0.1217
       ],
-      "min": 0.1212,
-      "max": 0.1216,
-      "mediana": 0.1213,
-      "amplitude_pct": 0.3297609233305833
+      "min": 0.1213,
+      "max": 0.1218,
+      "mediana": 0.1216,
+      "amplitude_pct": 0.41118421052631615
     },
     "record_sample.minimum": {
       "unidade": "ns",
       "por_execucao": [
-        0.1212,
-        0.1212,
+        0.1217,
+        0.1214,
         0.1213,
-        0.1209,
-        0.1206
+        0.1212,
+        0.1214
       ],
-      "min": 0.1206,
-      "max": 0.1213,
-      "mediana": 0.1212,
-      "amplitude_pct": 0.5775577557755827
+      "min": 0.1212,
+      "max": 0.1217,
+      "mediana": 0.1214,
+      "amplitude_pct": 0.4118616144975292
     },
     "record_sample.p99": {
       "unidade": "ns",
       "por_execucao": [
-        1.2239,
-        1.1194,
-        1.0617,
-        1.063,
-        1.1281
+        1.0789,
+        1.1177,
+        0.8537,
+        1.0971,
+        1.1459
       ],
-      "min": 1.0617,
-      "max": 1.2239,
-      "mediana": 1.1194,
-      "amplitude_pct": 14.489905306414144
+      "min": 0.8537,
+      "max": 1.1459,
+      "mediana": 1.0971,
+      "amplitude_pct": 26.63385288487831
     }
   },
   "ambiente": {
@@ -300,7 +300,7 @@
     "pmu_paranoid": "2",
     "pmu_estado": "so o proprio processo, sem eventos de kernel",
     "mem_total": "14,2 GiB",
-    "mem_disponivel": "3,8 GiB",
+    "mem_disponivel": "3,4 GiB",
     "mem_velocidade": "NAO LIDO -- rode: sudo ./scripts/ambiente.sh --cachear-memoria",
     "mem_canais": "NAO LIDO -- idem",
     "hugepages_total": "1024",
@@ -320,9 +320,9 @@
     "ninja": "1.13.2",
     "perf": "perf version 7.0.14",
     "builds_na_arvore": "build-clang-release-checked (release b_ndebug=false); build-debug (debug b_ndebug=false); build-release (release b_ndebug=true); build-release-checked (release b_ndebug=false)",
-    "commit": "b0380a5",
+    "commit": "de7f73a",
     "arvore_suja": "sim",
-    "coletado_em": "2026-09-22T11:38:54-03:00",
+    "coletado_em": "2026-09-22T19:26:39-03:00",
     "campos_nao_coletados": [],
     "topologia": [
       {

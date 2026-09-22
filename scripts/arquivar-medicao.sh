@@ -28,16 +28,23 @@
 # este script RECUSA outra configuração em vez de aceitar e anotar.
 #
 # Uso:
-#   ./scripts/arquivar-medicao.sh <nome-da-campanha> [repeticoes]
+#   ./scripts/arquivar-medicao.sh <topico> <programa> <campanha> [repeticoes]
+#
+# Exemplo:
+#   ./scripts/arquivar-medicao.sh docs/08-medicao/01-harness bench-harness piso 5
 set -u
 
 RAIZ="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$RAIZ"
 
-CAMPANHA=${1:?uso: arquivar-medicao.sh <nome-da-campanha> [repeticoes]}
-REPETICOES=${2:-3}
+TOPICO=${1:?uso: arquivar-medicao.sh <topico> <programa> <campanha> [repeticoes]}
+PROGRAMA=${2:?falta o nome do alvo do meson}
+CAMPANHA=${3:?falta o nome da campanha}
+REPETICOES=${4:-3}
 DIR_BUILD="build-release"
-DESTINO="docs/08-medicao/01-harness/bench/medicoes/historico/$(date +%Y-%m-%d)-$CAMPANHA"
+DESTINO="$TOPICO/bench/medicoes/historico/$(date +%Y-%m-%d)-$CAMPANHA"
+
+[ -d "$TOPICO" ] || { echo "ERRO: topico inexistente: $TOPICO" >&2; exit 1; }
 
 command -v python3 >/dev/null 2>&1 || {
     echo "ERRO: arquivar medicao exige python3 (compoe o metadata e a tabela)" >&2
@@ -70,7 +77,7 @@ if [ "$CFG" != "release true" ]; then
 fi
 
 meson compile -C "$DIR_BUILD" >/dev/null || { echo "ERRO: a compilacao falhou" >&2; exit 1; }
-BIN="$DIR_BUILD/docs/08-medicao/01-harness/bench-harness"
+BIN="$DIR_BUILD/$TOPICO/$PROGRAMA"
 [ -x "$BIN" ] || { echo "ERRO: binario nao encontrado: $BIN" >&2; exit 1; }
 
 mkdir -p "$DESTINO"
@@ -113,6 +120,7 @@ print('cpp_std=' + str(o.get('cpp_std')), 'warning_level=' + str(o.get('warning_
       'buildtype=' + str(o.get('buildtype')), 'b_ndebug=' + str(o.get('b_ndebug')))" \
   "$DIR_BUILD/meson-info/intro-buildoptions.json")" \
 MEDICAO_DURACAO="$((FIM - INICIO))" \
+MEDICAO_PROGRAMA="$TOPICO/bench" \
 python3 ./scripts/compor-medicao.py "$DESTINO" "$DESTINO/ambiente.json" "$DESTINO"/r*.csv || exit 1
 
 printf '\nA campanha esta arquivada e É VERSIONADA (norma, secao 3).\n'

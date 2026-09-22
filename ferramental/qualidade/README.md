@@ -31,7 +31,7 @@ e ainda assim deixou o valor derrubado circulando em outras páginas.
 | `verificar-suposicao.py` | a pré-condição da porta R chega ao otimizador em release | o Clang descartava a suposição em silêncio, porque o predicado é chamada de função |
 | `verificar-paridade.py` | par de idiomas: existência, navegação, estrutura e números | a regra do radical idêntico existia para ser verificável e não era verificada |
 
-O primeiro é o único dos oito que olha **código gerado**. Ele existe porque
+O primeiro é o único dos nove que olha **código gerado**. Ele existe porque
 `PERF_EXPECTS` promete duas coisas — não custar nada em release E entregar a
 pré-condição ao otimizador — e a segunda pode deixar de valer sem que nada
 quebre: o código continua correto, compila, e a suíte continua verde.
@@ -53,7 +53,7 @@ reduz a aritmética e aparece no assembly de qualquer arquitetura.
 
 ## Autoteste
 
-**Os oito têm autoteste**, e ele verifica o próprio verificador contra casos
+**Os nove têm autoteste**, e ele verifica o próprio verificador contra casos
 montados, incluindo iscas de falso positivo:
 
 ```bash
@@ -116,7 +116,7 @@ reprova depois.
 | Passo | O que confere |
 |---|---|
 | sintaxe | `bash -n` em todo script e `compileall` em todo `.py` |
-| documentação | os oito verificadores **e os oito autotestes** |
+| documentação | os nove verificadores **e os nove autotestes** |
 | segredos | chave privada e token de padrão reconhecível nos arquivos rastreados |
 | pin da CI | o SHA fixado da ação ainda é o topo do major declarado no comentário |
 | suíte | só no modo completo, que é o do gancho local |

@@ -2,9 +2,9 @@
 
 # 01 — Memória
 
-> **Estado: não iniciado.** Nenhum tópico deste módulo foi escrito, e nenhum
-> número foi publicado. Esta página existe para dar o mapa, não para anunciar
-> conteúdo — ver a [rotulagem de estado](../padrao-do-projeto.md#5-rotulagem-de-estado).
+> **Estado: um tópico medido.** O [01.01](01-alocador-arena/README.md) tem
+> número publicado com campanha arquivada; os outros dois não foram iniciados.
+> Ver a [rotulagem de estado](../padrao-do-projeto.md#5-rotulagem-de-estado).
 
 ## A pergunta do módulo
 
@@ -29,7 +29,7 @@ antes de o `std/` correspondente estar medido e publicado.
 
 | Tópico | Estado |
 |---|---|
-| `01-alocador-arena` — alocador de arena | **não iniciado** |
+| [`01-alocador-arena`](01-alocador-arena/README.md) — alocador de arena | **medido** |
 | `02-pool-freelist` — pool com free-list | **não iniciado** |
 | `03-pmr-o-meio-termo` — `std::pmr` como meio-termo | **não iniciado** |
 
