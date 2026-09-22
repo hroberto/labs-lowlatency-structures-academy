@@ -23,7 +23,7 @@ a named machine.
 | [Contract library](lib/contract/) | **code exists, not measured** — three gates, suite in all three configurations |
 | [`scripts/`](scripts/) | **code exists, not measured** — `check-env.sh`, `ambiente.sh` (text, markdown, JSON), `build-all.sh`, `test-all.sh`, `arquivar-medicao.sh`, with self-tests in the suite |
 | [CI](.github/workflows/ci.yml) and [pre-commit](ferramental/qualidade/pre-commit.sh) | **code exists, not measured** — consistency before build; GCC 14 × Clang 18 × three configurations matrix |
-| [Module track](trilha/README.en.md) | **one measured topic** — [08.01, the harness measuring itself](trilha/08-medicao/01-harness/README.en.md); the other eight modules not started |
+| [Module track](docs/README.en.md) | **one measured topic** — [08.01, the harness measuring itself](docs/08-medicao/01-harness/README.en.md); the other eight modules not started |
 | Capstone (order book engine) | **not started** |
 
 State labels are normative — see

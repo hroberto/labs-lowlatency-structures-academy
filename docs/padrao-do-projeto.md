@@ -63,10 +63,10 @@ verificador de pareamento, porque os dois arquivos não compartilham prefixo.
 O catálogo, portanto, é [`referencias.md`](referencias.md) /
 [`referencias.en.md`](referencias.en.md).
 
-Em cada tópico da trilha:
+Em cada tópico:
 
 ```text
-trilha/
+docs/
 └── 04-livro-de-ofertas/
     └── 02-array-plano-com-bitmap/
         ├── README.md
@@ -152,7 +152,7 @@ A norma vigente distingue **diretório de currículo** de **diretório de códig
 
 | Camada | Idioma | Exemplos |
 |---|---|---|
-| currículo e documentação | português | `trilha/01-memoria/`, `docs/`, `medicoes/` |
+| currículo e documentação | português | `docs/01-memoria/`, `docs/`, `medicoes/` |
 | código e build | inglês | `std/`, `custom/`, `bench/`, `tests/`, `lib/measurement/`, `lib/contract/` |
 
 A razão é que o nome do diretório de currículo é **texto do material** — ele
@@ -589,7 +589,7 @@ lib/
 ├── measurement/   régua de apuração: relógio, estatística, dica de espera
 └── contract/      contrato, domínios, unidades, orçamento
 
-<tópico da trilha>/
+<tópico>/
 ├── spec.hpp       a lei: interface comum e traits de invariante (seção 34)
 ├── std/           o baseline que a linguagem entrega
 ├── custom/        o complemento, sob a mesma spec
@@ -1247,7 +1247,7 @@ antes de entrar na norma.
 | 2 | §7 previa "HdrHistogram_c, wrap fixado por hash" | **não está no WrapDB** — consulta ao `releases.json` em 2026-09-21: 367 projetos, nenhum de histograma. O wrap tem de ser escrito à mão, com `meson.build` próprio, porque o projeto é CMake; e o *log writer* dele arrasta zlib, o que colide com "nenhuma dependência além do compilador" (seção 16). Decisão registrada no ROADMAP, etapa do harness |
 | 3 | §7 previa "um perfil `sanitize` com ASan, UBSan e TSan" | ASan e TSan não coexistem: dois perfis (seção 16) |
 | 4 | §2.2 descrevia o ferramental de qualidade como "verificadores de âncora, autodescrição e paridade" | são 23 programas e 6.827 linhas no DPDK Academy; portar é a maior tarefa do projeto, não um item de checklist (seção 31) |
-| 5 | §4 dava a `docs/0N-*` só teoria, sem diretório de código | no DPDK Academy os programas que produzem número de teoria moram em `docs/0N-*/medicoes/`. Sem isso, ou a teoria é prosa sem programa — o que a seção 8 proíbe — ou o diretório falta. Fica `docs/0N-*/medicoes/` |
+| 5 | §4 previa **duas árvores para o mesmo assunto**: `docs/0N-*` com a teoria e `trilha/0N-*` com a prática, ligadas por uma tabela | **árvore única, em `docs/`**. Três razões, e a primeira é interna: a seção 30 atribui ao DPDK Academy justamente TLB, cache e falso compartilhamento, que eram o conteúdo de `docs/01-memoria` e `docs/02-layout` — a estrutura mandava reensinar o que a norma manda citar. A segunda: a seção 25 já torna *Modelo mental, Fundamentos, Como funciona* obrigatórias **dentro** de cada tópico, então a teoria já tem casa. A terceira é medida: no DPDK Academy o código migrou para `docs/` (31 arquivos, contra 4 na trilha), e a trilha virou índice de tópico sem código — duas árvores preveem qual metade fica vazia. A palavra *trilha* sobrevive onde significa algo: a **ordem**, em `docs/plano-estudo.md` |
 | 6 | §7 punha arm64 no escopo, "compila, sem números publicados" | não há máquina nem *runner*; arm64 sai do escopo até haver um (seção 16) |
 | 7 | §6 prometia o experimento "o que acontece quando o TSC não é invariante" | a máquina de referência tem `constant_tsc` e `nonstop_tsc`: não é reproduzível aqui, e fica como questão em aberto (seções 7 e 29) |
 | 8 | §8 listava o que cada medição registra, sem CCD, sem precisão de histograma e sem variação entre execuções | os três entram, e o terceiro é herança de um defeito do DPDK Academy: critério de validade publicado com a calibração em lugar nenhum (seção 28) |

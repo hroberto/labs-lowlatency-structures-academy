@@ -127,13 +127,17 @@ repositório em 2026-09-21. Veio o que já era executável:
       pela seção 30 da norma eles são assunto do DPDK Academy e do EX442.
       Verificado: `perf stat` devolve `cycles:u`, `cache-misses:u` e
       `branch-misses:u` do próprio benchmark
-- [ ] o ajuste **não é persistente** e volta a 4 no próximo boot. Fixá-lo em
-      `/etc/sysctl.d/` é mudança de sistema, e fica como decisão declarada — a
-      alternativa é reaplicar antes de cada campanha, o que o `check-env.sh`
-      diagnostica
-- [ ] `governor=powersave` na máquina de referência: a campanha precisa declarar
-      se fixa `performance` antes de medir, ou publica a variação que o governor
-      introduz
+
+- [x] `governor=powersave`: **fica como está, e a decisão é por medição.** A
+      primeira campanha sugeria aquecimento (r0 e r1 ~26% mais caros); a segunda
+      refutou — o desvio foi para r3 e os percentis saíram idênticos nas cinco
+      execuções. O que varia é o **máximo**, conforme a execução tenha colhido
+      uma interrupção ou não. Fixar `performance` exigiria root e quebraria a
+      promessa de que nada didático exige privilégio — e quem reproduz também
+      estará em `powersave`. A amplitude entre execuções continua publicada, e
+      ela mede o estado da máquina durante a campanha
+- [x] `perf_event_paranoid` **persistente**: `/etc/sysctl.d/80-perf-event-paranoid.conf`
+      fixa o valor 2, com o motivo de não ser 0 escrito no próprio arquivo
 
 ## Etapa 3 — Harness e o ciclo completo · **parcial**
 
@@ -148,7 +152,7 @@ repositório em 2026-09-21. Veio o que já era executável:
       com 10 observações além do percentil — 1000 amostras para p99, 10 000 para
       p99,9 —, e `tail_statistics` carregando o percentil máximo sustentado para
       que publicar acima dele seja erro visível
-- [x] `trilha/08-medicao/01-harness/`: compila, roda, e arquiva campanha de 5
+- [x] `docs/08-medicao/01-harness/`: compila, roda, e arquiva campanha de 5
       execuções, versionando `metadata.json` — com a série completa por
       execução —, a tabela publicável nos dois idiomas e `ambiente.md`. A saída
       crua por repetição e o `ambiente.json` ficam locais: guardar o mesmo dado
@@ -157,7 +161,7 @@ repositório em 2026-09-21. Veio o que já era executável:
       `release` conferido na configuração real do Meson (não no nome do
       diretório), recusam campanha de uma execução só, e publicam a **amplitude
       entre execuções** de cada métrica
-- [x] `trilha/README.md` como índice que não anuncia tópico inexistente
+- [x] `docs/README.md` como índice que não anuncia tópico inexistente
 - [ ] `docs/regras-de-decisao.md` com esquema de dados e verificador que confira
       cada linha contra um `metadata.json` existente — **só faz sentido a partir
       do primeiro tópico que compara**, e 08.01 não compara

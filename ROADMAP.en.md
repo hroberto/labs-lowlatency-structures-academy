@@ -129,13 +129,19 @@ not started, **zero commits and no remote** — was absorbed by this repository 
       section 30 of the standard they belong to the DPDK Academy and EX442.
       Verified: `perf stat` returns `cycles:u`, `cache-misses:u` and
       `branch-misses:u` for the benchmark itself
-- [ ] the adjustment is **not persistent** and reverts to 4 on the next boot.
-      Pinning it in `/etc/sysctl.d/` is a system change, and stays a declared
-      decision — the alternative is reapplying it before each campaign, which
-      `check-env.sh` diagnoses
-- [ ] `governor=powersave` on the reference machine: the campaign must declare
-      whether it pins `performance` before measuring, or publishes the variation
-      the governor introduces
+
+- [x] `governor=powersave`: **it stays as it is, and the decision is by
+      measurement.** The first campaign suggested a warm-up (r0 and r1 ~26% more
+      expensive); the second refuted it — the outlier moved to r3 and the
+      percentiles came out identical across all five runs. What varies is the
+      **maximum**, depending on whether that run caught an interrupt. Pinning
+      `performance` would require root and break the promise that nothing
+      didactic needs privilege — and whoever reproduces will also be on
+      `powersave`. The spread across runs stays published, and it measures the
+      state of the machine during the campaign
+- [x] `perf_event_paranoid` made **persistent**:
+      `/etc/sysctl.d/80-perf-event-paranoid.conf` pins the value 2, with the
+      reason for not being 0 written in the file itself
 
 ## Stage 3 — Harness and the full cycle · **partial**
 
@@ -150,7 +156,7 @@ not started, **zero commits and no remote** — was absorbed by this repository 
       `min_samples_for(p)`, with 10 observations beyond the percentile — 1000
       samples for p99, 10,000 for p99.9 — and `tail_statistics` carrying the
       highest supported percentile so that publishing above it is a visible error
-- [x] `trilha/08-medicao/01-harness/`: it builds, runs, and archives a campaign
+- [x] `docs/08-medicao/01-harness/`: it builds, runs, and archives a campaign
       of 5 runs, versioning `metadata.json` — with the full per-run series —,
       the publishable table in both languages and `ambiente.md`. The raw
       per-repetition output and `ambiente.json` stay local: keeping the same data
@@ -159,7 +165,7 @@ not started, **zero commits and no remote** — was absorbed by this repository 
       `release` checked against Meson's real configuration (not the directory
       name), refuse a single-run campaign, and publish the **spread across runs**
       of every metric
-- [x] `trilha/README.en.md` as an index that does not announce topics that do
+- [x] `docs/README.en.md` as an index that does not announce topics that do
       not exist
 - [ ] `docs/regras-de-decisao.md` with a data schema and a checker that verifies
       each row against an existing `metadata.json` — **it only makes sense from

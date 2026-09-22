@@ -37,7 +37,7 @@ cd "$RAIZ"
 CAMPANHA=${1:?uso: arquivar-medicao.sh <nome-da-campanha> [repeticoes]}
 REPETICOES=${2:-3}
 DIR_BUILD="build-release"
-DESTINO="trilha/08-medicao/01-harness/bench/medicoes/historico/$(date +%Y-%m-%d)-$CAMPANHA"
+DESTINO="docs/08-medicao/01-harness/bench/medicoes/historico/$(date +%Y-%m-%d)-$CAMPANHA"
 
 command -v python3 >/dev/null 2>&1 || {
     echo "ERRO: arquivar medicao exige python3 (compoe o metadata e a tabela)" >&2
@@ -70,7 +70,7 @@ if [ "$CFG" != "release true" ]; then
 fi
 
 meson compile -C "$DIR_BUILD" >/dev/null || { echo "ERRO: a compilacao falhou" >&2; exit 1; }
-BIN="$DIR_BUILD/trilha/08-medicao/01-harness/bench-harness"
+BIN="$DIR_BUILD/docs/08-medicao/01-harness/bench-harness"
 [ -x "$BIN" ] || { echo "ERRO: binario nao encontrado: $BIN" >&2; exit 1; }
 
 mkdir -p "$DESTINO"

@@ -105,7 +105,7 @@ This is the part that differs most from the sibling projects.
 
 ### 5. Measurement guidance
 - Per-operation measurement has a floor, and it is measured and published in
-  `trilha/08-medicao/01-harness/`. If the operation costs less than the floor,
+  `docs/08-medicao/01-harness/`. If the operation costs less than the floor,
   the answer is batch measurement, not a smaller number.
 - Percentiles need samples: `min_samples_for(p)` in `lib/measurement/tail.hpp`.
   Never publish p99.9 from a thousand samples.
@@ -122,10 +122,11 @@ This is the part that differs most from the sibling projects.
 - **Knobs are `HARNESS_SAMPLES`, `HARNESS_ROUNDS`, `HARNESS_TAIL_SAMPLES`.** The
   prefix names the instrument, not the academy: `lib/` is a candidate for its own
   repository shared with the sibling projects.
-- **Campaigns show a first-run transient on this machine.** In the archived
-  campaign the clock arm reads ~26% higher on r0 and r1 and then settles to three
-  matching digits. That is ramping frequency, not dispersion — read r0 with
-  suspicion until the warm-up decision in the ROADMAP is settled.
+- **What varies across runs is interference, not a warm-up.** One campaign
+  suggested a first-run transient; a second one refuted it — the outlier moved to
+  r3, and p50/p99/p99.9 came out identical across all five runs. What moves is
+  the **maximum**, by two orders of magnitude, depending on whether that run
+  caught an interrupt. Never generalize a per-run pattern from one campaign.
 - **No published number comes from CI.** The runner is virtualized, shared and
   exposes no governor. CI answers for portability: one job with the reference
   machine's own compilers (GCC 15.2 + Clang 21.1) and one with the declared floor
@@ -161,7 +162,7 @@ This is the part that differs most from the sibling projects.
 | Level | What it is | Examples here |
 |---|---|---|
 | **L1** | pure logic, fast, no privilege, no environment | the documentation checkers, the ruler and contract sanity programs, the script self-tests |
-| **L2** | the binary **as the reader runs it**: output, exit code, warnings | `trilha/08-medicao/01-harness/tests/l2_run.sh` |
+| **L2** | the binary **as the reader runs it**: output, exit code, warnings | `docs/08-medicao/01-harness/tests/l2_run.sh` |
 | **L3** | requires privilege — hugepages, core isolation, PMU beyond user scope | **none exists yet**, and it is reserved, never mandatory |
 
 Meson suites carry both labels: `l1+docs`, `l1+contract`, `l1+measurement`,

@@ -68,10 +68,10 @@ automatically that every document has a pair. A pair `referencias.md` /
 verifier, because the two files share no prefix. The catalogue is therefore
 [`referencias.md`](referencias.md) / [`referencias.en.md`](referencias.en.md).
 
-In each topic of the track:
+In each topic:
 
 ```text
-trilha/
+docs/
 └── 04-livro-de-ofertas/
     └── 02-array-plano-com-bitmap/
         ├── README.md
@@ -162,7 +162,7 @@ directory**:
 
 | Layer | Language | Examples |
 |---|---|---|
-| curriculum and documentation | Portuguese | `trilha/01-memoria/`, `docs/`, `medicoes/` |
+| curriculum and documentation | Portuguese | `docs/01-memoria/`, `docs/`, `medicoes/` |
 | code and build | English | `std/`, `custom/`, `bench/`, `tests/`, `lib/measurement/`, `lib/contract/` |
 
 The reason is that the name of a curriculum directory is **text of the
@@ -605,7 +605,7 @@ lib/
 ├── measurement/   the measurement ruler: clock, statistics, wait hint
 └── contract/      contract, domains, units, budget
 
-<track topic>/
+<topic>/
 ├── spec.hpp       the law: shared interface and invariant traits (section 34)
 ├── std/           the baseline the language ships
 ├── custom/        the complement, under the same spec
@@ -1272,7 +1272,7 @@ before entering the standard.
 | 2 | §7 planned "HdrHistogram_c, wrap pinned by hash" | it is **not in WrapDB** — `releases.json` queried on 2026-09-21: 367 projects, none of them a histogram. The wrap has to be hand-written with its own `meson.build`, because the project is CMake; and its log writer pulls in zlib, which collides with "no dependency beyond the compiler" (section 16). Decision recorded in the ROADMAP, harness stage |
 | 3 | §7 planned "one `sanitize` profile with ASan, UBSan and TSan" | ASan and TSan do not coexist: two profiles (section 16) |
 | 4 | §2.2 described the quality tooling as "checkers for anchors, self-description and parity" | it is 23 programs and 6,827 lines in the DPDK Academy; porting it is the project's largest task, not a checklist item (section 31) |
-| 5 | §4 gave `docs/0N-*` theory only, with no code directory | in the DPDK Academy the programs producing theory numbers live in `docs/0N-*/medicoes/`. Without that, either the theory is prose with no program — which section 8 forbids — or the directory is missing. `docs/0N-*/medicoes/` stays |
+| 5 | §4 planned **two trees for one subject**: `docs/0N-*` with the theory and `trilha/0N-*` with the practice, linked by a table | **a single tree, under `docs/`**. Three reasons, the first internal: section 30 assigns TLB, cache and false sharing to the DPDK Academy — exactly the content of `docs/01-memoria` and `docs/02-layout` —, so the structure mandated re-teaching what the standard mandates citing. Second: section 25 already makes *Mental model, Fundamentals, How it works* mandatory **inside** every topic, so the theory already has a home. Third is measured: in the DPDK Academy the code migrated into `docs/` (31 files, against 4 in the track), and the track became an index of topics with no code — two trees predict which half stays empty. The word *trilha* survives where it means something: the **order**, in `docs/plano-estudo.md` |
 | 6 | §7 put arm64 in scope, "compiles, no numbers published" | there is no machine and no runner; arm64 leaves the scope until there is one (section 16) |
 | 7 | §6 promised the experiment "what happens when the TSC is not invariant" | the reference machine has `constant_tsc` and `nonstop_tsc`: not reproducible here, and it stays an open question (sections 7 and 29) |
 | 8 | §8 listed what each measurement records, with no CCD, no histogram precision and no between-run variation | all three go in, and the third is inherited from a DPDK Academy defect: a validity criterion published with its calibration nowhere (section 28) |

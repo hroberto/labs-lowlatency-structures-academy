@@ -143,7 +143,7 @@ def main():
 
     meta = {
         "campanha": os.path.basename(os.path.abspath(destino)),
-        "programa": "trilha/08-medicao/01-harness/bench/bench_harness.cpp",
+        "programa": "docs/08-medicao/01-harness/bench/bench_harness.cpp",
         "repeticoes": len(execucoes),
         # OS CSVs SAO LOCAIS, E O METADATA DIZ ISSO.
         #

@@ -95,13 +95,13 @@ domains, `governor=powersave` with boost on, and a `steady_clock` resolution of
 
 | Metric | Median across runs | Spread across runs | Unit |
 |---|---:|---:|---|
-| reading the clock (median) | 16.81 | 28.4% | ns |
-| reading the clock (minimum) | 16.75 | 28.6% | ns |
-| recording a sample (median) | 0.13 | 28.7% | ns |
+| reading the clock (median) | 16.09 | 4.6% | ns |
+| reading the clock (minimum) | 16.06 | 0.1% | ns |
+| recording a sample (median) | 0.12 | 0.3% | ns |
 | per-operation floor p50 | 20.00 | 0.0% | ns |
-| per-operation floor p99 | 21.00 | 42.9% | ns |
-| per-operation floor p99.9 | 21.00 | 47.6% | ns |
-| per-operation floor maximum | 201.00 | 772.1% | ns |
+| per-operation floor p99 | 21.00 | 0.0% | ns |
+| per-operation floor p99.9 | 21.00 | 0.0% | ns |
+| per-operation floor maximum | 21.00 | 10681.0% | ns |
 
 ## What this measurement does not show
 
@@ -145,26 +145,39 @@ requested without support.
 
 ## Analysis
 
-The per-operation floor is **20** ns at the median, with a spread of **0.0%**
-across five runs: it is the most reproducible number in the table. The pair of
+The per-operation floor is **20** ns at the median, and p50, p99 and p99.9 come
+out **identical across the five runs** — a 0.0% spread on all three. The pair of
 reads costs roughly what a single read costs in batch, which is consistent with
 the cost being in the call itself rather than in what it measures.
 
-The tail is another story. p99 and p99.9 vary by **42.9%** and **47.6%** across
-runs of the **same** measurement, on the same machine, with nothing changed
-between them — and the **maximum** varies by **772.1%**, because a single
-interrupt in one of the five runs moves it on its own. This is not an instrument
-defect: it is the machine, with `governor=powersave`, boost on and SMT. And it is
-exactly why the spread across runs is a mandatory field of the standard —
-without it, any topic publishing a 30% improvement in p99 would be publishing
-noise under the name of a result.
+The **maximum** is the exception, and an instructive one. The per-run series is
+`[2264, 21, 21, 21, 1864]`: two of the five runs caught an interrupt and the
+other three did not. The **10681%** spread does not describe variation of the
+instrument — it describes **how many isolated samples each run collected**. The
+maximum is one sample, and publishing it without the series beside it invites
+the wrong conclusion. It stays in the table because hiding the extent of what was
+observed is worse than showing it, but it sustains no comparison at all.
 
-The maximum is the extreme case of that lesson: it is **one sample**, and
-publishing it without the spread beside it invites the wrong conclusion. It
-stays in the table because hiding the extent of what was observed is worse than
-showing it — but it sustains no comparison at all.
+### An earlier reading of this topic was refuted by more measurement
 
-The cost of recording a sample, **0.13** ns, is on the order of one instruction:
+The first archived campaign showed p99 varying by **42.9%** across runs, and the
+clock arm about 26% more expensive on `r0` and `r1`. We concluded there that the
+campaign had a **warm-up**: the machine taking two seconds to settle at boost
+frequency.
+
+This campaign refutes that. The clock's spread fell to 4.6% and sits on `r3`, not
+on the first runs; the percentiles did not vary at all. What there was is
+**sporadic interference**, hitting runs at random — not a warm-up transient,
+which would always hit the first ones.
+
+The correct conclusion is more modest and more useful: on this machine the
+instrument's **typical value is reproducible**, and what varies across runs is
+how much interference each one collected. The spread across runs remains a
+mandatory field — but it measures the **state of the machine during the
+campaign**, not a stable property of it. Two campaigns of the same measurement
+gave 42.9% and 0.0% on the same p99.
+
+The cost of recording a sample, **0.12** ns, is on the order of one instruction:
 the collector is not what limits per-operation measurement. The clock is.
 
 ## Literature comparison
@@ -220,10 +233,10 @@ machine, and that is what they are for.
 
 ## References
 
-- [Project standard](../../../docs/padrao-do-projeto.en.md), sections 11, 28, 29 and 35
+- [Project standard](../../padrao-do-projeto.en.md), sections 11, 28, 29 and 35
 - [`lib/measurement/tail.hpp`](../../../lib/measurement/tail.hpp)
 - [`lib/measurement/clock.hpp`](../../../lib/measurement/clock.hpp)
-- [Reference catalogue](../../../docs/referencias.en.md)
+- [Reference catalogue](../../referencias.en.md)
 
 ## Navigation
 

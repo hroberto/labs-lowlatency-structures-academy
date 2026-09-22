@@ -93,13 +93,13 @@ de L3, `governor=powersave` com *boost* ativo, e resolução de `steady_clock` d
 
 | Métrica | Mediana entre execuções | Amplitude entre execuções | Unidade |
 |---|---:|---:|---|
-| ler o relógio (mediana) | 16,81 | 28,4% | ns |
-| ler o relógio (mínimo) | 16,75 | 28,6% | ns |
-| registrar amostra (mediana) | 0,13 | 28,7% | ns |
+| ler o relógio (mediana) | 16,09 | 4,6% | ns |
+| ler o relógio (mínimo) | 16,06 | 0,1% | ns |
+| registrar amostra (mediana) | 0,12 | 0,3% | ns |
 | piso por operação p50 | 20,00 | 0,0% | ns |
-| piso por operação p99 | 21,00 | 42,9% | ns |
-| piso por operação p99,9 | 21,00 | 47,6% | ns |
-| piso por operação máximo | 201,00 | 772,1% | ns |
+| piso por operação p99 | 21,00 | 0,0% | ns |
+| piso por operação p99,9 | 21,00 | 0,0% | ns |
+| piso por operação máximo | 21,00 | 10681,0% | ns |
 
 ## O que esta medição não mostra
 
@@ -140,26 +140,39 @@ e a suíte tem caso que aborta ao pedir publicação sem sustentação.
 
 ## Análise
 
-O piso por operação é **20** ns de mediana, com amplitude de **0,0%** entre
-cinco execuções: é o número mais reprodutível da tabela. O par de leituras custa
+O piso por operação é **20** ns de mediana, e p50, p99 e p99,9 saem **idênticos
+nas cinco execuções** — amplitude de 0,0% nos três. O par de leituras custa
 aproximadamente o que uma leitura isolada custa em lote, o que é coerente com o
 custo estar na própria chamada e não no que ela mede.
 
-A cauda é outra história. p99 e p99,9 variam **42,9%** e **47,6%** entre
-execuções da **mesma** medição, na mesma máquina, sem nada mudar entre elas — e
-o **máximo** varia **772,1%**, porque uma única interrupção numa das cinco
-execuções o move sozinha. Não é defeito do instrumento: é a máquina, com
-`governor=powersave`, *boost* ativo e SMT. E é exatamente por isso que a
-amplitude entre execuções é campo obrigatório da norma — sem ela, qualquer
-tópico que publicasse uma melhora de 30% no p99 estaria publicando ruído com
-nome de resultado.
+O **máximo** é a exceção, e ela é instrutiva. A série por execução é
+`[2264, 21, 21, 21, 1864]`: duas das cinco execuções pegaram uma interrupção, e
+as outras três não. A amplitude de **10681%** não descreve variação do
+instrumento — descreve **quantas amostras isoladas cada execução colheu**. O
+máximo é uma amostra, e publicá-lo sem a série ao lado convida à conclusão
+errada. Fica na tabela porque esconder a extensão do que se observou é pior que
+exibi-la, mas ele não sustenta comparação nenhuma.
 
-O máximo é o caso extremo dessa lição: ele é **uma amostra**, e publicá-lo sem a
-amplitude ao lado convida a conclusão errada. Fica na tabela porque esconder a
-extensão do que se observou é pior que exibi-la — mas ele não sustenta
-comparação nenhuma.
+### Uma leitura anterior deste tópico foi refutada por mais medição
 
-O custo de registrar amostra, **0,13** ns, é da ordem de uma instrução: o
+A primeira campanha arquivada mostrava p99 variando **42,9%** entre execuções, e
+o braço do relógio ~26% mais caro em `r0` e `r1`. Concluímos ali que a campanha
+tinha **aquecimento**: a máquina levando dois segundos para assentar em
+frequência de *boost*.
+
+Esta campanha refuta isso. O desvio do relógio caiu para 4,6% e está em `r3`, não
+nas primeiras; os percentis não variaram nada. O que havia era **interferência
+esporádica**, que atinge execuções ao acaso — não um transiente de aquecimento,
+que atingiria sempre as primeiras.
+
+A conclusão correta é mais modesta e mais útil: nesta máquina o **valor típico do
+instrumento é reprodutível**, e o que varia entre execuções é quanta
+interferência cada uma colheu. A amplitude entre execuções continua sendo campo
+obrigatório — mas ela mede o **estado da máquina durante a campanha**, e não uma
+propriedade estável dela. Duas campanhas da mesma medição deram 42,9% e 0,0% no
+mesmo p99.
+
+O custo de registrar amostra, **0,12** ns, é da ordem de uma instrução: o
 coletor não é o que limita a medição por operação. O relógio é.
 
 ## Confronto com a literatura
@@ -215,10 +228,10 @@ máquina, e é para isso que servem.
 
 ## Referências
 
-- [Norma do projeto](../../../docs/padrao-do-projeto.md), seções 11, 28, 29 e 35
+- [Norma do projeto](../../padrao-do-projeto.md), seções 11, 28, 29 e 35
 - [`lib/measurement/tail.hpp`](../../../lib/measurement/tail.hpp)
 - [`lib/measurement/clock.hpp`](../../../lib/measurement/clock.hpp)
-- [Catálogo de referências](../../../docs/referencias.md)
+- [Catálogo de referências](../../referencias.md)
 
 ## Navegação
 

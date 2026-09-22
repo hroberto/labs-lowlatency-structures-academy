@@ -252,4 +252,4 @@ test('l1 - cauda: publicar percentil sem sustentacao aborta', sanidade_cauda,
 # ---------------------------------------------------------------------------
 # A trilha.
 # ---------------------------------------------------------------------------
-subdir('trilha/08-medicao/01-harness')
+subdir('docs/08-medicao/01-harness')

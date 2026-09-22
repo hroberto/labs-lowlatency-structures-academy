@@ -1,6 +1,6 @@
 {
   "campanha": "2026-09-22-piso-do-harness",
-  "programa": "trilha/08-medicao/01-harness/bench/bench_harness.cpp",
+  "programa": "docs/08-medicao/01-harness/bench/bench_harness.cpp",
   "repeticoes": 5,
   "saida_crua_por_execucao": {
     "arquivos": [
@@ -23,66 +23,66 @@
     "compilador": "gcc 15.2.0",
     "flags_efetivas": "cpp_std=c++23 warning_level=3 buildtype=release b_ndebug=true"
   },
-  "commit": "7e609cd7feb87214c30477b80b6ba85eab02eeed",
+  "commit": "b0380a56cf0b12c36972fa509b16e2a0e1f42bd3",
   "arvore_suja": true,
-  "coletado_em": "2026-09-22T11:06:56-03:00",
-  "duracao_s": null,
+  "coletado_em": "2026-09-22T11:38:54-03:00",
+  "duracao_s": 1.0,
   "metricas": {
     "clock_read.disp": {
       "unidade": "percent",
       "por_execucao": [
-        0.05,
-        0.39,
-        0.4,
-        0.32,
-        2.0
+        0.66,
+        0.22,
+        0.18,
+        4.36,
+        0.74
       ],
-      "min": 0.05,
-      "max": 2.0,
-      "mediana": 0.39,
-      "amplitude_pct": 500.0
+      "min": 0.18,
+      "max": 4.36,
+      "mediana": 0.66,
+      "amplitude_pct": 633.3333333333334
     },
     "clock_read.median": {
       "unidade": "ns",
       "por_execucao": [
-        20.8476,
-        20.829,
-        16.8076,
-        16.7996,
-        16.0714
+        16.1212,
+        16.0798,
+        16.0656,
+        16.8015,
+        16.0936
       ],
-      "min": 16.0714,
-      "max": 20.8476,
-      "mediana": 16.8076,
-      "amplitude_pct": 28.41690663747352
+      "min": 16.0656,
+      "max": 16.8015,
+      "mediana": 16.0936,
+      "amplitude_pct": 4.572625142913959
     },
     "clock_read.minimum": {
       "unidade": "ns",
       "por_execucao": [
-        20.8392,
-        18.0508,
-        16.7507,
-        16.4775,
-        16.0473
+        16.0655,
+        16.0567,
+        16.0507,
+        16.0576,
+        16.0517
       ],
-      "min": 16.0473,
-      "max": 20.8392,
-      "mediana": 16.7507,
-      "amplitude_pct": 28.60716268573852
+      "min": 16.0507,
+      "max": 16.0655,
+      "mediana": 16.0567,
+      "amplitude_pct": 0.09217336065319172
     },
     "clock_read.p99": {
       "unidade": "ns",
       "por_execucao": [
-        21.5553,
-        21.1898,
-        18.9081,
-        18.6001,
-        18.4874
+        16.8487,
+        17.2093,
+        17.8042,
+        19.4321,
+        18.3171
       ],
-      "min": 18.4874,
-      "max": 21.5553,
-      "mediana": 18.9081,
-      "amplitude_pct": 16.225321423093796
+      "min": 16.8487,
+      "max": 19.4321,
+      "mediana": 17.8042,
+      "amplitude_pct": 14.510059424180795
     },
     "parameters.clock_period": {
       "unidade": "ns",
@@ -157,16 +157,16 @@
     "per_op_floor.maximum": {
       "unidade": "ns",
       "por_execucao": [
-        31.0,
-        201.0,
-        1563.0,
-        1573.0,
-        21.0
+        2264.0,
+        21.0,
+        21.0,
+        21.0,
+        1864.0
       ],
       "min": 21.0,
-      "max": 1573.0,
-      "mediana": 201.0,
-      "amplitude_pct": 772.139303482587
+      "max": 2264.0,
+      "mediana": 21.0,
+      "amplitude_pct": 10680.952380952382
     },
     "per_op_floor.p50": {
       "unidade": "ns",
@@ -185,30 +185,30 @@
     "per_op_floor.p99": {
       "unidade": "ns",
       "por_execucao": [
-        30.0,
+        21.0,
         21.0,
         21.0,
         21.0,
         21.0
       ],
       "min": 21.0,
-      "max": 30.0,
+      "max": 21.0,
       "mediana": 21.0,
-      "amplitude_pct": 42.857142857142854
+      "amplitude_pct": 0.0
     },
     "per_op_floor.p999": {
       "unidade": "ns",
       "por_execucao": [
-        31.0,
+        21.0,
         21.0,
         21.0,
         21.0,
         21.0
       ],
       "min": 21.0,
-      "max": 31.0,
+      "max": 21.0,
       "mediana": 21.0,
-      "amplitude_pct": 47.61904761904762
+      "amplitude_pct": 0.0
     },
     "per_op_floor.samples": {
       "unidade": "count",
@@ -227,58 +227,58 @@
     "record_sample.disp": {
       "unidade": "percent",
       "por_execucao": [
-        0.19,
-        0.11,
-        0.04,
+        0.25,
         0.08,
-        0.08
+        0.16,
+        0.08,
+        0.21
       ],
-      "min": 0.04,
-      "max": 0.19,
-      "mediana": 0.08,
-      "amplitude_pct": 187.5
+      "min": 0.08,
+      "max": 0.25,
+      "mediana": 0.16,
+      "amplitude_pct": 106.25
     },
     "record_sample.median": {
       "unidade": "ns",
       "por_execucao": [
-        0.1577,
-        0.1349,
-        0.127,
+        0.1216,
         0.1213,
-        0.1212
+        0.1216,
+        0.1212,
+        0.1213
       ],
       "min": 0.1212,
-      "max": 0.1577,
-      "mediana": 0.127,
-      "amplitude_pct": 28.740157480314963
+      "max": 0.1216,
+      "mediana": 0.1213,
+      "amplitude_pct": 0.3297609233305833
     },
     "record_sample.minimum": {
       "unidade": "ns",
       "por_execucao": [
-        0.1574,
-        0.1347,
-        0.1269,
-        0.1211,
-        0.1211
+        0.1212,
+        0.1212,
+        0.1213,
+        0.1209,
+        0.1206
       ],
-      "min": 0.1211,
-      "max": 0.1574,
-      "mediana": 0.1269,
-      "amplitude_pct": 28.605200945626486
+      "min": 0.1206,
+      "max": 0.1213,
+      "mediana": 0.1212,
+      "amplitude_pct": 0.5775577557755827
     },
     "record_sample.p99": {
       "unidade": "ns",
       "por_execucao": [
-        1.0907,
-        1.8115,
-        0.9499,
-        1.1047,
-        1.1218
+        1.2239,
+        1.1194,
+        1.0617,
+        1.063,
+        1.1281
       ],
-      "min": 0.9499,
-      "max": 1.8115,
-      "mediana": 1.1047,
-      "amplitude_pct": 77.9940255272925
+      "min": 1.0617,
+      "max": 1.2239,
+      "mediana": 1.1194,
+      "amplitude_pct": 14.489905306414144
     }
   },
   "ambiente": {
@@ -300,7 +300,7 @@
     "pmu_paranoid": "2",
     "pmu_estado": "so o proprio processo, sem eventos de kernel",
     "mem_total": "14,2 GiB",
-    "mem_disponivel": "4,5 GiB",
+    "mem_disponivel": "3,8 GiB",
     "mem_velocidade": "NAO LIDO -- rode: sudo ./scripts/ambiente.sh --cachear-memoria",
     "mem_canais": "NAO LIDO -- idem",
     "hugepages_total": "1024",
@@ -320,9 +320,9 @@
     "ninja": "1.13.2",
     "perf": "perf version 7.0.14",
     "builds_na_arvore": "build-clang-release-checked (release b_ndebug=false); build-debug (debug b_ndebug=false); build-release (release b_ndebug=true); build-release-checked (release b_ndebug=false)",
-    "commit": "7e609cd",
+    "commit": "b0380a5",
     "arvore_suja": "sim",
-    "coletado_em": "2026-09-22T11:06:56-03:00",
+    "coletado_em": "2026-09-22T11:38:54-03:00",
     "campos_nao_coletados": [],
     "topologia": [
       {
