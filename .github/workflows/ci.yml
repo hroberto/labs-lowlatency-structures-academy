@@ -43,7 +43,19 @@ jobs:
       # As regras de consistencia rodam ANTES do build, e num job proprio: uma
       # falha de documentacao nao deve gastar quatro configuracoes de compilacao
       # para aparecer.
+      # GH_TOKEN PORQUE A CONFERENCIA DO PIN PRECISA FALAR COM A API.
+      #
+      # Sem ele, `gh api` falha e o passo do pin degrada para "nao foi possivel
+      # consultar v5 (rede ou permissao)" -- um aviso, nao uma falha. So que o
+      # `.github/dependabot.yml` publica este script como a protecao numero 2
+      # contra merge de major sem revisao, e uma protecao que nao roda em PR do
+      # Dependabot e exatamente a afirmacao falsa que este projeto persegue.
+      #
+      # O token e o do proprio workflow, e `permissions: contents: read` ja
+      # limita o que ele pode fazer.
       - name: Consistencia do projeto (regras do pre-commit)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./ferramental/qualidade/pre-commit.sh --rapido
 
   build-e-testes:

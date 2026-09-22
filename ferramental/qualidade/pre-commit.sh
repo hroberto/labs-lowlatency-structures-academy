@@ -56,9 +56,30 @@ else
 fi
 
 # --- 2. verificadores de documentação -------------------------------------
+#
+# `suposicao` NÃO ESTÁ NA LISTA RÁPIDA, e a separação nasceu de uma CI vermelha.
+#
+# Ele é o único verificador que COMPILA uma sonda: confere no assembly que a
+# pré-condição da porta R chega ao otimizador. Os outros cinco leem Markdown.
+# O job de consistência da CI roda antes do build e não instala compilador de
+# propósito -- e o `g++` padrão da imagem é o 13, que não tem `<print>`. O
+# verificador então se recusou a aprovar, corretamente: "a sonda NAO COMPILOU
+# -- a porta R nao pode ser verificada".
+#
+# Quem estava errado era a lista, não ele. A cobertura não se perde: o job de
+# build roda `test-all.sh`, e a suíte registra `verificar-suposicao` com os
+# compiladores instalados.
+VERIFICADORES_DOC="links ancoras aritmetica retratacoes paridade"
+VERIFICADORES_COMPILADOR="suposicao"
+if [ "$RAPIDO" -eq 1 ]; then
+    VERIFICADORES="$VERIFICADORES_DOC"
+else
+    VERIFICADORES="$VERIFICADORES_DOC $VERIFICADORES_COMPILADOR"
+fi
+
 echo "Documentacao:"
 if command -v python3 >/dev/null 2>&1; then
-    for v in links ancoras aritmetica retratacoes paridade suposicao; do
+    for v in $VERIFICADORES; do
         script="ferramental/qualidade/verificar-$v.py"
         [ -f "$script" ] || { falha "$script nao existe"; continue; }
         if saida=$(python3 "$script" . 2>&1); then
@@ -70,11 +91,15 @@ if command -v python3 >/dev/null 2>&1; then
     done
     # O autoteste de cada verificador roda AQUI também, e não só na suíte: um
     # verificador que passou a aceitar tudo continua imprimindo "0 quebrados".
-    for v in links ancoras aritmetica retratacoes paridade suposicao; do
+    for v in $VERIFICADORES; do
         python3 "ferramental/qualidade/verificar-$v.py" --autoteste >/dev/null 2>&1 \
             || falha "autoteste de verificar-$v falhou"
     done
-    ok "autotestes dos verificadores"
+    ok "autotestes dos verificadores executados: $VERIFICADORES"
+    if [ "$RAPIDO" -eq 1 ]; then
+        # DITO, e não omitido: o que não rodou não pode passar por verificado.
+        aviso "verificar-suposicao PULADO no modo rapido (exige compilador C++23); ele roda na suite, no job de build"
+    fi
 fi
 
 # --- 3. segredos ----------------------------------------------------------
