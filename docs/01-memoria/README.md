@@ -2,8 +2,9 @@
 
 # 01 — Memória
 
-> **Estado: um tópico medido.** O [01.01](01-alocador-arena/README.md) tem
-> número publicado com campanha arquivada; os outros dois não foram iniciados.
+> **Estado: dois tópicos medidos.** O [01.01](01-alocador-arena/README.md) e o
+> [01.02](02-pool-freelist/README.md) têm número publicado com campanha
+> arquivada; o 01.03 não foi iniciado.
 > Ver a [rotulagem de estado](../padrao-do-projeto.md#5-rotulagem-de-estado).
 
 ## A pergunta do módulo
@@ -30,7 +31,7 @@ antes de o `std/` correspondente estar medido e publicado.
 | Tópico | Estado |
 |---|---|
 | [`01-alocador-arena`](01-alocador-arena/README.md) — alocador de arena | **medido** |
-| `02-pool-freelist` — pool com free-list | **não iniciado** |
+| [`02-pool-freelist`](02-pool-freelist/README.md) — pool com free-list | **medido** |
 | `03-pmr-o-meio-termo` — `std::pmr` como meio-termo | **não iniciado** |
 
 Os diretórios nascem com o primeiro arquivo real. Diretório vazio é promessa,

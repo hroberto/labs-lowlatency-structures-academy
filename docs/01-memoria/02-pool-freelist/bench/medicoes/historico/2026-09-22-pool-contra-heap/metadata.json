@@ -1,0 +1,957 @@
+{
+  "campanha": "2026-09-22-pool-contra-heap",
+  "programa": "docs/01-memoria/02-pool-freelist/bench",
+  "repeticoes": 5,
+  "saida_crua_por_execucao": {
+    "arquivos": [
+      "r0.csv",
+      "r1.csv",
+      "r2.csv",
+      "r3.csv",
+      "r4.csv"
+    ],
+    "versionados": false,
+    "onde_esta_o_dado": "metricas[].por_execucao, neste arquivo"
+  },
+  "parametros_do_experimento": {
+    "clock_period": 1.0,
+    "samples": 10000.0,
+    "steps_per_sample": 64.0,
+    "warmup_rounds": 64.0
+  },
+  "build": {
+    "configuracao": "build-release (release true)",
+    "compilador": "gcc 15.2.0",
+    "flags_efetivas": "cpp_std=c++23 warning_level=3 buildtype=release b_ndebug=true"
+  },
+  "commit": "6a0a81ae3f49fc8f4fad283a786fd332a945fbde",
+  "arvore_suja": true,
+  "coletado_em": "2026-09-22T19:49:24-03:00",
+  "duracao_s": null,
+  "metricas": {
+    "parameters.clock_period": {
+      "unidade": "ns",
+      "por_execucao": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "min": 1.0,
+      "max": 1.0,
+      "mediana": 1.0,
+      "amplitude_pct": 0.0
+    },
+    "parameters.samples": {
+      "unidade": "count",
+      "por_execucao": [
+        10000.0,
+        10000.0,
+        10000.0,
+        10000.0,
+        10000.0
+      ],
+      "min": 10000.0,
+      "max": 10000.0,
+      "mediana": 10000.0,
+      "amplitude_pct": 0.0
+    },
+    "parameters.steps_per_sample": {
+      "unidade": "count",
+      "por_execucao": [
+        64.0,
+        64.0,
+        64.0,
+        64.0,
+        64.0
+      ],
+      "min": 64.0,
+      "max": 64.0,
+      "mediana": 64.0,
+      "amplitude_pct": 0.0
+    },
+    "parameters.warmup_rounds": {
+      "unidade": "count",
+      "por_execucao": [
+        64.0,
+        64.0,
+        64.0,
+        64.0,
+        64.0
+      ],
+      "min": 64.0,
+      "max": 64.0,
+      "mediana": 64.0,
+      "amplitude_pct": 0.0
+    },
+    "pool_V4096.discarded": {
+      "unidade": "count",
+      "por_execucao": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "min": 0.0,
+      "max": 0.0,
+      "mediana": 0.0,
+      "amplitude_pct": null
+    },
+    "pool_V4096.highest_supported": {
+      "unidade": "percentile",
+      "por_execucao": [
+        0.999,
+        0.999,
+        0.999,
+        0.999,
+        0.999
+      ],
+      "min": 0.999,
+      "max": 0.999,
+      "mediana": 0.999,
+      "amplitude_pct": 0.0
+    },
+    "pool_V4096.maximum": {
+      "unidade": "ns",
+      "por_execucao": [
+        2535.0,
+        2305.0,
+        2284.0,
+        2786.0,
+        5100.0
+      ],
+      "min": 2284.0,
+      "max": 5100.0,
+      "mediana": 2535.0,
+      "amplitude_pct": 111.08481262327416
+    },
+    "pool_V4096.p50": {
+      "unidade": "ns",
+      "por_execucao": [
+        180.0,
+        180.0,
+        150.0,
+        140.0,
+        140.0
+      ],
+      "min": 140.0,
+      "max": 180.0,
+      "mediana": 150.0,
+      "amplitude_pct": 26.666666666666668
+    },
+    "pool_V4096.p50_per_step": {
+      "unidade": "ns",
+      "por_execucao": [
+        2.812,
+        2.812,
+        2.344,
+        2.188,
+        2.188
+      ],
+      "min": 2.188,
+      "max": 2.812,
+      "mediana": 2.344,
+      "amplitude_pct": 26.6211604095563
+    },
+    "pool_V4096.p99": {
+      "unidade": "ns",
+      "por_execucao": [
+        191.0,
+        191.0,
+        151.0,
+        150.0,
+        150.0
+      ],
+      "min": 150.0,
+      "max": 191.0,
+      "mediana": 151.0,
+      "amplitude_pct": 27.1523178807947
+    },
+    "pool_V4096.p999": {
+      "unidade": "ns",
+      "por_execucao": [
+        201.0,
+        191.0,
+        180.0,
+        151.0,
+        151.0
+      ],
+      "min": 151.0,
+      "max": 201.0,
+      "mediana": 180.0,
+      "amplitude_pct": 27.77777777777778
+    },
+    "pool_V4096.samples": {
+      "unidade": "count",
+      "por_execucao": [
+        10000.0,
+        10000.0,
+        10000.0,
+        10000.0,
+        10000.0
+      ],
+      "min": 10000.0,
+      "max": 10000.0,
+      "mediana": 10000.0,
+      "amplitude_pct": 0.0
+    },
+    "pool_V512.discarded": {
+      "unidade": "count",
+      "por_execucao": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "min": 0.0,
+      "max": 0.0,
+      "mediana": 0.0,
+      "amplitude_pct": null
+    },
+    "pool_V512.highest_supported": {
+      "unidade": "percentile",
+      "por_execucao": [
+        0.999,
+        0.999,
+        0.999,
+        0.999,
+        0.999
+      ],
+      "min": 0.999,
+      "max": 0.999,
+      "mediana": 0.999,
+      "amplitude_pct": 0.0
+    },
+    "pool_V512.maximum": {
+      "unidade": "ns",
+      "por_execucao": [
+        1973.0,
+        23084.0,
+        2033.0,
+        2034.0,
+        151.0
+      ],
+      "min": 151.0,
+      "max": 23084.0,
+      "mediana": 2033.0,
+      "amplitude_pct": 1128.03738317757
+    },
+    "pool_V512.p50": {
+      "unidade": "ns",
+      "por_execucao": [
+        180.0,
+        180.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "min": 150.0,
+      "max": 180.0,
+      "mediana": 150.0,
+      "amplitude_pct": 20.0
+    },
+    "pool_V512.p50_per_step": {
+      "unidade": "ns",
+      "por_execucao": [
+        2.812,
+        2.812,
+        2.344,
+        2.344,
+        2.344
+      ],
+      "min": 2.344,
+      "max": 2.812,
+      "mediana": 2.344,
+      "amplitude_pct": 19.965870307167236
+    },
+    "pool_V512.p99": {
+      "unidade": "ns",
+      "por_execucao": [
+        191.0,
+        191.0,
+        151.0,
+        151.0,
+        151.0
+      ],
+      "min": 151.0,
+      "max": 191.0,
+      "mediana": 151.0,
+      "amplitude_pct": 26.490066225165563
+    },
+    "pool_V512.p999": {
+      "unidade": "ns",
+      "por_execucao": [
+        191.0,
+        191.0,
+        151.0,
+        160.0,
+        151.0
+      ],
+      "min": 151.0,
+      "max": 191.0,
+      "mediana": 160.0,
+      "amplitude_pct": 25.0
+    },
+    "pool_V512.samples": {
+      "unidade": "count",
+      "por_execucao": [
+        10000.0,
+        10000.0,
+        10000.0,
+        10000.0,
+        10000.0
+      ],
+      "min": 10000.0,
+      "max": 10000.0,
+      "mediana": 10000.0,
+      "amplitude_pct": 0.0
+    },
+    "pool_V64.discarded": {
+      "unidade": "count",
+      "por_execucao": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "min": 0.0,
+      "max": 0.0,
+      "mediana": 0.0,
+      "amplitude_pct": null
+    },
+    "pool_V64.highest_supported": {
+      "unidade": "percentile",
+      "por_execucao": [
+        0.999,
+        0.999,
+        0.999,
+        0.999,
+        0.999
+      ],
+      "min": 0.999,
+      "max": 0.999,
+      "mediana": 0.999,
+      "amplitude_pct": 0.0
+    },
+    "pool_V64.maximum": {
+      "unidade": "ns",
+      "por_execucao": [
+        16591.0,
+        1994.0,
+        6031.0,
+        2184.0,
+        1923.0
+      ],
+      "min": 1923.0,
+      "max": 16591.0,
+      "mediana": 2184.0,
+      "amplitude_pct": 671.6117216117216
+    },
+    "pool_V64.p50": {
+      "unidade": "ns",
+      "por_execucao": [
+        181.0,
+        180.0,
+        161.0,
+        150.0,
+        150.0
+      ],
+      "min": 150.0,
+      "max": 181.0,
+      "mediana": 161.0,
+      "amplitude_pct": 19.25465838509317
+    },
+    "pool_V64.p50_per_step": {
+      "unidade": "ns",
+      "por_execucao": [
+        2.828,
+        2.812,
+        2.516,
+        2.344,
+        2.344
+      ],
+      "min": 2.344,
+      "max": 2.828,
+      "mediana": 2.516,
+      "amplitude_pct": 19.236883942766294
+    },
+    "pool_V64.p99": {
+      "unidade": "ns",
+      "por_execucao": [
+        371.0,
+        191.0,
+        171.0,
+        151.0,
+        151.0
+      ],
+      "min": 151.0,
+      "max": 371.0,
+      "mediana": 171.0,
+      "amplitude_pct": 128.6549707602339
+    },
+    "pool_V64.p999": {
+      "unidade": "ns",
+      "por_execucao": [
+        371.0,
+        191.0,
+        171.0,
+        161.0,
+        151.0
+      ],
+      "min": 151.0,
+      "max": 371.0,
+      "mediana": 171.0,
+      "amplitude_pct": 128.6549707602339
+    },
+    "pool_V64.samples": {
+      "unidade": "count",
+      "por_execucao": [
+        10000.0,
+        10000.0,
+        10000.0,
+        10000.0,
+        10000.0
+      ],
+      "min": 10000.0,
+      "max": 10000.0,
+      "mediana": 10000.0,
+      "amplitude_pct": 0.0
+    },
+    "std::allocator_V4096.discarded": {
+      "unidade": "count",
+      "por_execucao": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "min": 0.0,
+      "max": 0.0,
+      "mediana": 0.0,
+      "amplitude_pct": null
+    },
+    "std::allocator_V4096.highest_supported": {
+      "unidade": "percentile",
+      "por_execucao": [
+        0.999,
+        0.999,
+        0.999,
+        0.999,
+        0.999
+      ],
+      "min": 0.999,
+      "max": 0.999,
+      "mediana": 0.999,
+      "amplitude_pct": 0.0
+    },
+    "std::allocator_V4096.maximum": {
+      "unidade": "ns",
+      "por_execucao": [
+        2625.0,
+        3207.0,
+        19317.0,
+        2846.0,
+        14538.0
+      ],
+      "min": 2625.0,
+      "max": 19317.0,
+      "mediana": 3207.0,
+      "amplitude_pct": 520.4864359214218
+    },
+    "std::allocator_V4096.p50": {
+      "unidade": "ns",
+      "por_execucao": [
+        480.0,
+        501.0,
+        391.0,
+        411.0,
+        401.0
+      ],
+      "min": 391.0,
+      "max": 501.0,
+      "mediana": 411.0,
+      "amplitude_pct": 26.7639902676399
+    },
+    "std::allocator_V4096.p50_per_step": {
+      "unidade": "ns",
+      "por_execucao": [
+        7.5,
+        7.828,
+        6.109,
+        6.422,
+        6.266
+      ],
+      "min": 6.109,
+      "max": 7.828,
+      "mediana": 6.422,
+      "amplitude_pct": 26.767362192463413
+    },
+    "std::allocator_V4096.p99": {
+      "unidade": "ns",
+      "por_execucao": [
+        501.0,
+        521.0,
+        421.0,
+        431.0,
+        421.0
+      ],
+      "min": 421.0,
+      "max": 521.0,
+      "mediana": 431.0,
+      "amplitude_pct": 23.201856148491878
+    },
+    "std::allocator_V4096.p999": {
+      "unidade": "ns",
+      "por_execucao": [
+        712.2,
+        621.3,
+        751.0,
+        491.0,
+        841.0
+      ],
+      "min": 491.0,
+      "max": 841.0,
+      "mediana": 712.2,
+      "amplitude_pct": 49.14349901713002
+    },
+    "std::allocator_V4096.samples": {
+      "unidade": "count",
+      "por_execucao": [
+        10000.0,
+        10000.0,
+        10000.0,
+        10000.0,
+        10000.0
+      ],
+      "min": 10000.0,
+      "max": 10000.0,
+      "mediana": 10000.0,
+      "amplitude_pct": 0.0
+    },
+    "std::allocator_V512.discarded": {
+      "unidade": "count",
+      "por_execucao": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "min": 0.0,
+      "max": 0.0,
+      "mediana": 0.0,
+      "amplitude_pct": null
+    },
+    "std::allocator_V512.highest_supported": {
+      "unidade": "percentile",
+      "por_execucao": [
+        0.999,
+        0.999,
+        0.999,
+        0.999,
+        0.999
+      ],
+      "min": 0.999,
+      "max": 0.999,
+      "mediana": 0.999,
+      "amplitude_pct": 0.0
+    },
+    "std::allocator_V512.maximum": {
+      "unidade": "ns",
+      "por_execucao": [
+        2875.0,
+        2415.0,
+        2945.0,
+        4027.0,
+        5661.0
+      ],
+      "min": 2415.0,
+      "max": 5661.0,
+      "mediana": 2945.0,
+      "amplitude_pct": 110.22071307300509
+    },
+    "std::allocator_V512.p50": {
+      "unidade": "ns",
+      "por_execucao": [
+        481.0,
+        491.0,
+        421.0,
+        401.0,
+        401.0
+      ],
+      "min": 401.0,
+      "max": 491.0,
+      "mediana": 421.0,
+      "amplitude_pct": 21.377672209026127
+    },
+    "std::allocator_V512.p50_per_step": {
+      "unidade": "ns",
+      "por_execucao": [
+        7.516,
+        7.672,
+        6.578,
+        6.266,
+        6.266
+      ],
+      "min": 6.266,
+      "max": 7.672,
+      "mediana": 6.578,
+      "amplitude_pct": 21.37427789601702
+    },
+    "std::allocator_V512.p99": {
+      "unidade": "ns",
+      "por_execucao": [
+        491.0,
+        501.0,
+        451.0,
+        411.0,
+        411.0
+      ],
+      "min": 411.0,
+      "max": 501.0,
+      "mediana": 451.0,
+      "amplitude_pct": 19.955654101995567
+    },
+    "std::allocator_V512.p999": {
+      "unidade": "ns",
+      "por_execucao": [
+        572.1,
+        581.0,
+        501.0,
+        781.1,
+        471.0
+      ],
+      "min": 471.0,
+      "max": 781.1,
+      "mediana": 572.1,
+      "amplitude_pct": 54.203810522635905
+    },
+    "std::allocator_V512.samples": {
+      "unidade": "count",
+      "por_execucao": [
+        10000.0,
+        10000.0,
+        10000.0,
+        10000.0,
+        10000.0
+      ],
+      "min": 10000.0,
+      "max": 10000.0,
+      "mediana": 10000.0,
+      "amplitude_pct": 0.0
+    },
+    "std::allocator_V64.discarded": {
+      "unidade": "count",
+      "por_execucao": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "min": 0.0,
+      "max": 0.0,
+      "mediana": 0.0,
+      "amplitude_pct": null
+    },
+    "std::allocator_V64.highest_supported": {
+      "unidade": "percentile",
+      "por_execucao": [
+        0.999,
+        0.999,
+        0.999,
+        0.999,
+        0.999
+      ],
+      "min": 0.999,
+      "max": 0.999,
+      "mediana": 0.999,
+      "amplitude_pct": 0.0
+    },
+    "std::allocator_V64.maximum": {
+      "unidade": "ns",
+      "por_execucao": [
+        7965.0,
+        4098.0,
+        3817.0,
+        10741.0,
+        5440.0
+      ],
+      "min": 3817.0,
+      "max": 10741.0,
+      "mediana": 5440.0,
+      "amplitude_pct": 127.27941176470588
+    },
+    "std::allocator_V64.p50": {
+      "unidade": "ns",
+      "por_execucao": [
+        501.0,
+        491.0,
+        481.0,
+        401.0,
+        401.0
+      ],
+      "min": 401.0,
+      "max": 501.0,
+      "mediana": 481.0,
+      "amplitude_pct": 20.79002079002079
+    },
+    "std::allocator_V64.p50_per_step": {
+      "unidade": "ns",
+      "por_execucao": [
+        7.828,
+        7.672,
+        7.516,
+        6.266,
+        6.266
+      ],
+      "min": 6.266,
+      "max": 7.828,
+      "mediana": 7.516,
+      "amplitude_pct": 20.7823310271421
+    },
+    "std::allocator_V64.p99": {
+      "unidade": "ns",
+      "por_execucao": [
+        501.0,
+        501.0,
+        501.0,
+        411.0,
+        411.0
+      ],
+      "min": 411.0,
+      "max": 501.0,
+      "mediana": 501.0,
+      "amplitude_pct": 17.964071856287426
+    },
+    "std::allocator_V64.p999": {
+      "unidade": "ns",
+      "por_execucao": [
+        902.0,
+        651.3,
+        601.2,
+        821.0,
+        481.0
+      ],
+      "min": 481.0,
+      "max": 902.0,
+      "mediana": 651.3,
+      "amplitude_pct": 64.63995086749578
+    },
+    "std::allocator_V64.samples": {
+      "unidade": "count",
+      "por_execucao": [
+        10000.0,
+        10000.0,
+        10000.0,
+        10000.0,
+        10000.0
+      ],
+      "min": 10000.0,
+      "max": 10000.0,
+      "mediana": 10000.0,
+      "amplitude_pct": 0.0
+    }
+  },
+  "ambiente": {
+    "cpu_modelo": "AMD Ryzen 9 9900X 12-Core Processor",
+    "cpu_fisicos": "12",
+    "cpu_logicos": "24",
+    "cpu_smt": "2",
+    "cpu_smt_ativo": "1",
+    "cpu_soquetes": "1",
+    "numa_nos": "1",
+    "l3": "32768K x 2 instancia(s)",
+    "l3_dominios": "0-5,12-17 6-11,18-23",
+    "l3_cpus_por_dominio": "L3#0=[0,1,2,3,4,5,12,13,14,15,16,17] L3#1=[6,7,8,9,10,11,18,19,20,21,22,23]",
+    "tsc_sinalizadores": "constant_tsc nonstop_tsc",
+    "tsc_invariante": "sim (constant_tsc e nonstop_tsc)",
+    "governor": "powersave",
+    "turbo_intel": "-",
+    "turbo_amd": "1",
+    "pmu_paranoid": "2",
+    "pmu_estado": "so o proprio processo, sem eventos de kernel",
+    "mem_total": "14,2 GiB",
+    "mem_disponivel": "3,1 GiB",
+    "mem_velocidade": "NAO LIDO -- rode: sudo ./scripts/ambiente.sh --cachear-memoria",
+    "mem_canais": "NAO LIDO -- idem",
+    "hugepages_total": "1024",
+    "hugepages_livres": "1024",
+    "hugepages_tamanho": "2048 kB",
+    "placa": "ASRock B850 Steel Legend WiFi",
+    "bios": "4.10 de 02/10/2026",
+    "kernel": "7.0.0-31-generic",
+    "arquitetura": "x86_64",
+    "distribuicao": "Ubuntu 26.04.1 LTS",
+    "kernel_cmdline": "(nenhum parametro relevante)",
+    "mitigacoes_ativas": "spec_rstack_overflow=Mitigation: IBPB on VMEXIT only; spec_store_bypass=Mitigation: Speculative Store Bypass disabled via prctl; spectre_v1=Mitigation: usercopy/swapgs barriers and __user pointer sanitization; spectre_v2=Mitigation: Enhanced / Automatic IBRS; IBPB: conditional; STIBP: always-on; PBRSB-eIBRS: Not affected; BHI: Not affected; vmscape=Mitigation: IBPB on VMEXIT",
+    "mitigacoes_nao_aplicaveis": "gather_data_sampling, ghostwrite, indirect_target_selection, itlb_multihit, l1tf, mds, meltdown, mmio_stale_data, old_microcode, reg_file_data_sampling, retbleed, srbds, tsa, tsx_async_abort",
+    "gcc": "gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+    "clang": "Ubuntu clang version 21.1.8 (6ubuntu1)",
+    "meson": "1.10.1",
+    "ninja": "1.13.2",
+    "perf": "perf version 7.0.14",
+    "builds_na_arvore": "build-clang-release-checked (release b_ndebug=false); build-debug (debug b_ndebug=false); build-release (release b_ndebug=true); build-release-checked (release b_ndebug=false)",
+    "commit": "6a0a81a",
+    "arvore_suja": "sim",
+    "coletado_em": "2026-09-22T19:49:24-03:00",
+    "campos_nao_coletados": [],
+    "topologia": [
+      {
+        "cpu": "0",
+        "core_id": "0",
+        "l3_id": "0",
+        "smt_siblings": "0,12"
+      },
+      {
+        "cpu": "1",
+        "core_id": "1",
+        "l3_id": "0",
+        "smt_siblings": "1,13"
+      },
+      {
+        "cpu": "2",
+        "core_id": "2",
+        "l3_id": "0",
+        "smt_siblings": "2,14"
+      },
+      {
+        "cpu": "3",
+        "core_id": "3",
+        "l3_id": "0",
+        "smt_siblings": "3,15"
+      },
+      {
+        "cpu": "4",
+        "core_id": "4",
+        "l3_id": "0",
+        "smt_siblings": "4,16"
+      },
+      {
+        "cpu": "5",
+        "core_id": "5",
+        "l3_id": "0",
+        "smt_siblings": "5,17"
+      },
+      {
+        "cpu": "6",
+        "core_id": "8",
+        "l3_id": "1",
+        "smt_siblings": "6,18"
+      },
+      {
+        "cpu": "7",
+        "core_id": "9",
+        "l3_id": "1",
+        "smt_siblings": "7,19"
+      },
+      {
+        "cpu": "8",
+        "core_id": "10",
+        "l3_id": "1",
+        "smt_siblings": "8,20"
+      },
+      {
+        "cpu": "9",
+        "core_id": "11",
+        "l3_id": "1",
+        "smt_siblings": "9,21"
+      },
+      {
+        "cpu": "10",
+        "core_id": "12",
+        "l3_id": "1",
+        "smt_siblings": "10,22"
+      },
+      {
+        "cpu": "11",
+        "core_id": "13",
+        "l3_id": "1",
+        "smt_siblings": "11,23"
+      },
+      {
+        "cpu": "12",
+        "core_id": "0",
+        "l3_id": "0",
+        "smt_siblings": "0,12"
+      },
+      {
+        "cpu": "13",
+        "core_id": "1",
+        "l3_id": "0",
+        "smt_siblings": "1,13"
+      },
+      {
+        "cpu": "14",
+        "core_id": "2",
+        "l3_id": "0",
+        "smt_siblings": "2,14"
+      },
+      {
+        "cpu": "15",
+        "core_id": "3",
+        "l3_id": "0",
+        "smt_siblings": "3,15"
+      },
+      {
+        "cpu": "16",
+        "core_id": "4",
+        "l3_id": "0",
+        "smt_siblings": "4,16"
+      },
+      {
+        "cpu": "17",
+        "core_id": "5",
+        "l3_id": "0",
+        "smt_siblings": "5,17"
+      },
+      {
+        "cpu": "18",
+        "core_id": "8",
+        "l3_id": "1",
+        "smt_siblings": "6,18"
+      },
+      {
+        "cpu": "19",
+        "core_id": "9",
+        "l3_id": "1",
+        "smt_siblings": "7,19"
+      },
+      {
+        "cpu": "20",
+        "core_id": "10",
+        "l3_id": "1",
+        "smt_siblings": "8,20"
+      },
+      {
+        "cpu": "21",
+        "core_id": "11",
+        "l3_id": "1",
+        "smt_siblings": "9,21"
+      },
+      {
+        "cpu": "22",
+        "core_id": "12",
+        "l3_id": "1",
+        "smt_siblings": "10,22"
+      },
+      {
+        "cpu": "23",
+        "core_id": "13",
+        "l3_id": "1",
+        "smt_siblings": "11,23"
+      }
+    ]
+  },
+  "precisao_do_instrumento": {
+    "metodo": "amostras cruas em buffer pre-alocado, percentil exato",
+    "perda_de_precisao": "nenhuma",
+    "resolucao_do_relogio_ns": 1.0,
+    "percentil_maximo_sustentado": null
+  }
+}

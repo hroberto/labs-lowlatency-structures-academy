@@ -22,7 +22,7 @@ cada capítulo. A **ordem de estudo** é outro documento, ainda não escrito.
 
 | Módulo | Pergunta | Estado |
 |---|---|---|
-| [01 memória](01-memoria/README.md) | a que taxa de alocação o alocador global passa a dominar o p99? | **um tópico medido** |
+| [01 memória](01-memoria/README.md) | a que taxa de alocação o alocador global passa a dominar o p99? | **dois tópicos medidos** |
 | [02 layout](02-layout/README.md) | quantos *cache misses* por elemento cada layout custa? | não iniciado |
 | [03 contêineres](03-conteineres/README.md) | em que cardinalidade a busca em array plano perde para a árvore? | não iniciado |
 | [04 índice de chave densa](04-indice-de-chave-densa/README.md) | qual o custo de encontrar o extremo ocupado em p50/p99/p99,9? | não iniciado |
@@ -33,7 +33,7 @@ cada capítulo. A **ordem de estudo** é outro documento, ainda não escrito.
 | [09 capstone](09-capstone/README.md) | qual a diferença ponta a ponta, e qual tópico respondeu por ela? | não iniciado |
 | [10 código gerado](10-codigo-gerado/README.md) | o que o compilador faz com `custom/` que não faz com `std/`? | não iniciado |
 
-**2 tópicos de 23.** A tabela diz "não iniciado" onde não há conteúdo porque
+**3 tópicos de 23.** A tabela diz "não iniciado" onde não há conteúdo porque
 índice que anuncia o que não existe é o defeito que a
 [seção 5](padrao-do-projeto.md#5-rotulagem-de-estado) existe para impedir.
 

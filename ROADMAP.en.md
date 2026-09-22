@@ -261,7 +261,7 @@ that exists only in prose is not a debt: it is forgetting with a date on it.
 
 The ten modules have been reconciled with the standard and have an index under
 [`docs/`](docs/README.en.md), with a question, a failure question and the `std` →
-`custom` pair. **23 planned topics, 2 written.**
+`custom` pair. **23 planned topics, 3 written.**
 
 The done criterion is the same in all of them: every topic with `std/`,
 `custom/`, `spec.hpp`, a parameterized L1, an archived campaign and a **decision

@@ -255,7 +255,7 @@ com data marcada.
 
 Os dez módulos foram reconciliados com a norma e têm índice em
 [`docs/`](docs/README.md), com pergunta, pergunta de falha e par `std` →
-`custom`. **23 tópicos previstos, 2 escritos.**
+`custom`. **23 tópicos previstos, 3 escritos.**
 
 O critério de pronto é o mesmo em todas: cada tópico com `std/`, `custom/`,
 `spec.hpp`, L1 parametrizado, campanha arquivada e **regra de decisão**.
