@@ -59,8 +59,10 @@ not started, **zero commits and no remote** — was absorbed by this repository 
 - [ ] the `CPP_ACADEMY_*` prefix on the measurement ruler's environment
       variables: kept as-is during absorption, to be decided against the new identity
 - [ ] `pre-commit.sh` and CI running the three-configuration matrix
-- [ ] a **language-pair** checker: the identical-stem rule (standard, section 2)
-      exists to be verifiable, and today it is not
+- [x] a **language-pair** checker: `verificar-paridade.py`, with four rules —
+      pair, navigation, structure and numbers —, 14 self-test cases and two baits
+      born from its own false accusations (the per-language decimal separator,
+      and the example navigation inside a code block)
 
 ## Stage 2 — Environment · **partial**
 

@@ -967,27 +967,29 @@ Policy without a gate is worthless. The verifiers in
 | `verificar-retratacoes.py` | a value declared retracted does not survive outside the block retracting it |
 | `verificar-aritmetica.py` | a percentage the text makes checkable adds up |
 | `verificar-suposicao.py` | the Gate R precondition reaches the optimizer, checked in the assembly, with a control arm |
+| `verificar-paridade.py` | the language pair exists, the navigation points at it, the structure matches, and no published number is missing from either language |
 
 The first four come from the DPDK Academy, where **each was born from a measured
 defect**; the fifth was born in the absorbed project, from a defect of its own —
-Clang was discarding the assumption silently. All have self-tests. The reason for porting instead of writing is
+Clang was discarding the assumption silently. The sixth was born here, and it was
+born from this very section: it recorded that the identical-stem rule existed to
+be verifiable and was not verified. All have self-tests. The reason for porting instead of writing is
 in the header of `verificar-retratacoes.py`: in the defect that originated it,
 whoever wrote the retraction knew the rule, had just stated it, and still left
 the retracted value circulating on other pages. **Manual correction does not
 scale.**
 
 **Twelve are missing, and the count is meant to be read.** The DPDK Academy has
-23 quality programs and 6,827 lines in `ferramental/qualidade/`; here there are
-five. The two that matter most, with their coupling already measured, are
-`verificar-promessa.py` (every cited program exists and enters the build, 18
-coupling points) and `verificar-autodescricao.py` (what the material claims
-about itself matches the disk, 838 lines and 34 points) — the latter is what
-sustains the state labelling of section 5, and until it exists section 5 is an
-author's promise, not a gate. Also missing are the **language-pair** checker,
-which makes the identical-stem rule of section 2 verifiable, and the **chart
-generator**, because high-percentile dispersion is read in a chart and the PT/EN
-parity applies to images. State: **not ported** — recorded in the
-[ROADMAP.en.md](../ROADMAP.en.md).
+16 checkers in `ferramental/qualidade/`, inside 23 quality programs and 6,827
+lines. Four of them were ported: twelve are missing. The two that matter most,
+with their coupling already measured, are `verificar-promessa.py` (every cited
+program exists and enters the build, 18 coupling points) and
+`verificar-autodescricao.py` (what the material claims about itself matches the
+disk, 838 lines and 34 points) — the latter is what sustains the state labelling
+of section 5, and until it exists section 5 is an author's promise, not a gate.
+Also missing is the **chart generator**, because high-percentile dispersion is
+read in a chart and the PT/EN parity applies to images. State: **not ported** —
+recorded in the [ROADMAP.en.md](../ROADMAP.en.md).
 
 The porting order follows real need, not bulk: porting 6,800 lines before there
 is content to check is a promise with no code, which is what this standard

@@ -1,11 +1,13 @@
 <!-- cita-defeito -->
+> 🇧🇷 Português | [🇺🇸 English](README.en.md)
+
 # Qualidade — os verificadores
 
 <!-- Este documento REPRODUZ a conta errada que o verificador de aritmética
      pega, para explicar o que ele faz. A marca acima o isenta desse portão e
      aparece na contagem final dele: a isenção é declarada, não silenciosa. -->
 
-Portados de `ferramental/qualidade/` do projeto irmão
+Portados de `ferramental/qualidade/` do
 [labs-dpdk-academy](https://github.com/hroberto/labs-dpdk-academy). **Cada um
 nasceu de um defeito medido, não de teoria** — e a razão de portar em vez de
 reescrever está no cabeçalho de `verificar-retratacoes.py`: no defeito que o
@@ -13,7 +15,7 @@ originou, quem escreveu a retratação sabia da regra, tinha acabado de enunciá
 e ainda assim deixou o valor derrubado circulando em outras páginas.
 **Correção manual não escala.**
 
-## Os quatro portados do projeto irmão
+## Os quatro portados do DPDK Academy
 
 | Verificador | Regra | Defeito que o originou |
 |---|---|---|
@@ -27,8 +29,9 @@ e ainda assim deixou o valor derrubado circulando em outras páginas.
 | Verificador | Regra | Defeito que o originou |
 |---|---|---|
 | `verificar-suposicao.py` | a pré-condição da porta R chega ao otimizador em release | o Clang descartava a suposição em silêncio, porque o predicado é chamada de função |
+| `verificar-paridade.py` | par de idiomas: existência, navegação, estrutura e números | a regra do radical idêntico existia para ser verificável e não era verificada |
 
-Este é o único dos cinco que olha **código gerado**. Ele existe porque
+O primeiro é o único dos seis que olha **código gerado**. Ele existe porque
 `PERF_EXPECTS` promete duas coisas — não custar nada em release E entregar a
 pré-condição ao otimizador — e a segunda pode deixar de valer sem que nada
 quebre: o código continua correto, compila, e a suíte continua verde.
@@ -50,11 +53,11 @@ reduz a aritmética e aparece no assembly de qualquer arquitetura.
 
 ## Autoteste
 
-**Os cinco têm autoteste**, e ele verifica o próprio verificador contra casos
+**Os seis têm autoteste**, e ele verifica o próprio verificador contra casos
 montados, incluindo iscas de falso positivo:
 
 ```bash
-for v in links ancoras aritmetica retratacoes suposicao; do
+for v in links ancoras aritmetica retratacoes suposicao paridade; do
     python3 ferramental/qualidade/verificar-$v.py --autoteste
 done
 ```
@@ -66,19 +69,46 @@ E todos **pulam com código 77** quando falta `python3`, em vez de sumir da
 suíte: `pular-sem-python3.sh` existe porque a ausência desse tratamento fazia a
 suíte encolher e reportar verde.
 
-## Os dois do irmão que ainda não foram portados
+## Os dois do DPDK Academy que ainda não foram portados
 
 | Verificador | Regra | Por que ainda não |
 |---|---|---|
-| `verificar-promessa.py` | todo programa citado existe na árvore e entra na compilação | 18 pontos de acoplamento com a estrutura do projeto irmão |
+| `verificar-promessa.py` | todo programa citado existe na árvore e entra na compilação | 18 pontos de acoplamento com a estrutura do projeto de origem |
 | `verificar-autodescricao.py` | o que o material afirma sobre si corresponde ao disco | 838 linhas, 34 pontos de acoplamento |
 
 O segundo é o que sustenta a rotulagem de estado da norma
 ([seção 5](../../docs/padrao-do-projeto.md#5-rotulagem-de-estado)), e sua
 ausência é dívida declarada no [ROADMAP](../../ROADMAP.md).
 
-## Um verificador que falta, e que o irmão não tem
+## O que o verificador de paridade acusou na primeira execução
 
 A regra do **par de idiomas com radical idêntico**
 ([seção 2](../../docs/padrao-do-projeto.md#2-convenção-de-arquivos)) existe
-justamente para ser verificável por máquina. Hoje não é verificada.
+justamente para ser verificável por máquina, e passou a ser. Na primeira
+execução contra a árvore ele acusou dez problemas, e **oito eram dele mesmo** —
+seis de número e dois de navegação:
+
+- interpretava `.` como separador de milhar no português, o que transformava
+  `15.2.0` em `1520`, `1003.1` em `10031` e `802.3` em `8023` — versão de
+  compilador e identificador de norma não trocam de separador ao mudar de
+  idioma. A forma canônica passou a **remover** o separador em vez de
+  interpretá-lo, aceitando um falso negativo raro (`12,3` e `123` colidem) em
+  troca de zero acusação falsa;
+- lia a navegação de **exemplo** da [seção
+  4](../../docs/padrao-do-projeto.md#4-navegação-entre-idiomas), que mora num
+  bloco de código porque a norma ensina a regra mostrando-a, como se fosse a
+  navegação do documento — e exigia que a norma apontasse para `README.en.md`.
+
+Os dois defeitos viraram isca de falso positivo no autoteste. Os **dois**
+achados legítimos eram os READMEs de `ferramental/` sem par em inglês, agora
+escritos.
+
+A proporção é o argumento a favor de autoteste com isca: quatro em cada cinco
+acusações da primeira execução eram do verificador, e todas pareciam achados.
+
+## Navegação
+
+- [Ferramental](../README.md)
+- [Documentação e norma](../../docs/README.md)
+
+> 🇧🇷 Português | [🇺🇸 English](README.en.md)

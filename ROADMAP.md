@@ -58,8 +58,10 @@ repositório em 2026-09-21. Veio o que já era executável:
 - [ ] prefixo `CPP_ACADEMY_*` das variáveis de ambiente da régua de apuração:
       mantido na absorção, decidir se acompanha a identidade nova
 - [ ] `pre-commit.sh` e CI executando a matriz de três configurações
-- [ ] verificador de **par de idiomas**: a regra do radical idêntico (seção 2 da
-      norma) existe para ser verificável, e hoje não é
+- [x] verificador de **par de idiomas**: `verificar-paridade.py`, com quatro
+      regras — par, navegação, estrutura e números —, 14 casos de autoteste e
+      duas iscas que nasceram de acusações falsas dele mesmo (separador decimal
+      por idioma, e a navegação de exemplo dentro de bloco de código)
 
 ## Etapa 2 — Ambiente · **parcial**
 

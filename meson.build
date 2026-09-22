@@ -115,6 +115,9 @@ verificadores = [
   ['aritmetica', 'percentual que o texto torna conferivel fecha'],
   ['retratacoes', 'valor retratado nao sobrevive fora do bloco'],
   ['suposicao', 'a pre-condicao da porta R chega ao otimizador'],
+  # A regra do radical identico (norma, secao 2) existe para ser verificavel por
+  # maquina, e ate agora nao era -- a propria secao 31 registrava a lacuna.
+  ['paridade', 'par de idiomas: existencia, navegacao, estrutura e numeros'],
 ]
 
 foreach v : verificadores
