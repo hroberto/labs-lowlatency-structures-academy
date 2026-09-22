@@ -1,0 +1,45 @@
+# Diretórios de build do Meson/Ninja
+build/
+builddir/
+build-*/
+
+# Subprojetos baixados pelo Meson: os arquivos .wrap SÃO versionados
+# (fixam versão e hash, garantindo build reprodutível); o código baixado não.
+subprojects/*/
+subprojects/packagecache/
+!subprojects/*.wrap
+
+# Artefatos de compilação
+*.o
+*.a
+*.so
+*.out
+*.log
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+temp/
+
+# Cache do Python, gerado pelos verificadores em ferramental/qualidade/
+__pycache__/
+*.pyc
+
+# Resultados brutos de medição: são gerados por máquina e por execução.
+# O que o repositório versiona é o PROGRAMA que produz o número e a TABELA
+# publicada no documento -- não a saída crua de cada rodada, que difere em
+# cada host e inflaria o histórico sem tornar nada mais reprodutível.
+resultados/**/*.csv
+resultados/**/*.json
+!resultados/**/.gitkeep
+
+# Configuração local do Claude Code: o sufixo `.local` marca o que é pessoal e
+# não deve ser compartilhado. O CLAUDE.md, esse sim, é versionado -- ele carrega
+# as instruções do projeto, não as preferências de uma máquina.
+.claude/settings.local.json

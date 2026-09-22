@@ -1,0 +1,53 @@
+# Base herdada do projeto irmão labs-dpdk-academy. As exclusões abaixo NÃO são
+# conveniência: cada uma existe porque a regra colide com uma decisão de projeto
+# já documentada em docs/padrao-do-projeto.md, e uma exclusão silenciosa é pior
+# que a colisão.
+Checks: >
+  -*,
+  clang-analyzer-*,
+  bugprone-*,
+  performance-*,
+  modernize-*,
+  readability-*,
+  cppcoreguidelines-*,
+  misc-*,
+  google-*,
+  llvm-namespace-comment,
+  cert-*,
+  -cppcoreguidelines-macro-usage,
+  -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
+  -modernize-use-trailing-return-type,
+  -readability-identifier-length,
+  -readability-magic-numbers,
+  -cppcoreguidelines-avoid-magic-numbers
+WarningsAsErrors: ''
+FormatStyle: file
+HeaderFilterRegex: '.*'
+
+# POR QUE CADA EXCLUSÃO
+#
+# cppcoreguidelines-macro-usage
+#   PERF_EXPECTS e PERF_ENSURES são macros de propósito. Elas são a costura de
+#   migração para os Contracts de C++26: quando `pre`/`post` estiverem
+#   disponíveis, o corpo da macro muda e nenhum ponto de chamada é tocado.
+#   Uma função não serve aqui porque `[[assume]]` precisa do predicado no local
+#   de chamada, não avaliado, e porque o texto do predicado (#expr) e o
+#   source_location só existem na expansão.
+#
+# cppcoreguidelines-pro-bounds-array-to-pointer-decay
+#   As tabelas `static constexpr std::array` construídas por função `consteval`
+#   são o objeto de estudo da tese de compile-time. O acesso indexado a elas é
+#   o que está sendo medido.
+#
+# modernize-use-trailing-return-type
+#   Questão de forma, não de correção, e divergiria do projeto irmão.
+#
+# readability-identifier-length
+#   Nomes curtos são corretos em corpo de laço de microbenchmark e em parâmetro
+#   de template não-tipo.
+#
+# *-magic-numbers
+#   Os números deste repositório são, em grande parte, limites de domínio do
+#   kernel e da arquitetura -- e eles aparecem exatamente uma vez, na declaração
+#   do domínio, que é o lugar certo. A regra pediria uma constante nomeada para
+#   o conteúdo de uma constante nomeada.

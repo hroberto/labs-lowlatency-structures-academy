@@ -1,0 +1,51 @@
+> [🇧🇷 Português](README.md) | 🇺🇸 English
+
+# Low-Latency Structures Academy
+
+*Beyond the Standard Library.* Where the C++ standard library stops and the hot
+path begins. Every published number has a program that produces it, measured on
+a named machine.
+
+## Project state
+
+> **Skeleton.** This document is a skeleton and says so. The project's public
+> identity — thesis, readers, what the project is not — lives in
+> [`docs/origem/setup-lowlatency-structures-academy.md`](docs/origem/setup-lowlatency-structures-academy.md)
+> and has **not** yet been rewritten for the reader. **No performance number has
+> been published.**
+
+| Component | State |
+|---|---|
+| [Project standard](docs/padrao-do-projeto.en.md) | **written** — 33 sections, 6 parts; absorption delta pending |
+| [Reference catalogue](docs/referencias.en.md) | **written** — addresses pending verification |
+| [Quality tooling](ferramental/qualidade/) | **code exists, not measured** — 5 checkers, self-tests passing |
+| [Measurement ruler](lib/measurement/) | **code exists, not measured** — builds in all three configurations |
+| [Contract library](lib/contract/) | **code exists, not measured** — three gates, suite in all three configurations |
+| `scripts/ambiente.sh` | **not started** |
+| Module track | **not started** |
+| Capstone (order book engine) | **not started** |
+
+State labels are normative — see
+[project standard, section 5](docs/padrao-do-projeto.en.md#5-state-labelling).
+
+## The thesis
+
+Every topic takes the mechanism the language ships, measures the exact point
+where it stops serving, and builds the complement — in the same harness, under
+the same contract, on the same machine. The `std` → `custom` pair is the unit of
+work, and the **decision rule** — the volume, cardinality or percentile beyond
+which the swap pays off — is the deliverable.
+
+## Origin
+
+This repository absorbed the foundation of `labs_cpp_performance_tuning_academy`
+(standard, measurement ruler, contract library, checkers), which was never
+published. Both setup documents are preserved intact under
+[`docs/origem/`](docs/origem/).
+
+## Navigation
+
+- [Documentation and standard](docs/README.en.md)
+- [Build order](ROADMAP.en.md)
+
+> [🇧🇷 Português](README.md) | 🇺🇸 English

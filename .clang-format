@@ -1,0 +1,20 @@
+# Herdado do projeto irmão labs-dpdk-academy, para que código lido em sequência
+# nos dois repositórios não troque de forma no meio.
+BasedOnStyle: LLVM
+IndentWidth: 4
+ColumnLimit: 100
+SortIncludes: true
+PointerAlignment: Right
+AlignAfterOpenBracket: Align
+BreakBeforeBraces: Allman
+AllowShortFunctionsOnASingleLine: Empty
+
+# Acréscimos deste projeto: o material é C++ puro e fortemente baseado em
+# template, `requires` e `constexpr`. Sem estas opções, uma restrição de
+# concept vira uma linha de 180 colunas ou uma quebra em lugar arbitrário.
+Standard: Latest
+IndentRequiresClause: true
+RequiresClausePosition: OwnLine
+BreakBeforeConceptDeclarations: Always
+AlwaysBreakTemplateDeclarations: Yes
+PackConstructorInitializers: NextLine

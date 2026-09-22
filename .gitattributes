@@ -1,0 +1,27 @@
+# Normalização de fim de linha e classificação de linguagem.
+
+# --- Fim de linha ---------------------------------------------------------
+#
+# LF no repositório, sempre. O projeto é Linux-only, mas quem clonar no Windows
+# com `core.autocrlf=true` receberia CRLF nos scripts -- e um `.sh` com CRLF
+# falha com "bad interpreter: /usr/bin/env bash^M", erro que não diz o que é.
+# Fixar aqui vale mais que documentar depois.
+* text=auto eol=lf
+
+# Arquivos que nunca devem ser tocados pela normalização.
+*.png  binary
+*.jpg  binary
+*.pdf  binary
+*.tar.gz binary
+*.zip  binary
+
+# --- Classificação de linguagem -------------------------------------------
+#
+# Mesma razão que no projeto irmão labs-dpdk-academy: o linguist do GitHub
+# exclui `docs/` das estatísticas de linguagem POR CONVENÇÃO, e a convenção
+# está errada aqui -- `docs/**/medicoes/` guarda os programas C++ que produzem
+# cada número publicado. É árvore de build, não prosa.
+docs/**/medicoes/**  linguist-documentation=false
+
+# Subprojetos baixados pelo Meson são código de terceiros.
+subprojects/*/  linguist-vendored
