@@ -4,8 +4,9 @@
 
 **This document is the BUILD order of the material. It is not a reading order.**
 
-The canonical study order will be the track's, in `docs/plano-estudo.md`, **not
-yet written**. The distinction exists because in the upstream project two
+The study order is a different document:
+[`docs/plano-estudo.en.md`](docs/plano-estudo.en.md). The two diverge on purpose
+— module 08 is the first to build and the second to last to read. The distinction exists because in the upstream project two
 competing numberings shared one README and "level 5" came to mean two different
 things depending on the document.
 
@@ -189,9 +190,13 @@ not started, **zero commits and no remote** — was absorbed by this repository 
       and today's only coupling with no gate: a number published in a README
       against the campaign it cites. Re-running a campaign changes the numbers
       and nothing goes red
-- [ ] `docs/plano-estudo.md` — **the study order**, which is a different document
-      from this file's build order. It is cited in six files and does not exist;
-      it can be written now, because the module indexes exist
+- [x] [`docs/plano-estudo.en.md`](docs/plano-estudo.en.md) — the reading order,
+      in both languages, with its divergence from this order justified module by
+      module: allocation before layout because measuring SoA under allocator
+      pressure measures the allocator; containers before the order book because
+      the flat array only stops looking like magic once you have seen the generic
+      structure it beats; parsing near the end because the uncomfortable result
+      weighs more after six modules where the alternative paid off
 
 ## Stage 3.5 — Tooling debt, declared
 

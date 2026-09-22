@@ -8,6 +8,7 @@
 |---|---|---|
 | [padrao-do-projeto.md](padrao-do-projeto.md) | **a norma**: método, medição, contrato, arquitetura, documentação, fontes, e o par `std` e `custom` | **escrito** — 36 seções, 7 partes |
 | [referencias.md](referencias.md) | catálogo central, com identificadores estáveis | **escrito**, endereços pendentes |
+| [plano-estudo.md](plano-estudo.md) | **a ordem de leitura** — diferente da ordem de construção, que é o ROADMAP | **escrito** |
 | [origem/setup-cpp-performance-academy.md](origem/setup-cpp-performance-academy.md) | o documento de setup que originou **esta norma**, preservado intacto para auditoria | intacto |
 | [origem/setup-lowlatency-structures-academy.md](origem/setup-lowlatency-structures-academy.md) | o documento de setup que originou **a tese e a trilha** deste repositório, preservado intacto | intacto |
 
@@ -44,7 +45,6 @@ transversal, como o 08.
 
 | Documento | Para quê servirá |
 |---|---|
-| `plano-estudo.md` | **a ordem de estudo canônica** — é o que os módulos citarão |
 | `regras-de-decisao.md` | **a tabela consolidada de regras de decisão** (norma, seção 35) — o artefato de referência interna |
 
 > A ordem de estudo e a ordem de construção são documentos diferentes de

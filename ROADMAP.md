@@ -4,8 +4,9 @@
 
 **Este documento é a ordem de CONSTRUÇÃO do material. Não é ordem de leitura.**
 
-A ordem de estudo canônica será a da trilha, em `docs/plano-estudo.md`, **ainda
-não escrito**. A distinção existe porque no projeto a montante duas numerações
+A ordem de estudo é outro documento: [`docs/plano-estudo.md`](docs/plano-estudo.md).
+As duas divergem de propósito — o módulo 08 é o primeiro a construir e o
+penúltimo a ler. A distinção existe porque no projeto a montante duas numerações
 concorrentes conviveram no mesmo README e "nível 5" passou a significar duas
 coisas diferentes conforme o documento.
 
@@ -183,9 +184,13 @@ repositório em 2026-09-21. Veio o que já era executável:
       único acoplamento hoje sem portão: número publicado num README contra a
       campanha que ele cita. Refazer uma campanha muda os números e nada fica
       vermelho
-- [ ] `docs/plano-estudo.md` — **a ordem de estudo**, que é outro documento que
-      a ordem de construção deste arquivo. Ele é citado em seis arquivos e não
-      existe; pode ser escrito já, porque os índices de módulo existem
+- [x] [`docs/plano-estudo.md`](docs/plano-estudo.md) — a ordem de leitura, nos
+      dois idiomas, com a divergência em relação a esta ordem justificada módulo
+      a módulo: alocação antes de layout porque medir SoA sob pressão de alocador
+      mede o alocador; contêineres antes do livro porque o array plano só não
+      parece mágica depois de se ver a estrutura genérica que ele bate; parsing
+      perto do fim porque o resultado incômodo pesa mais depois de seis módulos
+      em que a alternativa compensou
 
 ## Etapa 3.5 — Dívida de ferramental, declarada
 
