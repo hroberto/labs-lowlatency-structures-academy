@@ -639,12 +639,38 @@ inspection — the `std::expected` of environment validation appears in
 |---|---|
 | Language standard | **C++23** (`cpp_std=c++23`) |
 | Reference compilers | GCC 15.2.0 and Clang 21.1.8 |
+| Verified floor | GCC 14 and Clang 20 — exercised in CI on every push |
+| **Refuted** floor | Clang 18.1.3 — measured, does not compile (see below) |
 | Build | Meson ≥ 1.1 + Ninja |
 | Architectures in scope | **x86-64 only** |
 | System dependencies | **none beyond the compiler**, Meson and Ninja |
 
 The choice of strict C++23 is what makes `[[assume]]` the contract mechanism
 rather than Contracts — see section 13.
+
+### The compiler minimum is measured, not announced
+
+The standard said **"GCC 14+ and Clang 18+"**, inherited from the track's origin
+document. The first CI run refuted the second half: the **Clang 18.1.3** of the
+`ubuntu-24.04` image does not compile what this project uses — `<expected>` and
+`hardware_destructive_interference_size` are missing, the latter depending in
+libstdc++ on a macro Clang only started defining later.
+
+What caught it was `check-env.sh`, and it caught it because it **probes the
+feature instead of trusting the version number**:
+
+```cpp
+static_assert(std::hardware_destructive_interference_size >= 32);
+std::expected<int, const char*> f(bool b);
+```
+
+The probe is the authority, not this table. If a future compiler starts failing,
+CI goes red in the diagnosis step, before any compilation — which is where the
+information is cheap.
+
+The floor is now **exercised**: the CI matrix runs one job with the reference
+machine's compilers and another with the declared minimum. A minimum version
+that compiles nothing is a promise, not a floor.
 
 **arm64 left the scope, and that departure corrects a promise with no checker.**
 The track's origin document said "arm64 compiles, no numbers published". There

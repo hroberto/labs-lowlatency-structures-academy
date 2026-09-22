@@ -86,11 +86,16 @@ repositório em 2026-09-21. Veio o que já era executável:
       em `main` e `pull_request`
 - [x] `dependabot.yml` só para `github-actions`, com a razão de não haver regra
       `ignore` registrada no próprio arquivo
-- [ ] **o contrato CI ↔ máquina de referência, declarado e não resolvido:** a CI
-      roda GCC 14 e Clang 18; a máquina mede em GCC 15.2.0 e Clang 21.1.8.
-      Portabilidade é da CI, medição é da máquina nomeada, e nenhum número
-      publicado sai da CI. Se um dia um número tiver de sair de lá, isto vira
-      decisão a rever
+- [x] **o contrato CI ↔ máquina de referência, resolvido por medição.** A CI
+      rodava `ubuntu-24.04` com GCC 14 e Clang 18 e falhou na primeira execução:
+      o **Clang 18.1.3 não compila** `<expected>` nem
+      `hardware_destructive_interference_size`, e a norma afirmava "Clang 18+".
+      Quem pegou foi o `check-env.sh`, porque sonda recurso em vez de confiar na
+      versão. A imagem passou a ser `ubuntu-26.04`, que traz **os mesmos GCC
+      15.2.0 e Clang 21.1.8 da máquina de referência**, e a matriz virou dois
+      *jobs*: `maquina` e `piso` (GCC 14 + Clang 20). Piso que nada compila é
+      promessa, não piso. Portabilidade continua sendo da CI e medição da
+      máquina — nenhum número publicado sai de lá
 - [x] verificador de **par de idiomas**: `verificar-paridade.py`, com quatro
       regras — par, navegação, estrutura e números —, 14 casos de autoteste e
       duas iscas que nasceram de acusações falsas dele mesmo (separador decimal

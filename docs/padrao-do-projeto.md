@@ -621,12 +621,38 @@ aqui. E a regra da porta E fica verificável por inspeção de diretório —
 |---|---|
 | Padrão da linguagem | **C++23** (`cpp_std=c++23`) |
 | Compiladores de referência | GCC 15.2.0 e Clang 21.1.8 |
+| Piso verificado | GCC 14 e Clang 20 — exercitados na CI a cada *push* |
+| Piso **refutado** | Clang 18.1.3 — medido, não compila (ver abaixo) |
 | Build | Meson ≥ 1.1 + Ninja |
 | Arquiteturas no escopo | **x86-64 apenas** |
 | Dependências de sistema | **nenhuma além do compilador**, do Meson e do Ninja |
 
 A escolha de C++23 estrito é o que torna `[[assume]]` o mecanismo de contrato, e
 não Contracts — ver seção 13.
+
+### O mínimo de compilador é medido, não anunciado
+
+A norma dizia **"GCC 14+ e Clang 18+"**, herdado do documento de origem da
+trilha. A primeira execução da CI refutou a segunda metade: o **Clang 18.1.3**
+da imagem `ubuntu-24.04` não compila o que este projeto usa — faltam
+`<expected>` e `hardware_destructive_interference_size`, que em libstdc++
+depende de um macro que o Clang passou a definir depois.
+
+Quem pegou foi o `check-env.sh`, e pegou porque **sonda o recurso em vez de
+confiar no número da versão**:
+
+```cpp
+static_assert(std::hardware_destructive_interference_size >= 32);
+std::expected<int, const char*> f(bool b);
+```
+
+A sonda é a autoridade, e não esta tabela. Se um compilador futuro passar a
+falhar, a CI fica vermelha no diagnóstico, antes de qualquer compilação — que é
+onde a informação é barata.
+
+O piso passou a ser **exercitado**: a matriz da CI roda um *job* com os
+compiladores da máquina de referência e outro com o mínimo declarado. Versão
+mínima que nada compila é promessa, não piso.
 
 **arm64 saiu do escopo, e a saída é a correção de uma promessa sem verificador.**
 O documento de origem da trilha dizia "arm64 compila, sem números publicados".

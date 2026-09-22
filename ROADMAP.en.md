@@ -87,11 +87,17 @@ not started, **zero commits and no remote** — was absorbed by this repository 
       `permissions: contents: read`, triggered only on `main` and `pull_request`
 - [x] `dependabot.yml` for `github-actions` only, with the reason for having no
       `ignore` rule recorded in the file itself
-- [ ] **the CI ↔ reference-machine contract, declared and unresolved:** CI runs
-      GCC 14 and Clang 18; the machine measures on GCC 15.2.0 and Clang 21.1.8.
-      Portability belongs to CI, measurement to the named machine, and no
-      published number comes out of CI. If one day a number has to come from
-      there, this becomes a decision to revisit
+- [x] **the CI ↔ reference-machine contract, settled by measurement.** CI ran
+      `ubuntu-24.04` with GCC 14 and Clang 18 and failed on its first run:
+      **Clang 18.1.3 does not compile** `<expected>` nor
+      `hardware_destructive_interference_size`, while the standard claimed
+      "Clang 18+". What caught it was `check-env.sh`, because it probes features
+      instead of trusting versions. The image is now `ubuntu-26.04`, which ships
+      **the same GCC 15.2.0 and Clang 21.1.8 as the reference machine**, and the
+      matrix became two jobs: `maquina` and `piso` (GCC 14 + Clang 20). A floor
+      that compiles nothing is a promise, not a floor. Portability still belongs
+      to CI and measurement to the machine — no published number comes from
+      there
 - [x] a **language-pair** checker: `verificar-paridade.py`, with four rules —
       pair, navigation, structure and numbers —, 14 self-test cases and two baits
       born from its own false accusations (the per-language decimal separator,
