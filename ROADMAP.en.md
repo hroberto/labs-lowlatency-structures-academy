@@ -222,14 +222,25 @@ that exists only in prose is not a debt: it is forgetting with a date on it.
       baits later, 105 promises checked and none broken. One of its defects was a
       real bug: `01-harness` exists **as a directory**, and the collection only
       looked at files
-- [ ] the **chart generator**, ported from `ferramental/graficos/` of the DPDK
-      Academy. Section 31 of the standard cites it as missing; no item tracked it.
-      High-percentile dispersion is read in a chart, and PT/EN parity applies to
-      images — the upstream project keeps `.svg` and `.en.svg` in pairs
-- [ ] decide whether a document **for the reader** on how to read the numbers
-      exists, distinct from the standard, which is for the author. The
-      `docs/00-visao-geral/` of the origin document left with the merge of the two
-      trees and left no declared replacement
+- [x] `ferramental/graficos/` — hand-written SVG, **with no dependency**:
+      requiring matplotlib would turn into an asterisk the promise that nothing
+      beyond the compiler is needed. Four files per figure, light and dark × PT
+      and EN.
+      The palette did not come from taste: the checks for colour-vision
+      separation (Machado-Oliveira-Fernandes, severity 1,0), chroma floor,
+      lightness band and contrast were **computed** in both modes — separation
+      23,8 in light and 25,7 in dark, against a target of 8,0. The status colour
+      never carries meaning alone: every point using it gets a direct label
+- [x] **image** parity is now verified. Section 31 of the standard promised that
+      "PT/EN parity applies to images" and the sentence had no gate: a chart
+      with Portuguese labels handed to an English reader is half a figure, and
+      nothing reported it
+- [x] **decided: there will be no separate document on how to read the
+      numbers.** The [study plan](docs/plano-estudo.en.md) routes the reader to
+      sections 6 to 9 and 28 of the standard before any module, and every topic
+      carries *What this measurement does not show* by requirement of section 27.
+      A third document would restate the same content and create a third copy to
+      diverge — the very defect that merging the two trees just corrected
 
 ## Stages 4 onwards — the track
 

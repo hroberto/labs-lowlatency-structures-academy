@@ -101,6 +101,16 @@ de L3, `governor=powersave` com *boost* ativo, e resolução de `steady_clock` d
 | piso por operação p99,9 | 21,00 | 0,0% | ns |
 | piso por operação máximo | 21,00 | 10681,0% | ns |
 
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="imagens/dispersao-piso-escuro.svg">
+  <img alt="Quatro painéis, um por métrica, com os valores das cinco execuções da campanha. Os painéis de p50, p99 e p99,9 mostram valores idênticos entre execuções; o painel do máximo mostra dois valores muito acima dos demais, de 2264 ns e 1864 ns, contra 21 ns nas outras três." src="imagens/dispersao-piso-claro.svg">
+</picture>
+
+A figura é o argumento: três linhas retas e uma serrilhada. A amplitude de
+**10681%** do máximo não mede o instrumento — mede **quais execuções colheram
+uma interrupção**.
+
 ## O que esta medição não mostra
 
 - **o que o benchmark removeu:** não há trabalho entre as duas leituras, nem

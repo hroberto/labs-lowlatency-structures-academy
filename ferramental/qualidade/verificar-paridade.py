@@ -13,7 +13,7 @@ verificável, e sem verificação é promessa: um documento inglês que perde um
 seção, uma tabela ou um número não avisa ninguém — ele apenas fica menor, e
 quem lê só em inglês nunca descobre o que faltou.
 
-AS QUATRO REGRAS
+AS CINCO REGRAS
 
   1. PAR. Todo `X.md` tem `X.en.md`, e todo `X.en.md` tem `X.md`.
   2. NAVEGAÇÃO (seção 4). O documento português abre e fecha com
@@ -28,6 +28,10 @@ AS QUATRO REGRAS
      português e `99.9` em inglês -- e `6.827` em português é `6,827` em inglês.
      Sem essa normalização a regra acusaria todo número de todo documento, o que
      é o mesmo que não acusar nada.
+  5. IMAGENS. Todo `.svg` de `imagens/` tem par `.en.svg`. A seção 31 da norma
+     diz que "a paridade PT/EN vale para as imagens", e até agora essa frase não
+     era verificada: um gráfico com rótulo em português entregue ao leitor de
+     inglês é uma figura pela metade, e nada acusava.
 
 O QUE ELE NÃO FAZ
 
@@ -150,6 +154,24 @@ def preservado(caminho):
     return ORIGEM_PRESERVADA in partes or ARQUIVO_DE_MEDICAO in partes
 
 
+def coletar_imagens(raiz):
+    """(sem par em inglês, sem par em português), para `.svg` de `imagens/`."""
+    pt, en = {}, {}
+    for base, dirs, arquivos in os.walk(raiz):
+        dirs[:] = [d for d in dirs if d not in IGNORAR and not d.startswith("build-")]
+        if os.path.basename(base) != "imagens":
+            continue
+        for nome in sorted(arquivos):
+            if not nome.endswith(".svg"):
+                continue
+            caminho = os.path.join(base, nome)
+            if nome.endswith(".en.svg"):
+                en[caminho[: -len(".en.svg")]] = caminho
+            else:
+                pt[caminho[: -len(".svg")]] = caminho
+    return pt, en
+
+
 def coletar(raiz):
     pt, en = {}, {}
     for base, dirs, arquivos in os.walk(raiz):
@@ -188,6 +210,17 @@ def verificar(raiz="."):
     for radical, caminho in sorted(en.items()):
         if radical not in pt:
             print(f"  {caminho}: sem par em portugues (esperado {radical}.md)")
+            problemas += 1
+
+    # --- regra 5: imagens ------------------------------------------------
+    ipt, ien = coletar_imagens(raiz)
+    for radical, caminho in sorted(ipt.items()):
+        if radical not in ien:
+            print(f"  {caminho}: imagem sem par em ingles (esperado {radical}.en.svg)")
+            problemas += 1
+    for radical, caminho in sorted(ien.items()):
+        if radical not in ipt:
+            print(f"  {caminho}: imagem sem par em portugues (esperado {radical}.svg)")
             problemas += 1
 
     pares = sorted(set(pt) & set(en))
@@ -250,7 +283,8 @@ def verificar(raiz="."):
                   f"{', '.join(sorted(so_pt))}")
             problemas += 1
 
-    print(f"\n  {len(pares)} par(es) verificado(s), {problemas} problema(s)")
+    print(f"\n  {len(pares)} par(es) de documento e {len(set(ipt) & set(ien))} "
+          f"de imagem verificado(s), {problemas} problema(s)")
     return problemas
 
 
@@ -367,6 +401,16 @@ def autoteste():
           "d.en.md": EN.replace("# t\n", "# t\n\n```markdown\n"
                                 "> [🇧🇷 Português](README.md) | 🇺🇸 English\n```\n")},
          False)
+
+    # 12e. IMAGEM sem par em inglês. A norma promete paridade para as imagens
+    #      desde o começo, e até agora a promessa não era verificada.
+    caso("12e", "imagem sem par em ingles nao acusada",
+         {"d.md": PT, "d.en.md": EN, "t/imagens/g-claro.svg": "<svg/>"}, True)
+
+    # 12f. E o par completo passa.
+    caso("12f", "par de imagem completo acusado",
+         {"d.md": PT, "d.en.md": EN,
+          "t/imagens/g-claro.svg": "<svg/>", "t/imagens/g-claro.en.svg": "<svg/>"}, False)
 
     # 12d. `CLAUDE.md` é configuração de ferramenta, não material do leitor, e
     #      fica fora da regra do par por decisão declarada.

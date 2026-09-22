@@ -103,6 +103,16 @@ domains, `governor=powersave` with boost on, and a `steady_clock` resolution of
 | per-operation floor p99.9 | 21.00 | 0.0% | ns |
 | per-operation floor maximum | 21.00 | 10681.0% | ns |
 
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="imagens/dispersao-piso-escuro.en.svg">
+  <img alt="Four panels, one per metric, with the values of the campaign's five runs. The p50, p99 and p99.9 panels show identical values across runs; the maximum panel shows two values far above the others, 2264 ns and 1864 ns, against 21 ns in the other three." src="imagens/dispersao-piso-claro.en.svg">
+</picture>
+
+The figure is the argument: three straight lines and one jagged. The maximum's
+**10681%** spread does not measure the instrument — it measures **which runs
+caught an interrupt**.
+
 ## What this measurement does not show
 
 - **what the benchmark removed:** there is no work between the two reads, no

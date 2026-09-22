@@ -217,14 +217,25 @@ com data marcada.
       Quatro iscas depois, 105 promessas conferidas e zero quebradas. Um defeito
       dele era de fato bug: `01-harness` existe **como diretório**, e a coleta
       só olhava arquivos
-- [ ] **gerador de gráficos**, portado de `ferramental/graficos/` do DPDK
-      Academy. A seção 31 da norma o cita como faltante; nenhum item o rastreava.
-      Dispersão de percentil alto se lê em gráfico, e a paridade PT/EN vale para
-      as imagens — o projeto a montante mantém `.svg` e `.en.svg` em par
-- [ ] decidir se existe um documento **para o leitor** sobre como ler os números,
-      distinto da norma, que é para o autor. O `docs/00-visao-geral/` do
-      documento de origem saiu com a fusão das duas árvores e não deixou
-      substituto declarado
+- [x] `ferramental/graficos/` — SVG escrito à mão, **sem dependência**: exigir
+      matplotlib transformaria em asterisco a promessa de que nada além do
+      compilador é necessário. Quatro arquivos por figura, claro e escuro ×
+      PT e EN.
+      A paleta não saiu de gosto: as verificações de separação para daltonismo
+      (Machado-Oliveira-Fernandes, severidade 1,0), piso de croma, faixa de
+      luminosidade e contraste foram **computadas** nos dois modos — separação
+      23,8 no claro e 25,7 no escuro, contra alvo de 8,0. O tom de estado nunca
+      carrega significado sozinho: todo ponto que o usa recebe rótulo direto
+- [x] a paridade de **imagens** passou a ser verificada. A seção 31 da norma
+      prometia "a paridade PT/EN vale para as imagens" e a frase não tinha
+      portão: um gráfico com rótulo em português entregue ao leitor de inglês é
+      uma figura pela metade, e nada acusava
+- [x] **decidido: não haverá documento separado sobre como ler os números.** O
+      [plano de estudo](docs/plano-estudo.md) roteia o leitor para as seções 6 a
+      9 e 28 da norma antes de qualquer módulo, e cada tópico carrega *O que esta
+      medição não mostra* por exigência da seção 27. Um terceiro documento
+      restaria o mesmo conteúdo e criaria uma terceira cópia para divergir —
+      que é o defeito que a fusão das duas árvores acabou de corrigir
 
 ## Etapas 4 em diante — a trilha
 
