@@ -1,9 +1,18 @@
 > [🇧🇷 Português](padrao-do-projeto.md) | 🇺🇸 English
 
-# Project standard — C++ Performance Academy
+# Project standard — Low-Latency Structures Academy
 
 This document defines the mandatory rules for **method, measurement, contract,
-architecture, documentation and references** of the C++ Performance Academy.
+architecture, documentation and references** of the Low-Latency Structures
+Academy.
+
+> **This standard was absorbed, and the absorption is on the record.** It was
+> born in `labs_cpp_performance_tuning_academy` — standard written, foundation
+> executable, track not started, zero commits — and now governs this repository,
+> which had the track and no foundation. What the absorption added is in
+> sections [34](#34-the-std-and-custom-pair-as-the-unit-of-work),
+> [35](#35-decision-rule) and [36](#36-the-generated-code-axis); what it
+> corrected is in the second divergence table.
 
 ## What this document replaces
 
@@ -16,13 +25,19 @@ last part, under [Divergences from the origin document](#divergences-from-the-or
 > preserved historical artefact, not living documentation, and translating it
 > would make it something other than what was originally written.
 
-## The three upstream projects
+## The upstream projects
 
 | Project | What this project takes from it |
 |---|---|
 | [DPDK-ACADEMY](referencias.en.md#dpdk-academy) | high-throughput architecture, already-measured mechanism costs, the measurement ruler, the quality tooling |
 | [EX442-LABS](referencias.en.md#ex442-labs) | **only in the final stage**: the operating-system tuning surface, in the integration plan with low-level optimization (section 30) |
-| this project | **language ↔ compiler ↔ generated code**, and the software engineering around it |
+| C++ Performance Academy | **absorbed**: this standard, `lib/measurement/`, `lib/contract/`, the checkers — and the `language ↔ compiler ↔ generated code` axis, which became section 36 |
+| this project | **where the standard library stops**: the `std` and `custom` pair measured under one contract, and the decision rule that comes out of it |
+
+The third is no longer upstream in the sense the other two are: it does not
+exist apart from this repository. It is listed because the standard you are
+reading is its own, and because section 30 legislated over this repository
+before this repository had a foundation.
 
 ---
 
@@ -53,18 +68,28 @@ automatically that every document has a pair. A pair `referencias.md` /
 verifier, because the two files share no prefix. The catalogue is therefore
 [`referencias.md`](referencias.md) / [`referencias.en.md`](referencias.en.md).
 
-In each module:
+In each topic of the track:
 
 ```text
 trilha/
-└── 03-cache-e-memoria/
-    ├── README.md
-    ├── README.en.md
-    ├── src/
-    ├── tests/
-    ├── benchmarks/
-    └── resultados/
+└── 04-livro-de-ofertas/
+    └── 02-array-plano-com-bitmap/
+        ├── README.md
+        ├── README.en.md
+        ├── spec.hpp            the topic's law: interface and traits of both arms
+        ├── std/                the baseline the language ships
+        ├── custom/             the complement, under the same contract
+        ├── bench/
+        │   └── medicoes/       archived output: metadata, CSV, table
+        ├── tests/
+        └── meson.build
 ```
+
+This standard's origin document gave the example as `src/` and `resultados/`,
+which presuppose a topic with **one** implementation. Here a topic has **two**,
+and the structure says so: `std/` and `custom/` side by side, not the
+alternative in an appendix. Why the name is `spec.hpp` and not `contract.hpp` is
+in section 34.
 
 ## 3. Language of identifiers
 
@@ -104,12 +129,39 @@ directory**:
 
 | Layer | Language | Examples |
 |---|---|---|
-| curriculum and documentation | Portuguese | `trilha/03-cache-e-memoria/`, `docs/`, `resultados/`, `medicoes/` |
-| code and build | English | `src/`, `tests/`, `benchmarks/`, `lib/measurement/`, `lib/contract/` |
+| curriculum and documentation | Portuguese | `trilha/01-memoria/`, `docs/`, `medicoes/` |
+| code and build | English | `std/`, `custom/`, `bench/`, `tests/`, `lib/measurement/`, `lib/contract/` |
 
 The reason is that the name of a curriculum directory is **text of the
 material** — it appears in navigation, in the track and in document links —
 whereas the name of a code directory is an **identifier**, subject to rule 3.
+
+### The measurement archive is versioned, and has one name
+
+The archived-output directory is **`bench/medicoes/`**, once. The inherited
+`.gitignore` ignored `resultados/**` while the track's setup archived under
+`bench/medicoes/`: two names for one thing, and the second one entered git
+history because the first was the ignored one.
+
+The name collision was the lesser defect. The greater one was the **rule**: the
+inherited `.gitignore` declared that raw measurement output is not versioned,
+because it "differs on every host and would inflate the history". That
+contradicts section 8 of this standard and the DPDK Academy's practice, which
+versions every campaign under `medicoes/historico/<YYYY-MM-DD>-<campaign>/`,
+with the environment beside it and **one output per repetition** (`r0`, `r1`,
+`r2`, `r3`).
+
+The rule in force is the DPDK Academy's, and the reason is what this project
+publishes:
+
+> A p99.9 whose campaign is not in the tree is not auditable afterwards. The
+> project's asset is the **provenance** of the number, and provenance that lives
+> outside the repository is not provenance.
+
+Therefore: the campaign history **is versioned**; what `.gitignore` excludes is
+only the run scratch that the campaign has not yet promoted to history. A
+promoted campaign carries `metadata.json`, the output of each repetition, the
+publishable table and the generated environment record (section 29).
 
 ## 4. Language navigation
 
@@ -279,6 +331,12 @@ This project's central thesis (section 14) has **exactly the same failure
 mode**. A microbenchmark of a `constexpr` table in a loop, with the table hot in
 L1 and perfectly predictable access, removes everything the conditional version
 would have cost — and the converse holds too.
+
+**This protocol is the publication gate of the `std` and `custom` pair**
+(section 34). It is not extra care: it is the difference between measuring the
+structure and measuring the harness. The failure mode here is the one from
+there — a `custom/` that warms up and a `std/` that does not publish the warm-up
+difference under the structure's name.
 
 Therefore every comparison between two implementations satisfies:
 
@@ -503,14 +561,27 @@ lib/
 ├── measurement/   the measurement ruler: clock, statistics, wait hint
 └── contract/      contract, domains, units, budget
 
-<module or capstone>/
+<track topic>/
+├── spec.hpp       the law: shared interface and invariant traits (section 34)
+├── std/           the baseline the language ships
+├── custom/        the complement, under the same spec
+├── bench/         both arms in the same harness, same load
+└── tests/         L1 parameterized by the spec, L2 as the reader runs it
+
+<capstone>/
 ├── domain/        pure computation: units, domains, invariants
 │                  100% constexpr, ZERO I/O, tested by static_assert
-├── ports/         interfaces: TopologyReader, TunableStore, CounterSource
+├── ports/         interfaces: FeedReader, BookSink, ClockSource
 ├── adapters/      environment reading: files, variables, counters
-├── application/   use cases: diagnose, propose, apply, verify
+├── application/   use cases: build the book, measure, report
 └── cli/           presentation and evidence report
 ```
+
+The `domain/ports/adapters/application/cli` layers belong to the **capstone**,
+not to every topic. A topic comparing two structures has neither use case nor
+adapter: it has two implementations, one spec and one benchmark. Imposing the
+five layers on it would produce empty directories, which is false
+self-description (section 5).
 
 The separation is not fashion: **the domain is only `constexpr`-testable because
 it has no I/O.** The architecture decision and the performance decision are the
@@ -525,10 +596,37 @@ inspection — the `std::expected` of environment validation appears in
 | Language standard | **C++23** (`cpp_std=c++23`) |
 | Reference compilers | GCC 15.2.0 and Clang 21.1.8 |
 | Build | Meson ≥ 1.1 + Ninja |
-| Architectures in scope | x86-64 and **arm64** |
+| Architectures in scope | **x86-64 only** |
+| System dependencies | **none beyond the compiler**, Meson and Ninja |
 
 The choice of strict C++23 is what makes `[[assume]]` the contract mechanism
 rather than Contracts — see section 13.
+
+**arm64 left the scope, and that departure corrects a promise with no checker.**
+The track's origin document said "arm64 compiles, no numbers published". There
+is no arm64 machine in this project, and no suite compiles for arm64 — an
+architecture "in scope" that nothing exercises is false self-description
+(section 5). The per-architecture branches for `rdtsc` and `_mm_pause` remain in
+`lib/measurement/`, because they are portable-code correctness, not a platform
+promise. arm64 returns to scope the day a machine or a CI runner compiles it.
+
+### The sanitizers are two profiles, not one
+
+The track's origin document planned "one `sanitize` profile with ASan, UBSan and
+TSan". **ASan and TSan do not coexist in one binary** — the compiler itself
+refuses. They are two profiles, and the distinction has a methodological
+consequence:
+
+| Profile | Tool | Where it is mandatory |
+|---|---|---|
+| `sanitize-address` | ASan + UBSan | every topic with its own allocator, arena or pool |
+| `sanitize-thread` | TSan | every topic in the queues-and-concurrency module |
+
+TSan does not understand the relaxed ordering of a hand-written lock-free
+algorithm: it reports what it observed, and what it does **not** report is no
+proof of correctness. The suite uses TSan as a filter, and the correctness
+argument still comes from the standard cited by clause (section 9), not from the
+absence of a warning.
 
 ### Why three configurations
 
@@ -675,12 +773,23 @@ chapter, where it is noise. The standard in force separates them:
 | Experiment, Execution environment, Results | mandatory **if there is measurement** |
 | Hardware counters | mandatory **if there is microarchitecture measurement** and the PMU is available |
 | **What this measurement does not show** | mandatory **if there is measurement** (section 27) |
+| **Decision rule** | mandatory **if the topic compares** (section 35) |
+| **When it goes wrong** | mandatory **if there is an invariant**, and answered with an experiment |
 | Analysis | mandatory **if there is measurement** |
 | Literature comparison | mandatory **if there is a relevant experiment** (section 26) |
 | Trade-offs, When to use, When not to use | **mandatory** |
 | Limitations | **mandatory** |
 | Exercises | **mandatory** |
 | References, Navigation | **mandatory** |
+
+*When it goes wrong* is not the same section as *Limitations*: a limitation is
+what the numbers do not license concluding; *when it goes wrong* is what the
+system does off the happy path — the arena exhausted mid-batch, the queue full,
+the price outside the array's range, the truncated message. The rule inherited
+from the DPDK Academy is that it is answered with a program, never in prose, and
+that **the invariant has a negative test**: the version that violates it exists
+and the suite requires it to fail. A check that has never failed is
+indistinguishable from a check that never fires.
 
 The Portuguese version has exactly the same conceptual structure: Objetivos,
 Problema, Modelo mental, Fundamentos, Como funciona, Implementação baseline,
@@ -738,20 +847,43 @@ code produced the number.
 Added for this project: **which of the three build configurations** of section
 16, and **was the PMU available?**
 
+And what the reference machine forces us to add:
+
+| Record | Why this, and not only what is usually recorded |
+|---|---|
+| **the core's CCD, and its SMT sibling** | the machine has two L3 domains; a pair of cores on the same CCD and a pair across CCDs give different results for the **same** structure. "Core 3" does not identify the experiment; "core 3, CCD 0, SMT sibling 15" does |
+| **histogram precision and range** | a published p99.9 without the instrument's precision is a number with no error bar |
+| **between-run variation** | the campaign runs the whole experiment more than once and publishes the variation. A percentile table from a single run does not separate the structure's tail from the machine's |
+
+The last one is inherited directly from a DPDK Academy defect: the validity
+criterion was published and its calibration was nowhere. Here the calibration is
+a campaign deliverable, not a footnote.
+
 An unknown variable is documented as unknown.
 
 ## 29. Reference environment
 
-There is `scripts/ambiente.sh`, which **generates** the record instead of having
-the author describe it in prose. The reason is in the origin script: a prose
+The record is **generated** by `scripts/ambiente.sh` instead of described in
+prose by the author. State of that script in this repository: **not started** —
+the measurement ruler exists, the environment generator does not yet, and no
+number may be published before it. The reason is in the origin script: a prose
 description diverges between files without anyone noticing, ages silently when
 the kernel or the compiler changes, and does not tell whoever reproduces it what
 to compare.
 
 It records at least: CPU model, microarchitecture when identifiable, cores,
-threads, SMT, NUMA topology, cache topology, RAM, kernel, governor, turbo,
-compiler and version, Meson, Ninja, perf. When relevant: mitigations, hugepages,
-CPU isolation, frequency, thermal state.
+threads, SMT, NUMA topology, cache topology **with the L3 domains and each
+core's CCD**, RAM, kernel, governor, turbo, compiler and version, Meson, Ninja,
+perf, `perf_event_paranoid`, and whether the TSC is invariant (`constant_tsc`,
+`nonstop_tsc`). When relevant: mitigations, hugepages, CPU isolation, frequency,
+thermal state.
+
+**This project's reference machine** is an AMD Ryzen 9 9900X — 12 cores, 24
+threads, SMT on, **two L3 domains**, one NUMA node, invariant TSC. The two
+consequences that run through the track: the chosen core pair is a variable of
+the experiment, not an execution detail (section 28); and the failure question
+"what happens when the TSC is not invariant" is **not reproducible here** — it
+is recorded as an open question (section 7), not as a promised experiment.
 
 > **Inherited lesson, to be preserved in the port:** the origin script does
 > **not** parse `lscpu` text, because its output is localized — the first
@@ -780,7 +912,18 @@ metrics vocabulary anchored in standards.
 | cost of a cache miss, TLB, NUMA, syscall | DPDK-ACADEMY | how the C++ object model and layout cause or avoid it |
 | cost of synchronization | DPDK-ACADEMY | `std::atomic`, memory ordering, linearizable correctness |
 | OS tuning surface | EX442-LABS | **nothing, until the final stage** — see below |
-| code generation, `constexpr`, templates | — | **it is this project's own object** |
+| code generation, `constexpr`, templates | here, section 36 | came from the absorbed project, and became a cross-cutting module |
+| **where the standard library's structures stop** | here | **it is this project's own object** — sections 34 and 35 |
+
+**This section legislated over this repository before it existed.** It was
+written in the absorbed project, and it assigns cache, TLB, NUMA and false
+sharing to the DPDK Academy — which are the subject of the memory and layout
+modules here. The rule that settles it has not changed, and it is the one that
+opens the section: **cites and extends; does not re-teach.** In practice, a
+module here does not re-present the cost of a cache miss: it cites the number
+already measured in the DPDK Academy and measures what the C++ structure does
+with that cost. When the cited number does not serve — another machine, another
+compiler, another load — the module re-measures and says why it did not.
 
 ### When EX442 enters, and why not earlier
 
@@ -823,18 +966,32 @@ Policy without a gate is worthless. The verifiers in
 | `verificar-ancoras.py` | a line anchor points to the right piece of code |
 | `verificar-retratacoes.py` | a value declared retracted does not survive outside the block retracting it |
 | `verificar-aritmetica.py` | a percentage the text makes checkable adds up |
+| `verificar-suposicao.py` | the Gate R precondition reaches the optimizer, checked in the assembly, with a control arm |
 
-All four come from the sibling project, where **each was born from a measured
-defect**, and all have self-tests. The reason for porting instead of writing is
+The first four come from the DPDK Academy, where **each was born from a measured
+defect**; the fifth was born in the absorbed project, from a defect of its own —
+Clang was discarding the assumption silently. All have self-tests. The reason for porting instead of writing is
 in the header of `verificar-retratacoes.py`: in the defect that originated it,
 whoever wrote the retraction knew the rule, had just stated it, and still left
 the retracted value circulating on other pages. **Manual correction does not
 scale.**
 
-Still missing, with coupling to adapt: `verificar-promessa.py` (every cited
-program exists and enters the build) and `verificar-autodescricao.py` (what the
-material claims about itself matches the disk). State: **not ported** —
-recorded in the [ROADMAP.en.md](../ROADMAP.en.md).
+**Twelve are missing, and the count is meant to be read.** The DPDK Academy has
+23 quality programs and 6,827 lines in `ferramental/qualidade/`; here there are
+five. The two that matter most, with their coupling already measured, are
+`verificar-promessa.py` (every cited program exists and enters the build, 18
+coupling points) and `verificar-autodescricao.py` (what the material claims
+about itself matches the disk, 838 lines and 34 points) — the latter is what
+sustains the state labelling of section 5, and until it exists section 5 is an
+author's promise, not a gate. Also missing are the **language-pair** checker,
+which makes the identical-stem rule of section 2 verifiable, and the **chart
+generator**, because high-percentile dispersion is read in a chart and the PT/EN
+parity applies to images. State: **not ported** — recorded in the
+[ROADMAP.en.md](../ROADMAP.en.md).
+
+The porting order follows real need, not bulk: porting 6,800 lines before there
+is content to check is a promise with no code, which is what this standard
+forbids.
 
 ## 32. Editorial policy
 
@@ -871,14 +1028,138 @@ C++ source → language semantics → compiler → assembly
           → microarchitecture → cache/memory → operating system → measurement
 ```
 
+and this project's chain adds one link, which is its own:
+
+```text
+what the standard library ships → the measured point where it stops
+                                → the complement, under the same contract
+                                → the decision rule
+```
+
 The goal is not to teach **how to write fast C++**. It is to teach:
 
 > **how to investigate scientifically why a given piece of C++ software exhibits
-> a given performance behaviour.**
+> a given performance behaviour** — and, with that, **when** to replace the
+> mechanism the language gives you, not only how.
 
-This philosophy stays consistent across the DPDK Academy, the C++ Performance
-Academy and the Messaging Academy, forming a coherent family of studies on
-**High Performance Systems Engineering**.
+This philosophy stays consistent across the DPDK Academy, this project and the
+Messaging Academy, forming a coherent family of studies on **High Performance
+Systems Engineering**. Comparability across the three depends on a shared
+measurement ruler, which is why `lib/` is treated as a candidate for its own
+repository from the start: the boundary has to be a **C ABI**, or the extraction
+never happens — the DPDK Academy is written in C, and a harness built on
+`<expected>` and templates is not consumable from there.
+
+---
+
+# Part VII — The std and custom pair
+
+This part did not exist in the absorbed standard. It is what this repository has
+and the origin project did not: the track, and its unit of work.
+
+## 34. The std and custom pair as the unit of work
+
+> A topic is not a structure. It is **a pair of structures under one law**,
+> measured in the same harness, on the same machine, under the same contract.
+
+The order is fixed and it is not a preference: **the language's offering first.**
+No `custom/` is written before the corresponding `std/` has been measured and
+published. A complement proposed against an unmeasured baseline is an opinion
+with code attached.
+
+Three outcomes are possible per topic, and **all three get published**:
+
+| Outcome | What the reader learns |
+|---|---|
+| the standard library suffices | which facility to use, and why the hand-rolled alternative does not pay off |
+| it suffices up to a volume or percentile | the decision rule: the point at which to switch (section 35) |
+| it does not serve on the hot path | the mechanism that replaces it, and what that costs in exchange |
+
+The second and third are the expected ones. **The first is what gives the other
+two credit**, and so it has its own index alongside the negative results of
+section 12: in several cases `string_view` with `from_chars` is already the
+answer, and the hand-rolled decoder does not pay off.
+
+### `spec.hpp` is the law, and `contract.hpp` is something else
+
+Two words collided. In this standard, **contract** is the mechanism of the three
+gates of section 13 — `PERF_EXPECTS`, `[[assume]]`, `lib/contract/`. In the
+track's origin document, "contract" was the shared interface that `std/` and
+`custom/` must fulfil. Two concepts, one name, in one repository.
+
+The name of a topic's interface is **`spec.hpp`**. The one in `lib/contract/`
+stays, because it is what `-Werror=assume` and `verificar-suposicao.py` already
+name.
+
+### A contract divergence is a finding, and it is declared in code
+
+`std::map<Price, Level>` and a flat array indexed by tick do **not** fulfil the
+same law: they differ in iteration order, reference stability and price domain.
+That is not a defect of the topic, it is the topic's subject.
+
+Rule: `spec.hpp` declares the invariants, and **each arm declares in `traits`
+which of them it honours**. The L1 tests are parameterized by the spec and
+consult the traits; an invariant an arm does not honour is a test **skipped with
+a reason**, not a missing test. The divergence stays in code, verifiable,
+instead of in prose, where it ages without anyone noticing.
+
+> A spec both arms fulfil without reservation is usually a sign that the spec was
+> written weak enough to fit both.
+
+## 35. Decision rule
+
+A mandatory section in every topic that compares, and **it is the project's
+internal-reference artefact** — what one consults when designing a real system,
+not when studying.
+
+The rule answers one question: **beyond what point does the switch pay off?**
+The point is a number — volume, cardinality, arrival rate, percentile — not an
+adjective.
+
+Every published rule declares at least:
+
+| Field | Example |
+|---|---|
+| the starting structure and the replacement | `std::map<Price, Level>` → flat array by tick with a bitmap |
+| the decision variable and the turning point | cardinality of active levels, above N |
+| the percentile where the turn shows up | shows in p99.9 before it shows in p50 |
+| the machine, the build configuration and the commit | environment generated, not described (section 29) |
+| what the rule does **not** cover | the load, access pattern and range outside which it does not hold |
+
+The consolidated table lives in `docs/regras-de-decisao.md`, and **each of its
+rows points at an existing `metadata.json`**. The table is machine-verified,
+like every other numeric claim under section 8: a decision rule without an
+archived measurement is an opinion wearing the clothes of a reference, and it is
+the most expensive defect this project could publish, because it is the one
+someone would use to decide.
+
+> A decision rule that does not say where it stops holding is not a rule: it is a
+> slogan.
+
+## 36. The generated-code axis
+
+The absorbed project's own object, preserved here as a **cross-cutting module**
+instead of diluted into the others. Its question is the one the structure
+modules do not ask:
+
+> **what does the compiler do with `custom/` that it does not do with `std/`?**
+
+What this axis brings, and what it is not:
+
+- it brings `constexpr`, templates, `[[assume]]` and the shift of work to
+  compile time as a **measured hypothesis**, never as a style rule (section 14);
+- it brings the sweep instead of the single point, because the variable under
+  test interacts with the memory hierarchy;
+- it brings the cost of compiling into the metrics;
+- it is **not** a comparison between compilers, nor a catalogue of flags: the
+  pair is still `std` and `custom`, and the compiler is the instrument, not the
+  object.
+
+The checker that sustains this axis already exists: `verificar-suposicao.py`
+compiles a probe and checks in the assembly, with a control arm, that the
+precondition reaches the optimizer. It was born from a measured defect — Clang
+discarding the assumption silently — and it is the proof that on this axis a
+claim about generated code is verified by reading generated code.
 
 ---
 
@@ -906,11 +1187,34 @@ An auditable record of the corrections applied on top of
 
 ---
 
+## Divergences from the track's origin document
+
+A second table, and a second origin document:
+[`origem/setup-lowlatency-structures-academy.md`](origem/setup-lowlatency-structures-academy.md),
+also preserved intact. The corrections below were verified on this machine
+before entering the standard.
+
+| # | Origin | Correction |
+|---|---|---|
+| 1 | §2.2 said test dependencies come "pinned by hash in `subprojects/*.wrap`, with `.wraplock`" | `.wraplock` **does not exist** in the DPDK Academy, and in Meson `.wraplock` is the directory lock used during download, not a dependency lockfile to commit. The hash pin is already in the `.wrap`; the mention goes |
+| 2 | §7 planned "HdrHistogram_c, wrap pinned by hash" | it is **not in WrapDB** — `releases.json` queried on 2026-09-21: 367 projects, none of them a histogram. The wrap has to be hand-written with its own `meson.build`, because the project is CMake; and its log writer pulls in zlib, which collides with "no dependency beyond the compiler" (section 16). Decision recorded in the ROADMAP, harness stage |
+| 3 | §7 planned "one `sanitize` profile with ASan, UBSan and TSan" | ASan and TSan do not coexist: two profiles (section 16) |
+| 4 | §2.2 described the quality tooling as "checkers for anchors, self-description and parity" | it is 23 programs and 6,827 lines in the DPDK Academy; porting it is the project's largest task, not a checklist item (section 31) |
+| 5 | §4 gave `docs/0N-*` theory only, with no code directory | in the DPDK Academy the programs producing theory numbers live in `docs/0N-*/medicoes/`. Without that, either the theory is prose with no program — which section 8 forbids — or the directory is missing. `docs/0N-*/medicoes/` stays |
+| 6 | §7 put arm64 in scope, "compiles, no numbers published" | there is no machine and no runner; arm64 leaves the scope until there is one (section 16) |
+| 7 | §6 promised the experiment "what happens when the TSC is not invariant" | the reference machine has `constant_tsc` and `nonstop_tsc`: not reproducible here, and it stays an open question (sections 7 and 29) |
+| 8 | §8 listed what each measurement records, with no CCD, no histogram precision and no between-run variation | all three go in, and the third is inherited from a DPDK Academy defect: a validity criterion published with its calibration nowhere (section 28) |
+| 9 | §10 planned extracting `ferramental/bench/` as a final stage, consumed by the DPDK Academy too | the DPDK Academy is C; the boundary has to be a C ABI **from the start**, or the extraction does not happen (section 33) |
+| 10 | §5 called the shared interface of `std/` and `custom/` `contract.hpp` | collision with the three-gate mechanism; a topic's law is `spec.hpp` (section 34) |
+| 11 | §4 planned `ferramental/bench/` for the harness | the absorbed harness is `lib/measurement/`, and `lib/` is the extraction boundary. `ferramental/` is left to quality and charts (section 15) |
+| 12 | §1.2 said the order book is a "recurring scenario, not an object of study", while the track gives it a whole module plus the capstone | pending an editorial decision, recorded in the ROADMAP: either the README owns the book as the protagonist, or module 04 shrinks |
+
 ## Navigation
 
 - [Reference catalogue](referencias.en.md)
 - [Documentation index](README.en.md)
 - [Repository README](../README.en.md)
-- [Origin document, intact](origem/setup-cpp-performance-academy.md)
+- [This standard's origin document, intact](origem/setup-cpp-performance-academy.md)
+- [The track's origin document, intact](origem/setup-lowlatency-structures-academy.md)
 
 > [🇧🇷 Português](padrao-do-projeto.md) | 🇺🇸 English

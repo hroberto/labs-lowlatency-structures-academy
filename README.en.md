@@ -16,7 +16,7 @@ a named machine.
 
 | Component | State |
 |---|---|
-| [Project standard](docs/padrao-do-projeto.en.md) | **written** — 33 sections, 6 parts; absorption delta pending |
+| [Project standard](docs/padrao-do-projeto.en.md) | **written** — 36 sections, 7 parts; absorption delta applied |
 | [Reference catalogue](docs/referencias.en.md) | **written** — addresses pending verification |
 | [Quality tooling](ferramental/qualidade/) | **code exists, not measured** — 5 checkers, self-tests passing |
 | [Measurement ruler](lib/measurement/) | **code exists, not measured** — builds in all three configurations |

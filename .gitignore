@@ -31,13 +31,20 @@ temp/
 __pycache__/
 *.pyc
 
-# Resultados brutos de medição: são gerados por máquina e por execução.
-# O que o repositório versiona é o PROGRAMA que produz o número e a TABELA
-# publicada no documento -- não a saída crua de cada rodada, que difere em
-# cada host e inflaria o histórico sem tornar nada mais reprodutível.
-resultados/**/*.csv
-resultados/**/*.json
-!resultados/**/.gitkeep
+# Medição: o HISTÓRICO DE CAMPANHA É VERSIONADO, e a regra foi invertida de
+# propósito -- ver a seção 3 do padrão do projeto.
+#
+# A versão herdada deste arquivo ignorava `resultados/**/*.csv` e `.json`
+# argumentando que saída crua "difere em cada host e inflaria o histórico". Num
+# projeto cujo ativo é a PROCEDÊNCIA do número, isso remove justamente a
+# evidência: um p99,9 cuja campanha não está na árvore não é auditável depois.
+# O DPDK Academy versiona cada campanha em
+# `medicoes/historico/<AAAA-MM-DD>-<campanha>/`, com o ambiente ao lado e uma
+# saída por repetição, e essa é a regra aqui.
+#
+# O que se ignora é só o rascunho que a campanha ainda NÃO promoveu a histórico.
+bench/medicoes/rascunho/
+**/medicoes/rascunho/
 
 # Configuração local do Claude Code: o sufixo `.local` marca o que é pessoal e
 # não deve ser compartilhado. O CLAUDE.md, esse sim, é versionado -- ele carrega

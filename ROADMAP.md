@@ -38,20 +38,25 @@ repositório em 2026-09-21. Veio o que já era executável:
 - [x] suíte verde nas três configurações **nesta** máquina (GCC 15.2.0):
       `debug` e `release-checked` com 11 OK + 1 falha esperada,
       `release` com 11 OK + 1 pulado
-- [ ] **delta da absorção na norma** — seção 30 (dois projetos a montante, não
-      três), seção 11 promovida a definição do par `std` → `custom`, seção nova
-      para a regra de decisão, seção 29 com a máquina de dois CCDs
-- [ ] tabela de divergências em relação ao setup desta trilha: `.wraplock`
-      inexistente, HdrHistogram fora do WrapDB, dois perfis de sanitizer,
-      `docs/0N-*/medicoes/`, ABI C do harness, CCD e SMT na metadata, arm64 sem
-      máquina, TSC não invariante não reproduzível aqui
-- [ ] colisão de nome de `contract.hpp`: a lei do tópico passa a ser `spec.hpp`
-- [ ] colisão de caminho: o `.gitignore` herdado ignora `resultados/**`, e o setup
-      desta trilha arquiva em `bench/medicoes/` — um dos dois nomes sai
+- [x] **delta da absorção na norma** — 33 seções e 6 partes viraram 36 e 7:
+      seção 30 reconciliada, seção 11 promovida a portão de publicação do par,
+      seção 16 sem arm64 e com dois perfis de sanitizer, seções 28 e 29 com CCD,
+      precisão de histograma, variação entre execuções e a máquina nomeada, e a
+      **Parte VII** nova — par `std` e `custom` (34), regra de decisão (35),
+      eixo do código gerado (36)
+- [x] tabela de divergências em relação ao setup desta trilha: 12 itens, todos
+      verificados nesta máquina antes de entrarem na norma
+- [x] colisão de nome de `contract.hpp`: a lei do tópico é `spec.hpp` (seção 34)
+- [x] colisão de caminho, e a **regra por trás dela invertida**: o nome é
+      `bench/medicoes/`, e o histórico de campanha passa a ser **versionado**. O
+      `.gitignore` herdado excluía saída bruta; num projeto cujo ativo é a
+      procedência do número, isso remove a evidência. Vale a prática do DPDK
+      Academy: `medicoes/historico/<data>-<campanha>/`, ambiente ao lado, uma
+      saída por repetição
+- [x] o eixo `linguagem ↔ compilador ↔ código gerado` virou a seção 36, e o
+      módulo transversal `10-codigo-gerado` está previsto na trilha
 - [ ] prefixo `CPP_ACADEMY_*` das variáveis de ambiente da régua de apuração:
       mantido na absorção, decidir se acompanha a identidade nova
-- [ ] o eixo `linguagem ↔ compilador ↔ código gerado`, que era objeto próprio do
-      projeto absorvido, ganha módulo transversal `10-codigo-gerado`
 - [ ] `pre-commit.sh` e CI executando a matriz de três configurações
 - [ ] verificador de **par de idiomas**: a regra do radical idêntico (seção 2 da
       norma) existe para ser verificável, e hoje não é

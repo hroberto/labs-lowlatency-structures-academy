@@ -1,9 +1,17 @@
 > 🇧🇷 Português | [🇺🇸 English](padrao-do-projeto.en.md)
 
-# Padrão do projeto — C++ Performance Academy
+# Padrão do projeto — Low-Latency Structures Academy
 
 Este documento define as regras obrigatórias de **método, medição, contrato,
-arquitetura, documentação e referências** do C++ Performance Academy.
+arquitetura, documentação e referências** do Low-Latency Structures Academy.
+
+> **Esta norma foi absorvida, e a absorção está registrada.** Ela nasceu no
+> `labs_cpp_performance_tuning_academy` — norma escrita, fundação executável,
+> trilha não iniciada, nenhum commit — e passou a reger este repositório, que
+> tinha a trilha e não tinha fundação. O que a absorção acrescentou está nas
+> seções [34](#34-o-par-std-e-custom-como-unidade-de-trabalho),
+> [35](#35-regra-de-decisão) e [36](#36-o-eixo-do-código-gerado), e o que ela
+> corrigiu está na segunda tabela de divergências.
 
 ## O que este documento substitui
 
@@ -12,13 +20,18 @@ Ele é a versão normalizada de [`origem/setup-cpp-performance-academy.md`](orig
 norma vigente sejam auditáveis. As correções aplicadas estão listadas na última
 parte, em [Divergências em relação ao documento de origem](#divergências-em-relação-ao-documento-de-origem).
 
-## Os três projetos a montante
+## Os projetos a montante
 
 | Projeto | O que este projeto toma dele |
 |---|---|
 | [DPDK-ACADEMY](referencias.md#dpdk-academy) | arquitetura de alta volumetria, custos de mecanismo já medidos, régua de apuração, ferramental de qualidade |
 | [EX442-LABS](referencias.md#ex442-labs) | **apenas na etapa final**: a superfície de ajuste do sistema operacional, no plano de integração com otimização de baixo nível (seção 30) |
-| este projeto | **linguagem ↔ compilador ↔ código gerado**, e a engenharia de software em volta |
+| C++ Performance Academy | **absorvido**: esta norma, `lib/measurement/`, `lib/contract/`, os verificadores — e o eixo `linguagem ↔ compilador ↔ código gerado`, que virou a seção 36 |
+| este projeto | **onde a biblioteca padrão para**: o par `std` e `custom` medido no mesmo contrato, e a regra de decisão que sai dele |
+
+O terceiro não é mais um projeto a montante no sentido dos outros dois: ele não
+existe separado deste. Está listado porque a norma que você está lendo é dele, e
+porque a seção 30 legislava sobre este repositório antes de ele ter fundação.
 
 ---
 
@@ -50,18 +63,27 @@ verificador de pareamento, porque os dois arquivos não compartilham prefixo.
 O catálogo, portanto, é [`referencias.md`](referencias.md) /
 [`referencias.en.md`](referencias.en.md).
 
-Em cada módulo:
+Em cada tópico da trilha:
 
 ```text
 trilha/
-└── 03-cache-e-memoria/
-    ├── README.md
-    ├── README.en.md
-    ├── src/
-    ├── tests/
-    ├── benchmarks/
-    └── resultados/
+└── 04-livro-de-ofertas/
+    └── 02-array-plano-com-bitmap/
+        ├── README.md
+        ├── README.en.md
+        ├── spec.hpp            a lei do topico: interface e traits dos dois bracos
+        ├── std/                o baseline que a linguagem entrega
+        ├── custom/             o complemento, sob o mesmo contrato
+        ├── bench/
+        │   └── medicoes/       saida arquivada: metadata, CSV, tabela
+        ├── tests/
+        └── meson.build
 ```
+
+O documento de origem desta norma exemplificava `src/` e `resultados/`, que
+pressupõem um tópico com **uma** implementação. Aqui o tópico tem **duas**, e a
+estrutura declara isso: `std/` e `custom/` lado a lado, não a alternativa num
+apêndice. A razão do nome `spec.hpp`, e não `contract.hpp`, está na seção 34.
 
 ## 3. Idioma dos identificadores
 
@@ -98,12 +120,37 @@ A norma vigente distingue **diretório de currículo** de **diretório de códig
 
 | Camada | Idioma | Exemplos |
 |---|---|---|
-| currículo e documentação | português | `trilha/03-cache-e-memoria/`, `docs/`, `resultados/`, `medicoes/` |
-| código e build | inglês | `src/`, `tests/`, `benchmarks/`, `lib/measurement/`, `lib/contract/` |
+| currículo e documentação | português | `trilha/01-memoria/`, `docs/`, `medicoes/` |
+| código e build | inglês | `std/`, `custom/`, `bench/`, `tests/`, `lib/measurement/`, `lib/contract/` |
 
 A razão é que o nome do diretório de currículo é **texto do material** — ele
 aparece na navegação, na trilha e nos links do documento —, enquanto o nome do
 diretório de código é **identificador**, sujeito à regra 3.
+
+### O arquivo de medição é versionado, e tem um nome só
+
+O diretório de saída arquivada é **`bench/medicoes/`**, uma vez. O `.gitignore`
+herdado ignorava `resultados/**`, e o setup da trilha arquivava em
+`bench/medicoes/`: dois nomes para a mesma coisa, e o segundo entrava no
+histórico do git porque o primeiro era o ignorado.
+
+A colisão de nome era o defeito menor. O maior era a **regra**: o `.gitignore`
+herdado declarava que saída bruta de medição não se versiona, porque "difere em
+cada host e inflaria o histórico". Isso contradiz a regra da seção 8 desta norma
+e a prática do DPDK Academy, que versiona cada campanha em
+`medicoes/historico/<AAAA-MM-DD>-<campanha>/`, com o ambiente ao lado e **uma
+saída por repetição** (`r0`, `r1`, `r2`, `r3`).
+
+A regra vigente é a do DPDK Academy, e a razão é o que este projeto publica:
+
+> Um p99,9 cuja campanha não está na árvore não é auditável depois. O ativo do
+> projeto é a **procedência** do número, e procedência que mora fora do
+> repositório não é procedência.
+
+Portanto: o histórico de campanha **é versionado**; o que o `.gitignore` exclui
+é apenas o rascunho de execução que a campanha ainda não promoveu a histórico.
+Uma campanha promovida traz `metadata.json`, a saída de cada repetição, a tabela
+publicável e o registro de ambiente gerado (seção 29).
 
 ## 4. Navegação entre idiomas
 
@@ -268,6 +315,12 @@ A tese central deste projeto (seção 14) tem **exatamente o mesmo modo de
 falha**. Um microbenchmark de tabela `constexpr` num laço, com a tabela quente
 em L1 e acesso perfeitamente previsível, remove tudo que a versão com
 condicional teria custado — e a recíproca também vale.
+
+**Este protocolo é o portão de publicação do par `std` e `custom`** (seção 34).
+Não é um cuidado a mais: é a diferença entre medir a estrutura e medir o
+harness. O modo de falha aqui é o mesmo de lá — um `custom/` que aquece e um
+`std/` que não aquece publicam a diferença de aquecimento com o nome da
+estrutura.
 
 Portanto, toda comparação entre duas implementações cumpre:
 
@@ -494,14 +547,26 @@ lib/
 ├── measurement/   régua de apuração: relógio, estatística, dica de espera
 └── contract/      contrato, domínios, unidades, orçamento
 
-<módulo ou projeto final>/
+<tópico da trilha>/
+├── spec.hpp       a lei: interface comum e traits de invariante (seção 34)
+├── std/           o baseline que a linguagem entrega
+├── custom/        o complemento, sob a mesma spec
+├── bench/         os dois braços no mesmo harness, mesma carga
+└── tests/         L1 parametrizado pela spec, L2 como o leitor executa
+
+<capstone>/
 ├── domain/        cálculo puro: unidades, domínios, invariantes
 │                  100% constexpr, ZERO I/O, testado por static_assert
-├── ports/         interfaces: TopologyReader, TunableStore, CounterSource
+├── ports/         interfaces: FeedReader, BookSink, ClockSource
 ├── adapters/      leitura do ambiente: arquivos, variáveis, contadores
-├── application/   casos de uso: diagnosticar, propor, aplicar, verificar
+├── application/   casos de uso: montar o livro, medir, relatar
 └── cli/           apresentação e relatório de evidência
 ```
+
+As camadas `domain/ports/adapters/application/cli` são do **capstone**, não de
+cada tópico. Um tópico que compara duas estruturas não tem caso de uso nem
+adaptador: tem duas implementações, uma spec e um benchmark. Impor as cinco
+camadas a ele produziria diretório vazio, que é autodescrição falsa (seção 5).
 
 A separação não é moda: **o domínio só é `constexpr`-testável porque não tem
 I/O.** A decisão de arquitetura e a decisão de desempenho são a mesma decisão
@@ -515,10 +580,36 @@ aqui. E a regra da porta E fica verificável por inspeção de diretório —
 | Padrão da linguagem | **C++23** (`cpp_std=c++23`) |
 | Compiladores de referência | GCC 15.2.0 e Clang 21.1.8 |
 | Build | Meson ≥ 1.1 + Ninja |
-| Arquiteturas no escopo | x86-64 e **arm64** |
+| Arquiteturas no escopo | **x86-64 apenas** |
+| Dependências de sistema | **nenhuma além do compilador**, do Meson e do Ninja |
 
 A escolha de C++23 estrito é o que torna `[[assume]]` o mecanismo de contrato, e
 não Contracts — ver seção 13.
+
+**arm64 saiu do escopo, e a saída é a correção de uma promessa sem verificador.**
+O documento de origem da trilha dizia "arm64 compila, sem números publicados".
+Não existe máquina arm64 neste projeto, e nenhuma suíte compila para arm64 — uma
+arquitetura "no escopo" que nada exercita é autodescrição falsa (seção 5). Os
+ramos por arquitetura de `rdtsc` e de `_mm_pause` continuam existindo em
+`lib/measurement/`, porque são corretude de código portável, não promessa de
+plataforma. arm64 volta ao escopo no dia em que houver máquina ou *runner* de CI
+que o compile.
+
+### Os sanitizers são dois perfis, não um
+
+O documento de origem da trilha previa "um perfil `sanitize` com ASan, UBSan e
+TSan". **ASan e TSan não coexistem no mesmo binário** — o próprio compilador
+recusa. São dois perfis, e a distinção tem consequência de método:
+
+| Perfil | Ferramenta | Onde é obrigatório |
+|---|---|---|
+| `sanitize-address` | ASan + UBSan | todo tópico com alocador, arena ou pool próprios |
+| `sanitize-thread` | TSan | todo tópico do módulo de filas e concorrência |
+
+TSan não entende ordenação relaxada de algoritmo *lock-free* escrito à mão: ele
+reporta o que observou, e o que ele **não** reporta não é prova de correção. A
+suíte usa TSan como filtro, e o argumento de correção continua vindo da norma
+citada por cláusula (seção 9), não da ausência de aviso.
 
 ### Por que três configurações
 
@@ -664,6 +755,8 @@ conceitual, onde é ruído. A norma vigente separa:
 | Experimento, Ambiente de execução, Resultados | obrigatória **se houver medição** |
 | Hardware counters | obrigatória **se houver medição de microarquitetura** e PMU disponível |
 | **O que esta medição não mostra** | obrigatória **se houver medição** (seção 27) |
+| **Regra de decisão** | obrigatória **se o tópico compara** (seção 35) |
+| **Quando dá errado** | obrigatória **se houver invariante**, e respondida com experimento |
 | Análise | obrigatória **se houver medição** |
 | Confronto com a literatura | obrigatória **se houver experimento relevante** (seção 26) |
 | Trade-offs, Quando utilizar, Quando não utilizar | **obrigatória** |
@@ -674,8 +767,17 @@ conceitual, onde é ruído. A norma vigente separa:
 A versão inglesa tem exatamente a mesma estrutura conceitual: Objectives,
 Problem, Mental model, Fundamentals, How it works, Baseline implementation,
 Experiment, Execution environment, Results, Hardware counters, **What this
-measurement does not show**, Analysis, Literature comparison, Trade-offs, When
-to use, When not to use, Limitations, Exercises, References, Navigation.
+measurement does not show**, Analysis, Literature comparison, **Decision rule**,
+**When it goes wrong**, Trade-offs, When to use, When not to use, Limitations,
+Exercises, References, Navigation.
+
+*Quando dá errado* não é a mesma seção que *Limitações*: limitação é o que os
+números não autorizam concluir; *quando dá errado* é o que o sistema faz fora do
+caminho feliz — a arena que esgota no meio de um lote, a fila que enche, o preço
+fora da faixa do array, a mensagem truncada. A regra herdada do DPDK Academy é
+que ela se responde com programa, nunca em prosa, e que **a invariante tem teste
+negativo**: a versão que a viola existe e a suíte exige que ela falhe.
+Verificação que nunca falhou é indistinguível de verificação que nunca dispara.
 
 ## 26. Confronto com a literatura
 
@@ -727,19 +829,43 @@ código gerou o número.
 Acrescenta-se, para este projeto: **qual configuração de build** das três da
 seção 16, e **o PMU estava disponível?**
 
+E acrescenta-se o que a máquina de referência obriga a acrescentar:
+
+| Registro | Por que ele, e não só o que se costuma registrar |
+|---|---|
+| **CCD do núcleo, e o par SMT** | a máquina tem dois domínios de L3; um par de núcleos no mesmo CCD e um par em CCDs diferentes dão resultados distintos para a **mesma** estrutura. "Núcleo 3" não identifica o experimento; "núcleo 3, CCD 0, par SMT 15" identifica |
+| **precisão e faixa do histograma** | um p99,9 publicado sem a precisão do instrumento é um número sem barra de erro |
+| **variação entre execuções** | a campanha roda o experimento inteiro mais de uma vez, e publica a variação. Uma tabela de percentis de uma única execução não distingue a cauda da estrutura da cauda da máquina |
+
+A última é herança direta de um defeito do DPDK Academy: o critério de validade
+estava publicado e a calibração dele não estava em lugar nenhum. Aqui a
+calibração é entregável da campanha, não nota de rodapé.
+
 Variável não conhecida é documentada como não conhecida.
 
 ## 29. Ambiente de referência
 
-Existe `scripts/ambiente.sh`, que **gera** o registro em vez de o autor o
-descrever em prosa. A razão está no script de origem: descrição em prosa diverge
+O registro é **gerado** por `scripts/ambiente.sh`, em vez de descrito em prosa
+pelo autor. Estado do script neste repositório: **não iniciado** — a régua de
+apuração existe, o gerador de ambiente ainda não, e nenhum número pode ser
+publicado antes dele. A razão está no script de origem: descrição em prosa diverge
 entre arquivos sem que ninguém perceba, envelhece em silêncio quando o kernel ou
 o compilador mudam, e não diz a quem reproduz o que comparar.
 
 Registra pelo menos: modelo de CPU, microarquitetura quando identificável,
-núcleos, threads, SMT, topologia NUMA, topologia de cache, RAM, kernel,
-governor, turbo, compilador e versão, Meson, Ninja, perf. Quando relevante:
-mitigations, hugepages, isolamento de CPU, frequência, estado térmico.
+núcleos, threads, SMT, topologia NUMA, topologia de cache **com os domínios de
+L3 e o CCD de cada núcleo**, RAM, kernel, governor, turbo, compilador e versão,
+Meson, Ninja, perf, `perf_event_paranoid`, e se o TSC é invariante
+(`constant_tsc`, `nonstop_tsc`). Quando relevante: mitigations, hugepages,
+isolamento de CPU, frequência, estado térmico.
+
+**A máquina de referência deste projeto** é um AMD Ryzen 9 9900X — 12 núcleos,
+24 *threads*, SMT ativo, **dois domínios de L3**, um nó NUMA, TSC invariante. As
+duas consequências que atravessam a trilha: o par de núcleos escolhido é
+variável do experimento, não detalhe de execução (seção 28); e a pergunta de
+falha "o que acontece quando o TSC não é invariante" **não é reproduzível
+aqui** — fica registrada como questão em aberto (seção 7), não como experimento
+prometido.
 
 > **Lição herdada, a ser preservada na porta:** o script de origem **não** faz
 > parsing do texto do `lscpu`, porque a saída dele é traduzida — a primeira
@@ -768,7 +894,17 @@ barramento, e o vocabulário de métricas ancorado em norma.
 | custo de cache miss, TLB, NUMA, syscall | DPDK-ACADEMY | como o modelo de objetos e o layout de C++ o provocam ou o evitam |
 | custo de sincronização | DPDK-ACADEMY | `std::atomic`, ordenação de memória, correção linearizável |
 | superfície de ajuste do SO | EX442-LABS | **nada, até a etapa final** — ver abaixo |
-| geração de código, `constexpr`, template | — | **é o objeto próprio deste projeto** |
+| geração de código, `constexpr`, template | aqui, seção 36 | veio do projeto absorvido, e virou módulo transversal |
+| **onde a estrutura da biblioteca padrão para** | aqui | **é o objeto próprio deste projeto** — seções 34 e 35 |
+
+**Esta seção legislava sobre este repositório antes de ele existir.** Ela foi
+escrita no projeto absorvido, e atribui ao DPDK Academy cache, TLB, NUMA e falso
+compartilhamento — que são o assunto dos módulos de memória e de layout daqui. A
+regra que resolve não mudou, e é a que abre a seção: **cita e estende; não
+reensina.** Na prática, um módulo daqui não reapresenta o custo do *cache miss*:
+ele cita o número já medido no DPDK Academy e mede o que a estrutura de C++ faz
+com esse custo. Quando o número citado não serve — outra máquina, outro
+compilador, outra carga —, o módulo remede e diz por que o citado não servia.
 
 ### Quando o EX442 entra, e por que não antes
 
@@ -811,17 +947,30 @@ Política sem portão não vale. Os verificadores em
 | `verificar-ancoras.py` | âncora de linha aponta para o trecho certo do código |
 | `verificar-retratacoes.py` | valor declarado retratado não sobrevive fora do bloco que o retrata |
 | `verificar-aritmetica.py` | percentual que o texto torna conferível fecha |
+| `verificar-suposicao.py` | a pré-condição da porta R chega ao otimizador, conferida no assembly, com braço de controle |
 
-Os quatro vêm do projeto irmão, onde **cada um nasceu de um defeito medido**, e
-todos têm autoteste. A razão de portar em vez de escrever está no cabeçalho de
+Os quatro primeiros vêm do DPDK Academy, onde **cada um nasceu de um defeito
+medido**; o quinto nasceu no projeto absorvido, de um defeito dele — o Clang
+descartava a suposição em silêncio. Todos têm autoteste. A razão de portar em vez de escrever está no cabeçalho de
 `verificar-retratacoes.py`: no defeito que o originou, quem escreveu a retratação
 sabia da regra, tinha acabado de enunciá-la, e ainda assim deixou o valor
 derrubado circulando em outras páginas. **Correção manual não escala.**
 
-Faltam ainda, com acoplamento a adaptar: `verificar-promessa.py` (todo programa
-citado existe e entra na compilação) e `verificar-autodescricao.py` (o que o
-material afirma sobre si corresponde ao disco). Estado: **não portados** —
-registrado no [ROADMAP.md](../ROADMAP.md).
+**Faltam doze, e a conta é para ser lida.** O DPDK Academy tem 23 programas de
+qualidade e 6.827 linhas em `ferramental/qualidade/`; aqui há cinco. Os dois que
+mais importam, com o acoplamento já medido, são `verificar-promessa.py` (todo
+programa citado existe e entra na compilação, 18 pontos de acoplamento) e
+`verificar-autodescricao.py` (o que o material afirma sobre si corresponde ao
+disco, 838 linhas e 34 pontos) — este último é o que sustenta a rotulagem de
+estado da seção 5, e enquanto ele não existir a seção 5 é promessa de autor, não
+portão. Faltam também o verificador de **par de idiomas**, que torna verificável
+a regra do radical idêntico da seção 2, e o **gerador de gráficos**, porque
+dispersão de percentil alto se lê em gráfico e a paridade PT/EN vale para as
+imagens. Estado: **não portados** — registrado no [ROADMAP.md](../ROADMAP.md).
+
+A ordem de portar é por necessidade real, não em bloco: portar 6.800 linhas
+antes de existir conteúdo a verificar é promessa sem código, que é o que esta
+norma proíbe.
 
 ## 32. Política editorial
 
@@ -858,14 +1007,135 @@ C++ source → semântica da linguagem → compilador → assembly
           → microarquitetura → cache/memória → sistema operacional → medição
 ```
 
+e a cadeia deste projeto acrescenta um elo, que é o seu:
+
+```text
+o que a biblioteca padrão entrega → o ponto medido em que ela para
+                                  → o complemento, sob o mesmo contrato
+                                  → a regra de decisão
+```
+
 O objetivo não é ensinar **como escrever C++ rápido**. É ensinar:
 
 > **como investigar cientificamente por que determinado software C++ apresenta
-> determinado comportamento de desempenho.**
+> determinado comportamento de desempenho** — e, com isso, **quando** trocar o
+> mecanismo que a linguagem dá, não só como.
 
-Essa filosofia permanece consistente entre DPDK Academy, C++ Performance
-Academy e Messaging Academy, formando uma família coerente de estudos sobre
-**High Performance Systems Engineering**.
+Essa filosofia permanece consistente entre DPDK Academy, este projeto e
+Messaging Academy, formando uma família coerente de estudos sobre **High
+Performance Systems Engineering**. A comparabilidade entre os três depende de
+uma régua de apuração compartilhada, e é por isso que `lib/` é tratado como
+candidato a repositório próprio desde já: a fronteira tem de ser **ABI C**, ou a
+extração nunca acontece — o DPDK Academy é escrito em C, e um harness em
+`<expected>` e template não é consumível de lá.
+
+---
+
+# Parte VII — O par std e custom
+
+Esta parte não existia na norma absorvida. Ela é o que este repositório tem e o
+projeto de origem não tinha: a trilha, e a unidade de trabalho dela.
+
+## 34. O par std e custom como unidade de trabalho
+
+> Um tópico não é uma estrutura. É **um par de estruturas sob a mesma lei**,
+> medido no mesmo harness, na mesma máquina, com o mesmo contrato.
+
+A ordem é fixa e não é preferência: **primeiro o que a linguagem dá.** Nenhum
+`custom/` se escreve antes de o `std/` correspondente estar medido e publicado.
+Um complemento proposto contra um baseline não medido é opinião com código.
+
+Três resultados são possíveis por tópico, e **todos os três se publicam**:
+
+| Resultado | O que o leitor aprende |
+|---|---|
+| a biblioteca padrão basta | qual recurso usar, e por que a alternativa artesanal não compensa |
+| basta até um volume ou percentil | a regra de decisão: em que ponto trocar (seção 35) |
+| não serve no caminho crítico | o mecanismo que a substitui, e o que ele custa em troca |
+
+O segundo e o terceiro são os esperados. **O primeiro é o que dá crédito aos
+outros dois**, e por isso tem índice próprio junto com os resultados negativos
+da seção 12: em vários casos `string_view` com `from_chars` já é a resposta, e o
+decodificador artesanal não compensa.
+
+### `spec.hpp` é a lei, e `contract.hpp` é outra coisa
+
+Duas palavras colidiam. Nesta norma, **contrato** é o mecanismo das três portas
+da seção 13 — `PERF_EXPECTS`, `[[assume]]`, `lib/contract/`. No documento de
+origem da trilha, "contrato" era a interface comum que `std/` e `custom/`
+precisam cumprir. Dois conceitos, um nome, no mesmo repositório.
+
+O nome da interface do tópico é **`spec.hpp`**. O de `lib/contract/` fica, porque
+é o que `-Werror=assume` e `verificar-suposicao.py` já nomeiam.
+
+### A divergência de contrato é achado, e é declarada em código
+
+`std::map<Price, Level>` e um array plano indexado por *tick* **não** cumprem a
+mesma lei: diferem em ordem de iteração, estabilidade de referência e domínio de
+preço. Isso não é defeito do tópico, é o assunto dele.
+
+Regra: a `spec.hpp` declara as invariantes, e **cada braço declara em `traits`
+quais delas honra**. Os testes L1 são parametrizados pela spec e consultam os
+traits; uma invariante que um braço não honra é um teste **pulado com motivo**,
+não um teste ausente. A divergência fica no código, verificável, em vez de na
+prosa, onde envelhece sem que ninguém perceba.
+
+> Uma spec que os dois braços cumprem sem ressalva costuma ser sinal de que a
+> spec foi escrita fraca o suficiente para caber nos dois.
+
+## 35. Regra de decisão
+
+Seção obrigatória em todo tópico que compara, e **é o artefato de referência
+interna do projeto** — o que se consulta ao projetar um sistema real, e não ao
+estudar.
+
+A regra responde a uma pergunta só: **a partir de que ponto a troca compensa?**
+O ponto é um número — volume, cardinalidade, taxa de chegada, percentil —, não
+um adjetivo.
+
+Cada regra publicada declara, no mínimo:
+
+| Campo | Exemplo |
+|---|---|
+| a estrutura de partida e a de troca | `std::map<Price, Level>` → array plano por *tick* com bitmap |
+| a variável de decisão e o ponto de virada | cardinalidade de níveis ativos, acima de N |
+| o percentil em que a virada aparece | aparece em p99,9 antes de aparecer em p50 |
+| a máquina, a configuração de build e o *commit* | ambiente gerado, não descrito (seção 29) |
+| o que a regra **não** cobre | a carga, o padrão de acesso e a faixa fora dos quais ela não vale |
+
+A tabela consolidada vive em `docs/regras-de-decisao.md`, e **cada linha dela
+aponta para um `metadata.json` existente**. A tabela é verificada por máquina,
+como as demais afirmações numéricas da seção 8: uma regra de decisão sem
+medição arquivada é opinião com aparência de referência, e é o tipo de defeito
+mais caro que este projeto pode publicar, porque é o que alguém usaria para
+decidir.
+
+> Uma regra de decisão que não diz onde deixa de valer não é regra: é slogan.
+
+## 36. O eixo do código gerado
+
+Objeto próprio do projeto absorvido, preservado aqui como **módulo transversal**
+em vez de diluído nos outros. A pergunta dele é a que os módulos de estrutura
+não fazem:
+
+> **o que o compilador faz com `custom/` que ele não faz com `std/`?**
+
+O que este eixo traz, e o que ele não é:
+
+- traz `constexpr`, template, `[[assume]]` e o deslocamento de trabalho para
+  tempo de compilação como **hipótese medida**, nunca como regra de estilo
+  (seção 14);
+- traz a varredura em vez do ponto único, porque a variável sob teste interage
+  com a hierarquia de memória;
+- traz o custo de compilar entre as métricas;
+- **não** é comparação entre compiladores, nem catálogo de *flags*: o par
+  continua sendo `std` e `custom`, e o compilador é o instrumento, não o objeto.
+
+O verificador que sustenta este eixo já existe: `verificar-suposicao.py` compila
+uma sonda e confere no assembly, com braço de controle, que a pré-condição chega
+ao otimizador. Ele nasceu de um defeito medido — o Clang descartava a suposição
+em silêncio —, e é a prova de que neste eixo a afirmação sobre código gerado se
+verifica lendo código gerado.
 
 ---
 
@@ -893,11 +1163,34 @@ Registro auditável das correções aplicadas sobre
 
 ---
 
+## Divergências em relação ao documento de origem da trilha
+
+Segunda tabela, e segundo documento de origem:
+[`origem/setup-lowlatency-structures-academy.md`](origem/setup-lowlatency-structures-academy.md),
+também preservado intacto. As correções abaixo foram verificadas nesta máquina
+antes de entrar na norma.
+
+| # | Origem | Correção |
+|---|---|---|
+| 1 | §2.2 dizia que as dependências de teste vêm "fixadas por hash em `subprojects/*.wrap`, com `.wraplock`" | o `.wraplock` **não existe** no DPDK Academy, e em Meson `.wraplock` é o lock de diretório usado durante o download, não um lockfile de dependências a versionar. O pin por hash já está no `.wrap`; a menção sai |
+| 2 | §7 previa "HdrHistogram_c, wrap fixado por hash" | **não está no WrapDB** — consulta ao `releases.json` em 2026-09-21: 367 projetos, nenhum de histograma. O wrap tem de ser escrito à mão, com `meson.build` próprio, porque o projeto é CMake; e o *log writer* dele arrasta zlib, o que colide com "nenhuma dependência além do compilador" (seção 16). Decisão registrada no ROADMAP, etapa do harness |
+| 3 | §7 previa "um perfil `sanitize` com ASan, UBSan e TSan" | ASan e TSan não coexistem: dois perfis (seção 16) |
+| 4 | §2.2 descrevia o ferramental de qualidade como "verificadores de âncora, autodescrição e paridade" | são 23 programas e 6.827 linhas no DPDK Academy; portar é a maior tarefa do projeto, não um item de checklist (seção 31) |
+| 5 | §4 dava a `docs/0N-*` só teoria, sem diretório de código | no DPDK Academy os programas que produzem número de teoria moram em `docs/0N-*/medicoes/`. Sem isso, ou a teoria é prosa sem programa — o que a seção 8 proíbe — ou o diretório falta. Fica `docs/0N-*/medicoes/` |
+| 6 | §7 punha arm64 no escopo, "compila, sem números publicados" | não há máquina nem *runner*; arm64 sai do escopo até haver um (seção 16) |
+| 7 | §6 prometia o experimento "o que acontece quando o TSC não é invariante" | a máquina de referência tem `constant_tsc` e `nonstop_tsc`: não é reproduzível aqui, e fica como questão em aberto (seções 7 e 29) |
+| 8 | §8 listava o que cada medição registra, sem CCD, sem precisão de histograma e sem variação entre execuções | os três entram, e o terceiro é herança de um defeito do DPDK Academy: critério de validade publicado com a calibração em lugar nenhum (seção 28) |
+| 9 | §10 previa a extração de `ferramental/bench/` como etapa final, consumida também pelo DPDK Academy | o DPDK Academy é C; a fronteira tem de ser ABI C **desde já**, ou a extração não acontece (seção 33) |
+| 10 | §5 chamava de `contract.hpp` a interface comum de `std/` e `custom/` | colisão com o mecanismo das três portas; a lei do tópico é `spec.hpp` (seção 34) |
+| 11 | §4 previa `ferramental/bench/` para o harness | o harness absorvido é `lib/measurement/`, e `lib/` é a fronteira de extração. `ferramental/` fica só para qualidade e gráficos (seção 15) |
+| 12 | §1.2 dizia que o livro de ofertas é "cenário recorrente, não objeto de estudo", e a trilha lhe dá um módulo inteiro mais o capstone | pendente de decisão editorial, registrada no ROADMAP: ou o README assume o livro como protagonista, ou o módulo 04 encolhe |
+
 ## Navegação
 
 - [Catálogo de referências](referencias.md)
 - [Índice da documentação](README.md)
 - [README do repositório](../README.md)
-- [Documento de origem, intacto](origem/setup-cpp-performance-academy.md)
+- [Documento de origem desta norma, intacto](origem/setup-cpp-performance-academy.md)
+- [Documento de origem da trilha, intacto](origem/setup-lowlatency-structures-academy.md)
 
 > 🇧🇷 Português | [🇺🇸 English](padrao-do-projeto.en.md)

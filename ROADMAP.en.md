@@ -39,21 +39,25 @@ not started, **zero commits and no remote** — was absorbed by this repository 
 - [x] suite green in all three configurations on **this** machine (GCC 15.2.0):
       `debug` and `release-checked` at 11 OK + 1 expected failure, `release` at
       11 OK + 1 skipped
-- [ ] **absorption delta in the standard** — section 30 (two upstream projects,
-      not three), section 11 promoted to the definition of the `std` → `custom`
-      pair, a new section for the decision rule, section 29 with the two-CCD
-      machine
-- [ ] divergence table against this track's setup document: non-existent
-      `.wraplock`, HdrHistogram absent from WrapDB, two sanitizer profiles,
-      `docs/0N-*/medicoes/`, the harness C ABI, CCD and SMT in the metadata,
-      arm64 without a machine, non-invariant TSC not reproducible here
-- [ ] `contract.hpp` name collision: a topic's law becomes `spec.hpp`
-- [ ] path collision: the inherited `.gitignore` ignores `resultados/**`, while
-      this track's setup archives under `bench/medicoes/` — one of the two names goes
+- [x] **absorption delta in the standard** — 33 sections and 6 parts became 36
+      and 7: section 30 reconciled, section 11 promoted to the pair's publication
+      gate, section 16 without arm64 and with two sanitizer profiles, sections 28
+      and 29 with CCD, histogram precision, between-run variation and the named
+      machine, and the new **Part VII** — the `std` and `custom` pair (34), the
+      decision rule (35), the generated-code axis (36)
+- [x] divergence table against this track's setup document: 12 items, each
+      verified on this machine before entering the standard
+- [x] `contract.hpp` name collision: a topic's law is `spec.hpp` (section 34)
+- [x] path collision, and **the rule behind it inverted**: the name is
+      `bench/medicoes/`, and the campaign history is now **versioned**. The
+      inherited `.gitignore` excluded raw output; in a project whose asset is the
+      provenance of the number, that removes the evidence. The DPDK Academy's
+      practice holds: `medicoes/historico/<date>-<campaign>/`, environment
+      beside it, one output per repetition
+- [x] the `language ↔ compiler ↔ generated code` axis became section 36, and the
+      cross-cutting module `10-codigo-gerado` is planned in the track
 - [ ] the `CPP_ACADEMY_*` prefix on the measurement ruler's environment
       variables: kept as-is during absorption, to be decided against the new identity
-- [ ] the `language ↔ compiler ↔ generated code` axis, which was the absorbed
-      project's own object, gets a cross-cutting module `10-codigo-gerado`
 - [ ] `pre-commit.sh` and CI running the three-configuration matrix
 - [ ] a **language-pair** checker: the identical-stem rule (standard, section 2)
       exists to be verifiable, and today it is not

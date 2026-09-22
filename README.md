@@ -16,7 +16,7 @@ máquina nomeada.
 
 | Componente | Estado |
 |---|---|
-| [Padrão do projeto](docs/padrao-do-projeto.md) | **escrito** — 33 seções, 6 partes; pendente do delta da absorção |
+| [Padrão do projeto](docs/padrao-do-projeto.md) | **escrito** — 36 seções, 7 partes; delta da absorção aplicado |
 | [Catálogo de referências](docs/referencias.md) | **escrito** — endereços pendentes de conferência |
 | [Ferramental de qualidade](ferramental/qualidade/) | **código existe, não medido** — 5 verificadores, autotestes passando |
 | [Régua de apuração](lib/measurement/) | **código existe, não medido** — compila nas três configurações |

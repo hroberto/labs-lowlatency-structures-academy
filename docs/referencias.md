@@ -2,7 +2,7 @@
 
 # Catálogo de referências
 
-Bibliografia central do **C++ Performance Academy**. Os identificadores entre
+Bibliografia central do **Low-Latency Structures Academy**. Os identificadores entre
 colchetes são **estáveis**: não mudam se os documentos forem reorganizados, e é
 por eles que os módulos citam.
 

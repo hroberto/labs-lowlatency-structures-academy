@@ -2,7 +2,7 @@
 
 # Reference catalogue
 
-The central bibliography of the **C++ Performance Academy**. The identifiers in
+The central bibliography of the **Low-Latency Structures Academy**. The identifiers in
 brackets are **stable**: they do not change if the documents are reorganized,
 and they are what the modules cite.
 
