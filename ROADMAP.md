@@ -176,19 +176,28 @@ repositório em 2026-09-21. Veio o que já era executável:
       com nome de caso em português porque é prosa; **TAP** (`protocol: 'tap'`)
       para os testes de shell e Python, que o GTest nunca cobriria — `l2_run.sh`,
       os autotestes de script e os autotestes dos próprios verificadores
-- [ ] executar a decisão: `subprojects/gtest.wrap` fixado por hash (está no
-      WrapDB), conversão de `tail_sanity` e `contract_sanity`, e saída TAP nos
-      testes de shell e Python. Um framework sem usuário é dependência sem
-      pagador, então o wrap entra no mesmo commit do primeiro teste que o use
+- [x] **GoogleTest executado**: `subprojects/gtest.wrap` em 1.17.0, fixado por
+      hash e idêntico ao do DPDK Academy, entrou no mesmo commit do primeiro
+      teste que o usa — o L1 do tópico 01.01, com `protocol: 'gtest'`. São 7
+      invariantes × 2 braços = 14 casos, e o Meson conta os 2 pulados. E o
+      `test-all.sh` passou a ler o JUnit e reportar **casos**, não só testes
+- [ ] **TAP nos testes de shell e Python**, que é a outra metade da decisão e
+      cobre o que o GoogleTest nunca cobrirá: os dois `l2_run.sh`, os dois
+      autotestes de script e os nove autotestes de verificador. São 4 alvos que
+      hoje escondem 19 casos atrás de um código de saída
+- [ ] converter `tail_sanity` e `contract_sanity` para GoogleTest — 11 e 12
+      asserções escondidas em um alvo cada. Não é urgente como era o L1
+      parametrizado, mas é a mesma dívida
 - [ ] **`CITATION.cff` é ponto cego do `verificar-autodescricao.py`**, que só
       confere `.md`. Três contagens dele envelheceram em silêncio e foram
       corrigidas à mão em 2026-09-22 — "doze verificadores" virou dez, "oito
       módulos" virou nove de dez. Ou o verificador passa a ler `.cff` e `.yml`,
       ou o arquivo continua fora do portão e isso fica dito nele (está)
-- [ ] portar `verificar-medicao.py` do DPDK Academy — o **13º verificador**, e o
-      único acoplamento hoje sem portão: número publicado num README contra a
-      campanha que ele cita. Refazer uma campanha muda os números e nada fica
-      vermelho
+- [x] `verificar-medicao.py` — o **13º verificador**, escrito quando o
+      acoplamento mordeu pela terceira vez. A tabela publicada é a arquivada,
+      **caractere a caractere**: igualdade literal, e não comparação com
+      tolerância, porque quem decide se 16,08 e 16,09 são a mesma medição é o
+      autor ao reescrever o texto. Ele se pagou na mesma sessão em que nasceu
 - [x] [`docs/plano-estudo.md`](docs/plano-estudo.md) — a ordem de leitura, nos
       dois idiomas, com a divergência em relação a esta ordem justificada módulo
       a módulo: alocação antes de layout porque medir SoA sob pressão de alocador
@@ -287,7 +296,7 @@ O critério de pronto é o mesmo em todas: cada tópico com `std/`, `custom/`,
 
 ### Etapa 8 — Capstone · módulo [09](docs/09-capstone/README.md)
 
-- [ ] o motor de livro em duas versões, com *feed* sintético reproduzível
+- [ ] o motor de índice em duas versões, com *feed* sintético reproduzível
 - [ ] a tabela que **atribui** a diferença ponta a ponta a cada tópico — sem ela
       o capstone é demonstração, não fecho
 

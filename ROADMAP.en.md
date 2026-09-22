@@ -182,19 +182,29 @@ not started, **zero commits and no remote** — was absorbed by this repository 
       **TAP** (`protocol: 'tap'`) for the shell and Python tests, which GTest
       would never cover — `l2_run.sh`, the script self-tests and the checkers'
       own self-tests
-- [ ] carry the decision out: `subprojects/gtest.wrap` pinned by hash (it is in
-      WrapDB), converting `tail_sanity` and `contract_sanity`, and TAP output in
-      the shell and Python tests. A framework with no user is a dependency with
-      no payer, so the wrap lands in the same commit as the first test that uses it
+- [x] **GoogleTest carried out**: `subprojects/gtest.wrap` at 1.17.0, pinned by
+      hash and identical to the DPDK Academy's, landed in the same commit as the
+      first test that uses it — topic 01.01's L1, with `protocol: 'gtest'`. That
+      is 7 invariants × 2 arms = 14 cases, and Meson counts the 2 skipped ones.
+      And `test-all.sh` now reads the JUnit and reports **cases**, not just tests
+- [ ] **TAP in the shell and Python tests**, the other half of the decision, and
+      the part GoogleTest will never cover: both `l2_run.sh`, both script
+      self-tests and the nine checker self-tests. 4 targets that today hide 19
+      cases behind one exit code
+- [ ] convert `tail_sanity` and `contract_sanity` to GoogleTest — 11 and 12
+      assertions hidden in one target each. Not as urgent as the parameterized
+      L1 was, but the same debt
 - [ ] **`CITATION.cff` is a blind spot of `verificar-autodescricao.py`**, which
       only reads `.md`. Three of its counts aged silently and were fixed by hand
       on 2026-09-22 — "twelve checkers" became ten, "eight modules" became nine
       of ten. Either the checker starts reading `.cff` and `.yml`, or the file
       stays outside the gate and says so (it does)
-- [ ] port `verificar-medicao.py` from the DPDK Academy — the **13th checker**,
-      and today's only coupling with no gate: a number published in a README
-      against the campaign it cites. Re-running a campaign changes the numbers
-      and nothing goes red
+- [x] `verificar-medicao.py` — the **13th checker**, written when the coupling
+      bit for the third time. The published table is the archived one,
+      **character for character**: literal equality, not a tolerance comparison,
+      because whoever decides whether 16.08 and 16.09 are the same measurement is
+      the author rewriting the text. It paid for itself in the session it was
+      born in
 - [x] [`docs/plano-estudo.en.md`](docs/plano-estudo.en.md) — the reading order,
       in both languages, with its divergence from this order justified module by
       module: allocation before layout because measuring SoA under allocator
