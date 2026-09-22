@@ -1,0 +1,52 @@
+# Manutenção das dependências que o Dependabot de fato entende.
+#
+# POR QUE SÓ github-actions
+#
+# Este projeto não tem dependência de biblioteca: a norma (seção 16) declara
+# "nenhuma dependência de sistema além do compilador, do Meson e do Ninja", e a
+# régua de apuração e a biblioteca de contratos são header-only, escritas aqui.
+# Declarar outro ecossistema não faria nada além de dar falsa sensação de
+# cobertura, e cobertura imaginária é pior que ausência declarada.
+#
+# O que ele entende é a CI. E ali existe um custo real a pagar: em
+# `.github/workflows/ci.yml` a ação `actions/checkout` está fixada por SHA, e
+# não por tag. Isso foi deliberado — `v5` é ponteiro móvel, e quem controla o
+# repositório da ação pode reapontá-lo —, mas troca risco de cadeia de
+# suprimento por custo de manutenção: SHA fixo não se atualiza sozinho e
+# envelhece em silêncio.
+#
+# É esse custo que este arquivo paga: quando o SHA por trás da tag mudar, chega
+# um pull request com a atualização, para revisão.
+#
+# CADÊNCIA MENSAL, e não semanal, de propósito. Ação de terceiros não muda com
+# frequência, e pull request demais em repositório de uma pessoa vira ruído que
+# se ignora — ruído ignorado é pior que alerta ausente, porque dá a impressão de
+# que alguém está olhando.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "ci"
+    labels:
+      - "dependencies"
+    # Um PR por vez: com uma única ação monitorada, mais que isso é sinal de que
+    # algo está errado, não de que há trabalho a fazer.
+    open-pull-requests-limit: 1
+
+    # POR QUE NAO HA REGRA `ignore` AQUI
+    #
+    # A tentação é silenciar salto de major. A documentação do GitHub não é
+    # conclusiva sobre `ignore` filtrar também os SECURITY updates, e num
+    # controle de segurança essa incerteza é ela própria o defeito: silenciar
+    # por regra que talvez silencie mais do que se pretende é pior do que não
+    # silenciar.
+    #
+    # A proteção contra merge de major sem revisão não mora aqui, e sim em:
+    #
+    #   1. PR é PROPOSTA — nada entra na main sem merge deliberado;
+    #   2. `ferramental/qualidade/pre-commit.sh` avisa quando o SHA fixado deixa
+    #      de ser o topo do major declarado no workflow;
+    #   3. a `main` exige assinatura verificada e recusa force push.

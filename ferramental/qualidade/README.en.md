@@ -111,6 +111,34 @@ The proportion is the argument for self-tests with baits: four out of every five
 accusations on the first run came from the checker, and all of them looked like
 findings.
 
+## The gate: `pre-commit.sh`
+
+It runs in both places, and the reason is that each covers a gap the other does
+not: a local hook does not run on a third party's pull request nor on
+Dependabot's, by construction; a CI step does not prevent the bad commit from
+existing, it only fails it afterwards.
+
+| Step | What it checks |
+|---|---|
+| syntax | `bash -n` on every script and `compileall` on every `.py` |
+| documentation | the six checkers **and their six self-tests** |
+| secrets | private keys and recognisable token patterns in tracked files |
+| CI pin | the action's pinned SHA is still the top of the major declared in the comment |
+| suite | full mode only, which is the local hook's |
+
+The `--rapido` mode exists because without it CI would run the suite twice and a
+failure would have no address: the red would show up before `meson setup`,
+without saying which configuration broke.
+
+The pin check has already paid for itself: it caught that the SHA written in the
+workflow's first version was not the top of `v5`.
+
+To install the hook:
+
+```bash
+ln -sf ../../ferramental/qualidade/pre-commit.sh .git/hooks/pre-commit
+```
+
 ## Navigation
 
 - [Tooling](../README.en.md)

@@ -22,6 +22,7 @@ a named machine.
 | [Measurement ruler](lib/measurement/) | **code exists, not measured** — builds in all three configurations |
 | [Contract library](lib/contract/) | **code exists, not measured** — three gates, suite in all three configurations |
 | [`scripts/`](scripts/) | **code exists, not measured** — `check-env.sh`, `ambiente.sh` (text, markdown, JSON), `build-all.sh`, `test-all.sh`, with self-tests in the suite |
+| [CI](.github/workflows/ci.yml) and [pre-commit](ferramental/qualidade/pre-commit.sh) | **code exists, not measured** — consistency before build; GCC 14 × Clang 18 × three configurations matrix |
 | Module track | **not started** |
 | Capstone (order book engine) | **not started** |
 

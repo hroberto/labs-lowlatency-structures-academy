@@ -57,7 +57,22 @@ repositório em 2026-09-21. Veio o que já era executável:
       módulo transversal `10-codigo-gerado` está previsto na trilha
 - [ ] prefixo `CPP_ACADEMY_*` das variáveis de ambiente da régua de apuração:
       mantido na absorção, decidir se acompanha a identidade nova
-- [ ] `pre-commit.sh` e CI executando a matriz de três configurações
+- [x] `pre-commit.sh` — sintaxe, os seis verificadores mais os seis autotestes,
+      varredura de segredo com escopo declarado, e conferência de que o SHA
+      fixado da ação de CI ainda é o topo do major declarado no comentário. O
+      modo `--rapido` é o da CI; o gancho local roda a suíte também
+- [x] CI em dois *jobs*: consistência antes de build, e build com matriz de
+      compilador (GCC 14 e Clang 18 da imagem `ubuntu-24.04`) × as três
+      configurações, que vêm de `lib-configuracoes.sh` e não são duplicadas no
+      *workflow*. Ação fixada por SHA, `permissions: contents: read`, gatilho só
+      em `main` e `pull_request`
+- [x] `dependabot.yml` só para `github-actions`, com a razão de não haver regra
+      `ignore` registrada no próprio arquivo
+- [ ] **o contrato CI ↔ máquina de referência, declarado e não resolvido:** a CI
+      roda GCC 14 e Clang 18; a máquina mede em GCC 15.2.0 e Clang 21.1.8.
+      Portabilidade é da CI, medição é da máquina nomeada, e nenhum número
+      publicado sai da CI. Se um dia um número tiver de sair de lá, isto vira
+      decisão a rever
 - [x] verificador de **par de idiomas**: `verificar-paridade.py`, com quatro
       regras — par, navegação, estrutura e números —, 14 casos de autoteste e
       duas iscas que nasceram de acusações falsas dele mesmo (separador decimal

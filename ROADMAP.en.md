@@ -58,7 +58,22 @@ not started, **zero commits and no remote** — was absorbed by this repository 
       cross-cutting module `10-codigo-gerado` is planned in the track
 - [ ] the `CPP_ACADEMY_*` prefix on the measurement ruler's environment
       variables: kept as-is during absorption, to be decided against the new identity
-- [ ] `pre-commit.sh` and CI running the three-configuration matrix
+- [x] `pre-commit.sh` — syntax, the six checkers plus their six self-tests, a
+      secret scan with a declared scope, and a check that the pinned CI action
+      SHA is still the top of the major declared in the comment. The `--rapido`
+      mode is the CI's; the local hook also runs the suite
+- [x] CI in two jobs: consistency before build, and build with a compiler matrix
+      (GCC 14 and Clang 18 from the `ubuntu-24.04` image) × the three
+      configurations, which come from `lib-configuracoes.sh` and are not
+      duplicated in the workflow. Action pinned by SHA,
+      `permissions: contents: read`, triggered only on `main` and `pull_request`
+- [x] `dependabot.yml` for `github-actions` only, with the reason for having no
+      `ignore` rule recorded in the file itself
+- [ ] **the CI ↔ reference-machine contract, declared and unresolved:** CI runs
+      GCC 14 and Clang 18; the machine measures on GCC 15.2.0 and Clang 21.1.8.
+      Portability belongs to CI, measurement to the named machine, and no
+      published number comes out of CI. If one day a number has to come from
+      there, this becomes a decision to revisit
 - [x] a **language-pair** checker: `verificar-paridade.py`, with four rules —
       pair, navigation, structure and numbers —, 14 self-test cases and two baits
       born from its own false accusations (the per-language decimal separator,

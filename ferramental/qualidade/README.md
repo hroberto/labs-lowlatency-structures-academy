@@ -106,6 +106,34 @@ escritos.
 A proporção é o argumento a favor de autoteste com isca: quatro em cada cinco
 acusações da primeira execução eram do verificador, e todas pareciam achados.
 
+## O portão: `pre-commit.sh`
+
+Roda nos dois lugares, e a razão é que cada um cobre uma lacuna que o outro não
+cobre: um gancho local não roda em *pull request* de terceiro nem do Dependabot,
+por construção; uma etapa de CI não impede que o commit ruim exista, só o
+reprova depois.
+
+| Passo | O que confere |
+|---|---|
+| sintaxe | `bash -n` em todo script e `compileall` em todo `.py` |
+| documentação | os seis verificadores **e os seis autotestes** |
+| segredos | chave privada e token de padrão reconhecível nos arquivos rastreados |
+| pin da CI | o SHA fixado da ação ainda é o topo do major declarado no comentário |
+| suíte | só no modo completo, que é o do gancho local |
+
+O modo `--rapido` existe porque, sem ele, a CI rodaria a suíte duas vezes e uma
+falha ficaria sem endereço: o vermelho apareceria antes do `meson setup`, sem
+dizer qual configuração quebrou.
+
+A conferência do pin já se pagou: ela acusou que o SHA escrito na primeira
+versão do *workflow* não era o topo de `v5`.
+
+Para instalar o gancho:
+
+```bash
+ln -sf ../../ferramental/qualidade/pre-commit.sh .git/hooks/pre-commit
+```
+
 ## Navegação
 
 - [Ferramental](../README.md)

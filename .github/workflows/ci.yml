@@ -1,0 +1,135 @@
+name: CI
+
+# GATILHO RESTRITO A main E A PULL REQUESTS, e a razao e uma so: `on: push` sem
+# filtro dispara tambem em TAG, e reconstruir uma tag antiga com o ferramental
+# de hoje produz vermelho permanente -- a arvore daquele commit nao tem os
+# verificadores que o pre-commit de hoje executa, entao a CI dela nunca mais vai
+# passar, por definicao.
+#
+# Vermelho que nao tem conserto treina quem le a lista a ignorar o vermelho, e
+# foi exatamente assim que cinco falhas reais passaram despercebidas no projeto a
+# montante. Um sinal que nao pode ficar verde nao e sinal.
+#
+# Branch de trabalho continua coberta: entra por `pull_request`, onde o resultado
+# tem para onde ir.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Menor privilegio para o GITHUB_TOKEN. Sem este bloco ele herda o padrao da
+# conta, que pode ser escrita -- e este workflow so compila e testa: nao cria
+# release, nao comenta em PR, nao empurra nada.
+permissions:
+  contents: read
+
+jobs:
+  consistencia:
+    runs-on: ubuntu-24.04
+    steps:
+      # Fixada por SHA, nao por tag: `v5` e um ponteiro movel, e quem controla o
+      # repositorio da acao pode reaponta-lo. O SHA e imutavel.
+      #
+      # Corresponde a v5, que hoje aponta para v5.1.0 -- conferido com
+      # `gh api repos/actions/checkout/git/ref/tags/v5.1.0`, que devolve o mesmo
+      # SHA. Essa linha nao e decorativa:
+      # `ferramental/qualidade/pre-commit.sh` a le para resolver o SHA de volta e
+      # avisar se ele deixou de ser o topo do major declarado.
+      #
+      # Para atualizar dentro do mesmo major:
+      #   gh api repos/actions/checkout/git/ref/tags/v5 --jq '.object.sha'
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+
+      # As regras de consistencia rodam ANTES do build, e num job proprio: uma
+      # falha de documentacao nao deve gastar quatro configuracoes de compilacao
+      # para aparecer.
+      - name: Consistencia do projeto (regras do pre-commit)
+        run: ./ferramental/qualidade/pre-commit.sh --rapido
+
+  build-e-testes:
+    needs: consistencia
+    # Imagem FIXA, nao 'ubuntu-latest': o compilador padrao muda quando a imagem
+    # muda, e este projeto exige C++23 com <print> e <expected>. Com 'latest' a
+    # CI quebraria num dia em que ninguem tocou no codigo.
+    runs-on: ubuntu-24.04
+
+    # A MATRIZ AQUI E DE COMPILADOR; A DE CONFIGURACAO E DO scripts/build-all.sh
+    #
+    # A norma (secao 16) exige as tres configuracoes -- debug, release e
+    # release-checked --, e `build-all.sh` as constroi todas a partir de
+    # `lib-configuracoes.sh`. Duplicar essa lista aqui faria a CI e a maquina
+    # divergirem em silencio, que e a razao de a lista viver num lugar so.
+    #
+    # O que varia por job e o COMPILADOR, porque a norma mede nos dois e registra
+    # onde divergirem.
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - compilador: gcc
+            cxx: g++-14
+          - compilador: clang
+            cxx: clang++-18
+
+    name: build-e-testes (${{ matrix.compilador }})
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+
+      # ESTE PROJETO NAO TEM DEPENDENCIA DE SISTEMA, e a lista curta e a prova.
+      #
+      # A norma (secao 16) declara "nenhuma dependencia alem do compilador, do
+      # Meson e do Ninja". Se um dia esta linha crescer, ou a norma mudou ou a
+      # declaracao dela deixou de ser verdadeira.
+      # OS DOIS COMPILADORES EM TODO JOB, e a razao nao e simetria estetica.
+      #
+      # `check-env.sh` reprova -- com FALTA, nao com aviso -- compilador que
+      # ESTA presente e nao compila os recursos de C++23 que a norma usa. O
+      # `g++` padrao do ubuntu-24.04 e o 13, que nao tem <print>: instalar so o
+      # clang deixaria o g++ 13 na imagem e o diagnostico sairia com codigo 1
+      # antes de qualquer compilacao. Nao e falso positivo do script -- a imagem
+      # de fato tem um compilador que nao serve.
+      #
+      # `update-alternatives` resolve a causa em vez de silenciar o sintoma:
+      # `g++` e `clang++` passam a apontar para versoes que compilam C++23, que
+      # e o que o script diagnostica.
+      - name: Instalar compiladores e build
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build python3-pip g++-14 clang-18
+          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 100
+          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 100
+          sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-18 100
+          sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-18 100
+          python3 -m pip install --upgrade --break-system-packages meson
+
+      # O CONTRATO ENTRE A CI E A MAQUINA DE REFERENCIA, DECLARADO
+      #
+      # A CI roda GCC 14 e Clang 18, que e o que a imagem ubuntu-24.04 oferece.
+      # A maquina de referencia da norma (secao 29) roda GCC 15.2.0 e Clang
+      # 21.1.8. Os dois conjuntos NAO coincidem, e a divisao de trabalho e
+      # explicita: a CI responde por PORTABILIDADE -- o codigo compila e a suite
+      # passa em compilador mais antigo --, e a maquina nomeada responde por
+      # MEDICAO. Nenhum numero publicado sai daqui.
+      - name: Diagnosticar ambiente
+        run: ./scripts/check-env.sh
+
+      # A coleta de ambiente roda na CI mesmo sem publicar numero: o que se
+      # verifica e que ela NAO QUEBRA em maquina diferente da de referencia --
+      # outro numero de CCDs, outro governor, PMU bloqueado. Um script de
+      # ambiente que so funciona numa maquina nao serve ao leitor que reproduz.
+      - name: Registrar ambiente do runner
+        run: |
+          ./scripts/ambiente.sh
+          ./scripts/ambiente.sh --markdown
+          ./scripts/ambiente.sh --json > /dev/null
+
+      - name: Construir as tres configuracoes
+        env:
+          CXX: ${{ matrix.cxx }}
+        run: ./scripts/build-all.sh
+
+      # `test-all.sh` resume por configuracao e distingue PULADO de OK: em
+      # release a violacao de [[assume]] devolve 77, e um resumo que dissesse
+      # apenas "passou" esconderia que um caso nao foi exercido.
+      - name: Rodar a suite nas tres configuracoes
+        run: ./scripts/test-all.sh
