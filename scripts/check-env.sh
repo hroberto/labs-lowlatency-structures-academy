@@ -110,11 +110,23 @@ if command -v perf >/dev/null 2>&1; then
 else
     aviso "perf ausente -- o modulo de contadores de hardware nao roda (o resto roda)"
 fi
+# O 2 E SUFICIENTE PARA ESTE PROJETO, e dizer isso importa.
+#
+# O que a trilha mede sao os benchmarks DESTE repositorio, em espaco de usuario
+# e no proprio processo -- que e exatamente o que o 2 permite. Escopo de CPU
+# (`perf stat -a`) e perfilagem de kernel ficam de fora, e pela divisao de
+# trabalho da secao 30 da norma eles sao assunto do DPDK Academy e do EX442,
+# nao daqui.
+#
+# Por isso o 2 sai como `ok` e nao como aviso: um aviso que diz "funciona tudo
+# o que voce precisa" e ruido, e ruido ensina o leitor a ignorar os avisos que
+# importam.
 case "${paranoid:-vazio}" in
-    -1|0) ok "perf_event_paranoid=$paranoid: contadores de CPU disponiveis" ;;
-    1|2)  aviso "perf_event_paranoid=$paranoid: contador por processo apenas; sem escopo de CPU" ;;
+    -1|0) ok "perf_event_paranoid=$paranoid: contadores de CPU e perfilagem de kernel disponiveis" ;;
+    1)    ok "perf_event_paranoid=1: contador do proprio processo, inclusive modo kernel; sem escopo de CPU" ;;
+    2)    ok "perf_event_paranoid=2: contador do proprio processo em espaco de usuario -- suficiente para a trilha" ;;
     vazio) aviso "perf_event_paranoid nao exposto por este kernel" ;;
-    *)    aviso "perf_event_paranoid=$paranoid BLOQUEIA contador de hardware. Para o modulo de cache misses: sudo sysctl kernel.perf_event_paranoid=0" ;;
+    *)    aviso "perf_event_paranoid=$paranoid BLOQUEIA contador de hardware (o 3+ e extensao do Ubuntu). Para a trilha basta: sudo sysctl -w kernel.perf_event_paranoid=2" ;;
 esac
 
 # Governor e boost decidem se duas execuções são comparáveis -- e é a coleta de

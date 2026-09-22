@@ -101,10 +101,18 @@ repositório em 2026-09-21. Veio o que já era executável:
 - [x] autotestes na suíte `l1+scripts`: braço sintético de dois domínios de L3
       para o agrupamento, e braço de controle que esconde o Meson do `PATH` e
       exige que o `check-env.sh` acuse
-- [ ] **`perf_event_paranoid=4` nesta máquina bloqueia contador de hardware.**
-      O módulo de `perf` e *cache misses* não mede sem `sysctl
-      kernel.perf_event_paranoid=0`, que é mudança de sistema e fica como
-      decisão declarada, não como pré-requisito silencioso
+- [x] **`perf_event_paranoid` resolvido em 2, e não em 0.** A máquina vinha com
+      **4** — extensão do Ubuntu, que bloqueia `perf_event_open` inteiro; o
+      kernel original para em 2. O ajuste aplicado foi o **menor que serve**: o
+      2 permite contador do próprio processo em espaço de usuário, que é o que a
+      trilha mede. Escopo de CPU e perfilagem de kernel continuam fechados, e
+      pela seção 30 da norma eles são assunto do DPDK Academy e do EX442.
+      Verificado: `perf stat` devolve `cycles:u`, `cache-misses:u` e
+      `branch-misses:u` do próprio benchmark
+- [ ] o ajuste **não é persistente** e volta a 4 no próximo boot. Fixá-lo em
+      `/etc/sysctl.d/` é mudança de sistema, e fica como decisão declarada — a
+      alternativa é reaplicar antes de cada campanha, o que o `check-env.sh`
+      diagnostica
 - [ ] `governor=powersave` na máquina de referência: a campanha precisa declarar
       se fixa `performance` antes de medir, ou publica a variação que o governor
       introduz

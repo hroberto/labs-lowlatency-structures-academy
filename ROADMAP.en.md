@@ -102,10 +102,18 @@ not started, **zero commits and no remote** — was absorbed by this repository 
 - [x] self-tests in the `l1+scripts` suite: a synthetic two-L3-domain arm for
       the grouping, and a control arm that hides Meson from `PATH` and requires
       `check-env.sh` to report it
-- [ ] **`perf_event_paranoid=4` on this machine blocks hardware counters.** The
-      `perf` and cache-miss module cannot measure without `sysctl
-      kernel.perf_event_paranoid=0`, which is a system change and stays a
-      declared decision, not a silent prerequisite
+- [x] **`perf_event_paranoid` settled at 2, not 0.** The machine shipped at
+      **4** — an Ubuntu extension that blocks `perf_event_open` entirely; the
+      upstream kernel stops at 2. The adjustment applied was the **smallest that
+      serves**: 2 allows own-process counters in user space, which is what the
+      track measures. CPU-wide scope and kernel profiling stay closed, and under
+      section 30 of the standard they belong to the DPDK Academy and EX442.
+      Verified: `perf stat` returns `cycles:u`, `cache-misses:u` and
+      `branch-misses:u` for the benchmark itself
+- [ ] the adjustment is **not persistent** and reverts to 4 on the next boot.
+      Pinning it in `/etc/sysctl.d/` is a system change, and stays a declared
+      decision — the alternative is reapplying it before each campaign, which
+      `check-env.sh` diagnoses
 - [ ] `governor=powersave` on the reference machine: the campaign must declare
       whether it pins `performance` before measuring, or publishes the variation
       the governor introduces
