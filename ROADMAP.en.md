@@ -77,7 +77,7 @@ not started, **zero commits and no remote** — was absorbed by this repository 
       document and contradicted by the entire history of both projects, now says
       **Portuguese**, with the reason recorded: the commit subject is the
       finding, and a finding is prose
-- [x] `pre-commit.sh` — syntax, the seven checkers plus their seven self-tests, a
+- [x] `pre-commit.sh` — syntax, the eight checkers plus their eight self-tests, a
       secret scan with a declared scope, and a check that the pinned CI action
       SHA is still the top of the major declared in the comment. The `--rapido`
       mode is the CI's; the local hook also runs the suite
@@ -172,9 +172,9 @@ not started, **zero commits and no remote** — was absorbed by this repository 
       each row against an existing `metadata.json` — **it only makes sense from
       the first topic that compares**, and 08.01 does not compare
 - [x] **decided: GoogleTest wherever it is needed, and TAP where it does not
-      reach.** The suite has 22 tests hiding more than a hundred assertions —
-      `tail-sanity` is one test with eleven cases, and a regression in one of
-      them reports "1 of 22". The deficit did not come from the absence of GTest:
+      reach.** The suite counts fewer tests than assertions — `tail-sanity` is
+      **one** test with **eleven** cases, and a regression in one of them reports
+      a single failure. The deficit did not come from the absence of GTest:
       it came from `protocol: 'exitcode'`, Meson's default, which also accepts
       `tap` and `gtest`. So: **GoogleTest** (`protocol: 'gtest'`) for C++ tests
       with several cases, with Portuguese case names because they are prose;
@@ -207,10 +207,16 @@ that exists only in prose is not a debt: it is forgetting with a date on it.
       standard writes "the seven have a self-test", not "the 7".
       **On its first run it reported eleven problems; nine were real**: the census
       said 31 planned topics where the disk has 23, six checkers with self-tests
-      where there are seven, and a suite of 20 tests where Meson registers 22.
+      where there are seven, and the suite count stale.
       Two were its own, and became the *change-record* rule
-- [ ] `verificar-promessa.py` (18 coupling points) — every cited program exists
-      in the tree and enters the build
+- [x] `verificar-promessa.py` — three rules: every cited program exists, every
+      source enters the build, and every `./path` command in a block points at a
+      file. **On its first run it reported 160 problems, and none were real** —
+      the rule accepted the underscore as a separator and caught `unordered_map`,
+      and it accused the topic names the index itself declares not started. Four
+      baits later, 105 promises checked and none broken. One of its defects was a
+      real bug: `01-harness` exists **as a directory**, and the collection only
+      looked at files
 - [ ] the **chart generator**, ported from `ferramental/graficos/` of the DPDK
       Academy. Section 31 of the standard cites it as missing; no item tracked it.
       High-percentile dispersion is read in a chart, and PT/EN parity applies to

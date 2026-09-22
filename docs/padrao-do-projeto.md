@@ -1018,6 +1018,7 @@ Política sem portão não vale. Os verificadores em
 | `verificar-suposicao.py` | a pré-condição da porta R chega ao otimizador, conferida no assembly, com braço de controle |
 | `verificar-paridade.py` | o par de idiomas existe, a navegação aponta para ele, a estrutura é a mesma e nenhum número publicado falta num dos idiomas |
 | `verificar-autodescricao.py` | o que o material afirma **sobre si** corresponde ao disco: censo da norma, da trilha, dos verificadores e da suíte, e o rótulo de estado da seção 5 |
+| `verificar-promessa.py` | todo programa citado existe, toda fonte entra na compilação, e todo comando `./caminho` de bloco aponta para arquivo |
 
 Os quatro primeiros vêm do DPDK Academy, onde **cada um nasceu de um defeito
 medido**; o quinto nasceu no projeto absorvido, de um defeito dele — o Clang
@@ -1028,11 +1029,9 @@ não era verificada. Todos têm autoteste. A razão de portar em vez de escrever
 sabia da regra, tinha acabado de enunciá-la, e ainda assim deixou o valor
 derrubado circulando em outras páginas. **Correção manual não escala.**
 
-**Faltam onze, e a conta é para ser lida.** O DPDK Academy tem 16 verificadores
+**Faltam dez, e a conta é para ser lida.** O DPDK Academy tem 16 verificadores
 em `ferramental/qualidade/`, dentro de 23 programas de qualidade e 6.827 linhas.
-Cinco deles foram portados: faltam onze. O que mais importa, com o acoplamento já
-medido, é `verificar-promessa.py` — todo programa citado existe e entra na
-compilação, 18 pontos de acoplamento.
+Seis deles foram portados: faltam dez.
 
 O `verificar-autodescricao.py` **saiu dessa lista**, e a forma como saiu vale
 registrar: ele não foi portado, foi reescrito para as afirmações que *este*

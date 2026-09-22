@@ -76,7 +76,7 @@ repositório em 2026-09-21. Veio o que já era executável:
       origem e contrariada por todo o histórico dos dois projetos, passou a
       dizer **português**, com a razão registrada: o assunto do commit é o
       achado, e achado é prosa
-- [x] `pre-commit.sh` — sintaxe, os sete verificadores mais os sete autotestes,
+- [x] `pre-commit.sh` — sintaxe, os oito verificadores mais os oito autotestes,
       varredura de segredo com escopo declarado, e conferência de que o SHA
       fixado da ação de CI ainda é o topo do major declarado no comentário. O
       modo `--rapido` é o da CI; o gancho local roda a suíte também
@@ -167,8 +167,8 @@ repositório em 2026-09-21. Veio o que já era executável:
       cada linha contra um `metadata.json` existente — **só faz sentido a partir
       do primeiro tópico que compara**, e 08.01 não compara
 - [x] **decidido: GoogleTest onde for necessário, e TAP onde ele não alcança.**
-      A suíte tem 22 testes que escondem mais de cem asserções — `tail-sanity` é
-      um teste com onze casos, e uma regressão em um deles reporta "1 de 22".
+      A suíte conta menos testes do que asserções — `tail-sanity` é **um** teste
+      com **onze** casos, e uma regressão em um deles reporta uma falha só.
       O déficit não vinha da ausência do GTest: vinha de `protocol: 'exitcode'`,
       o padrão do Meson, que também aceita `tap` e `gtest`. Então:
       **GoogleTest** (`protocol: 'gtest'`) para teste de C++ com vários casos,
@@ -199,13 +199,19 @@ com data marcada.
       origem; o que se porta é a ideia, não o arquivo. Ele confere cinco censos
       contra o disco — norma, trilha, verificadores, suíte e o rótulo de estado
       da seção 5 — e entende numeral por extenso, porque a norma escreve "os
-      sete têm autoteste", não "os 7".
+      oito têm autoteste", não "os 7".
       **Na primeira execução acusou onze problemas; nove eram reais**: o censo
       dizia 31 tópicos previstos onde o disco tem 23, seis verificadores com
-      autoteste onde há sete, e a suíte com 20 testes onde o Meson registra 22.
+      autoteste onde há sete, e a contagem da suíte defasada.
       Dois eram dele, e viraram a regra do *registro de mudança*
-- [ ] `verificar-promessa.py` (18 pontos de acoplamento) — todo programa citado
-      existe na árvore e entra na compilação
+- [x] `verificar-promessa.py` — três regras: todo programa citado existe, toda
+      fonte entra na compilação, e todo comando `./caminho` de bloco aponta para
+      arquivo. **Na primeira execução acusou 160 problemas, e nenhum era real** —
+      a regra aceitava sublinhado como separador e pegava `unordered_map`, e
+      acusava os nomes de tópico que o próprio índice declara não iniciados.
+      Quatro iscas depois, 105 promessas conferidas e zero quebradas. Um defeito
+      dele era de fato bug: `01-harness` existe **como diretório**, e a coleta
+      só olhava arquivos
 - [ ] **gerador de gráficos**, portado de `ferramental/graficos/` do DPDK
       Academy. A seção 31 da norma o cita como faltante; nenhum item o rastreava.
       Dispersão de percentil alto se lê em gráfico, e a paridade PT/EN vale para

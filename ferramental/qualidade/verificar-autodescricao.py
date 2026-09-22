@@ -97,6 +97,29 @@ def numero(texto):
 NUM = r"(\*\*)?\b([0-9]+|[A-Za-zÀ-ÿ]+)\b(\*\*)?"
 
 
+# Marcador de CENSO HISTÓRICO, na linha anterior ao trecho.
+#
+# O ROADMAP narra o que cada item fechado encontrou, e esses relatos citam
+# contagens de um dia específico: "a suíte com 20 testes onde o Meson registra
+# 22". No dia seguinte o Meson registra 24, e os DOIS números da frase estão
+# velhos -- inclusive o que era o correto.
+#
+# A regra do registro de mudança não alcança esse caso, porque ela exige o valor
+# de HOJE na frase, e um relato do passado não o tem. Sem marcador, a saída
+# seria o histórico mentir sobre o passado para agradar ao verificador.
+#
+# O marcador é de LINHA e não de arquivo, de propósito: isentar o ROADMAP
+# inteiro desligaria a regra justamente onde ela mais pega.
+HISTORICO = "<!-- censo-historico -->"
+
+
+def historico(texto, inicio):
+    """O parágrafo que contém `inicio` é precedido pelo marcador?"""
+    trecho = texto[:inicio]
+    corte = trecho.rfind("\n\n")
+    return HISTORICO in (trecho[corte:] if corte != -1 else trecho)
+
+
 def frase(texto, inicio, fim):
     """A frase que contém o trecho, de ponto a ponto."""
     ini = texto.rfind(".", 0, inicio) + 1
@@ -221,7 +244,7 @@ def verificar(raiz="."):
                     texto, NUM + r"\s+(?:seções|secoes|sections)[^.\n]{0,12}?" + NUM +
                     r"\s+(?:partes|parts)", 2):
                 conferidas += 1
-                if tuple(vals[:2]) != norma and not registro_de_mudanca(
+                if tuple(vals[:2]) != norma and not historico(texto, ini) and not registro_de_mudanca(
                         texto, ini, fim, norma):
                     print(f"  {caminho}: diz {vals[0]} seções e {vals[1]} partes; "
                           f"a norma tem {norma[0]} e {norma[1]} -- \"{trecho}\"")
@@ -234,7 +257,7 @@ def verificar(raiz="."):
                     texto, NUM + r"\s+(?:tópicos?|topics?)\s+(?:previstos?|planned)?[^.\n]{0,24}?"
                     + NUM + r"\s+(?:escritos?|written)", 2):
                 conferidas += 1
-                if (vals[0], vals[1]) != (previstos, escritos) and not registro_de_mudanca(
+                if (vals[0], vals[1]) != (previstos, escritos) and not historico(texto, ini) and not registro_de_mudanca(
                         texto, ini, fim, (previstos, escritos)):
                     print(f"  {caminho}: diz {vals[0]} previstos e {vals[1]} escrito(s); "
                           f"o disco tem {previstos} e {escritos} -- \"{trecho}\"")
@@ -242,7 +265,7 @@ def verificar(raiz="."):
             for vals, trecho, ini, fim in achar(
                     texto, NUM + r"\s+(?:tópico|topic)\s+(?:de|out of)\s+" + NUM, 2):
                 conferidas += 1
-                if (vals[0], vals[1]) != (escritos, previstos) and not registro_de_mudanca(
+                if (vals[0], vals[1]) != (escritos, previstos) and not historico(texto, ini) and not registro_de_mudanca(
                         texto, ini, fim, (escritos, previstos)):
                     print(f"  {caminho}: diz {vals[0]} de {vals[1]}; o disco tem "
                           f"{escritos} de {previstos} -- \"{trecho}\"")
@@ -255,7 +278,7 @@ def verificar(raiz="."):
                     texto, r"os\s+" + NUM + r"\s+têm\s+autoteste|all\s+" + NUM +
                     r"\s+have\s+a\s+self-test", 1):
                 conferidas += 1
-                if vals[0] != com_autoteste and not registro_de_mudanca(
+                if vals[0] != com_autoteste and not historico(texto, ini) and not registro_de_mudanca(
                         texto, ini, fim, (com_autoteste,)):
                     print(f"  {caminho}: diz que {vals[0]} têm autoteste; "
                           f"{com_autoteste} têm -- \"{trecho}\"")
@@ -275,7 +298,7 @@ def verificar(raiz="."):
                 if not re.search(r"su[ií]te|suite", frase(texto, ini, fim), re.I):
                     continue
                 conferidas += 1
-                if vals[0] != suite and not registro_de_mudanca(
+                if vals[0] != suite and not historico(texto, ini) and not registro_de_mudanca(
                         texto, ini, fim, (suite,)):
                     print(f"  {caminho}: diz {vals[0]} testes na suíte; "
                           f"o Meson registra {suite} -- \"{trecho}\"")
@@ -397,6 +420,16 @@ def autoteste():
     # 11b. A mesma frase com o número certo passa.
     caso("11b", "contagem correta da suite acusada",
          dict(SUITE, **{"d.md": "A suíte tem 3 testes verdes.\n"}), False)
+
+    # 11c. O marcador de censo histórico isenta o relato de um dia específico.
+    caso("11c", "censo historico marcado foi acusado",
+         dict(SUITE, **{"d.md": "<!-- censo-historico -->\nA suíte tinha 20 testes.\n"}), False)
+
+    # 11d. E o marcador vale para o PARÁGRAFO dele, não para o arquivo inteiro:
+    #      uma contagem velha depois de linha em branco continua sendo acusada.
+    caso("11d", "marcador isentou o arquivo inteiro",
+         dict(SUITE, **{"d.md": "<!-- censo-historico -->\nA suíte tinha 20 testes.\n\n"
+                                "Hoje a suíte tem 99 testes.\n"}), True)
 
     # 12. FAIL-CLOSED: raiz inexistente acusa.
     buf = _io.StringIO()

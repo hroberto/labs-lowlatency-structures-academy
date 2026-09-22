@@ -1039,6 +1039,7 @@ Policy without a gate is worthless. The verifiers in
 | `verificar-suposicao.py` | the Gate R precondition reaches the optimizer, checked in the assembly, with a control arm |
 | `verificar-paridade.py` | the language pair exists, the navigation points at it, the structure matches, and no published number is missing from either language |
 | `verificar-autodescricao.py` | what the material claims **about itself** matches the disk: the census of the standard, the track, the checkers and the suite, plus the state label of section 5 |
+| `verificar-promessa.py` | every cited program exists, every source enters the build, and every `./path` command in a block points at a file |
 
 The first four come from the DPDK Academy, where **each was born from a measured
 defect**; the fifth was born in the absorbed project, from a defect of its own —
@@ -1050,11 +1051,9 @@ whoever wrote the retraction knew the rule, had just stated it, and still left
 the retracted value circulating on other pages. **Manual correction does not
 scale.**
 
-**Eleven are missing, and the count is meant to be read.** The DPDK Academy has
-16 checkers in `ferramental/qualidade/`, inside 23 quality programs and 6,827
-lines. Five of them were ported: eleven are missing. The one that matters most,
-with its coupling already measured, is `verificar-promessa.py` — every cited
-program exists and enters the build, 18 coupling points.
+**Ten are missing, and the count is meant to be read.** The DPDK Academy has 16
+checkers in `ferramental/qualidade/`, inside 23 quality programs and 6,827
+lines. Six of them were ported: ten are missing.
 
 `verificar-autodescricao.py` **left that list**, and how it left is worth
 recording: it was not ported, it was rewritten for the claims *this* repository

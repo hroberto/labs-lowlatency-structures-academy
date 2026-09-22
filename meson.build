@@ -122,6 +122,12 @@ verificadores = [
   # varredura manual que procurou por `graficos` e devolveu zero arquivos,
   # porque o texto diz `graficos` com acento.
   ['autodescricao', 'o que o material afirma sobre si corresponde ao disco'],
+  # Todo programa citado existe, toda fonte entra na compilacao, e todo comando
+  # de bloco aponta para arquivo. O projeto a montante quebrou as duas primeiras
+  # pelo mesmo mecanismo: arquivo na arvore e fora do build nao e conferido por
+  # nada -- nem pelo compilador, nem pela suite, nem pelo portao que anuncia
+  # "build limpo".
+  ['promessa', 'programa citado existe e entra na compilacao'],
 ]
 
 foreach v : verificadores
