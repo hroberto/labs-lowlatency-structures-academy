@@ -22,7 +22,7 @@ every chapter. The **study order** is a separate document, not yet written.
 
 | Module | Question | State |
 |---|---|---|
-| [01 memory](01-memoria/README.en.md) | at what allocation rate does the global allocator start dominating p99? | **two measured topics** |
+| [01 memory](01-memoria/README.en.md) | at what allocation rate does the global allocator start dominating p99? | **complete, 3 of 3** |
 | [02 layout](02-layout/README.en.md) | how many cache misses per element does each layout cost? | not started |
 | [03 containers](03-conteineres/README.en.md) | at what cardinality does a flat-array search lose to the tree? | not started |
 | [04 dense-key index](04-indice-de-chave-densa/README.en.md) | what does finding the occupied extreme cost at p50/p99/p99.9? | not started |
@@ -33,7 +33,7 @@ every chapter. The **study order** is a separate document, not yet written.
 | [09 capstone](09-capstone/README.en.md) | what is the end-to-end difference, and which topic accounted for it? | not started |
 | [10 generated code](10-codigo-gerado/README.en.md) | what does the compiler do with `custom/` that it does not do with `std/`? | not started |
 
-**3 topics out of 23.** The table says "not started" where there is no content
+**4 topics out of 23.** The table says "not started" where there is no content
 because an index announcing what does not exist is the defect
 [section 5](padrao-do-projeto.en.md#5-state-labelling) exists to prevent.
 
@@ -45,7 +45,7 @@ like 08.
 
 | Document | What it will be for |
 |---|---|
-| `regras-de-decisao.en.md` | **the consolidated decision-rule table** (standard, section 35) — the internal-reference artefact |
+| [regras-de-decisao.en.md](regras-de-decisao.en.md) | **the consolidated decision-rule table** (standard, section 35) — the internal-reference artefact | **3 rules** |
 
 > Study order and build order are deliberately different documents. The build
 > order is the [ROADMAP.en.md](../ROADMAP.en.md), and it is **not** a reading

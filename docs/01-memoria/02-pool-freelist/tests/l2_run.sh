@@ -57,8 +57,10 @@ if csv=$("$BIN" --csv 2>&1); then
     # braco custom perder do baseline, ou a medicao esta errada ou a conclusao
     # publicada deixou de valer. Nos dois casos, vermelho.
     perdeu=$(printf '%s\n' "$csv" | awk -F, '
-        /^pool_V[0-9]+,p50,/      {split($1,a,"_"); pool[a[2]] = $3}
-        /^std::allocator_V[0-9]+,p50,/ {split($1,a,"_"); std[a[2]] = $3}
+        # `+ 0` pelo mesmo motivo do L2 do topico 01.03: valor que passa por
+        # array perde o atributo numerico no mawk, e a comparacao vira textual.
+        /^pool_V[0-9]+,p50,/      {split($1,a,"_"); pool[a[2]] = $3 + 0}
+        /^std::allocator_V[0-9]+,p50,/ {split($1,a,"_"); std[a[2]] = $3 + 0}
         END {for (v in pool) if (pool[v] >= std[v]) n++; print n+0}')
     [ "$perdeu" -eq 0 ] && ok "o pool e mais rapido que o baseline em todos os pontos" \
         || erro "$perdeu ponto(s) em que o pool NAO ganhou -- a conclusao publicada nao vale"

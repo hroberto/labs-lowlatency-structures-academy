@@ -255,17 +255,22 @@ com data marcada.
 
 Os dez módulos foram reconciliados com a norma e têm índice em
 [`docs/`](docs/README.md), com pergunta, pergunta de falha e par `std` →
-`custom`. **23 tópicos previstos, 3 escritos.**
+`custom`. **23 tópicos previstos, 4 escritos.**
 
 O critério de pronto é o mesmo em todas: cada tópico com `std/`, `custom/`,
 `spec.hpp`, L1 parametrizado, campanha arquivada e **regra de decisão**.
 
 ### Etapa 4 — Memória e layout · módulos [01](docs/01-memoria/README.md) e [02](docs/02-layout/README.md)
 
-- [ ] 6 tópicos. É a etapa que estreia o par `std` → `custom` de verdade, e com
-      ele o `spec.hpp`, os `traits` de invariante e o L1 parametrizado — os três
-      são decisões de desenho que só se firmam com código na frente
-- [ ] é também onde `docs/regras-de-decisao.md` nasce, com a primeira regra real
+- [x] **módulo 01 completo, 3 de 3.** Arena, pool com lista de livres e
+      `std::pmr` — e a ordem entre eles é o resultado: os 27,9× do artesanal
+      sobre `std::allocator` viram **1,59×** sobre o `std::pmr`, que já vem na
+      linguagem. A maior parte do ganho vem de desistir da liberação
+      individual, e não de escrever código
+- [x] [`docs/regras-de-decisao.md`](docs/regras-de-decisao.md) nasceu com as
+      **três** regras do módulo, e com a leitura que nenhuma delas dá sozinha
+- [ ] módulo 02 — layout: 3 tópicos (SoA contra AoS, falso compartilhamento,
+      *small buffer*)
 
 ### Etapa 5 — Contêineres e índice de chave densa · módulos [03](docs/03-conteineres/README.md) e [04](docs/04-indice-de-chave-densa/README.md)
 

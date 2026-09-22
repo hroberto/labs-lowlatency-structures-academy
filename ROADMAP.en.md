@@ -261,7 +261,7 @@ that exists only in prose is not a debt: it is forgetting with a date on it.
 
 The ten modules have been reconciled with the standard and have an index under
 [`docs/`](docs/README.en.md), with a question, a failure question and the `std` →
-`custom` pair. **23 planned topics, 3 written.**
+`custom` pair. **23 planned topics, 4 written.**
 
 The done criterion is the same in all of them: every topic with `std/`,
 `custom/`, `spec.hpp`, a parameterized L1, an archived campaign and a **decision
@@ -269,11 +269,15 @@ rule**.
 
 ### Stage 4 — Memory and layout · modules [01](docs/01-memoria/README.en.md) and [02](docs/02-layout/README.en.md)
 
-- [ ] 6 topics. This is the stage where the `std` → `custom` pair really debuts,
-      and with it `spec.hpp`, the invariant `traits` and the parameterized L1 —
-      all three are design decisions that only settle with code in front of them
-- [ ] it is also where `docs/regras-de-decisao.md` is born, with the first real
-      rule
+- [x] **module 01 complete, 3 of 3.** Arena, pool with a free list and
+      `std::pmr` — and the order between them is the result: the hand-written
+      side's 27.9× over `std::allocator` becomes **1.59×** over `std::pmr`,
+      which already ships with the language. Most of the gain comes from giving
+      up individual freeing, not from writing code
+- [x] [`docs/regras-de-decisao.en.md`](docs/regras-de-decisao.en.md) was born
+      with the module's **three** rules, and with the reading none of them gives
+      alone
+- [ ] module 02 — layout: 3 topics (SoA versus AoS, false sharing, small buffer)
 
 ### Stage 5 — Containers and dense-key index · modules [03](docs/03-conteineres/README.en.md) and [04](docs/04-indice-de-chave-densa/README.en.md)
 

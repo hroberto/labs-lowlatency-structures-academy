@@ -2,9 +2,9 @@
 
 # 01 — Memória
 
-> **Estado: dois tópicos medidos.** O [01.01](01-alocador-arena/README.md) e o
-> [01.02](02-pool-freelist/README.md) têm número publicado com campanha
-> arquivada; o 01.03 não foi iniciado.
+> **Estado: módulo completo.** Os três tópicos têm número publicado com
+> campanha arquivada, e as três regras de decisão estão em
+> [`regras-de-decisao.md`](../regras-de-decisao.md).
 > Ver a [rotulagem de estado](../padrao-do-projeto.md#5-rotulagem-de-estado).
 
 ## A pergunta do módulo
@@ -32,7 +32,7 @@ antes de o `std/` correspondente estar medido e publicado.
 |---|---|
 | [`01-alocador-arena`](01-alocador-arena/README.md) — alocador de arena | **medido** |
 | [`02-pool-freelist`](02-pool-freelist/README.md) — pool com free-list | **medido** |
-| `03-pmr-o-meio-termo` — `std::pmr` como meio-termo | **não iniciado** |
+| [`03-pmr-o-meio-termo`](03-pmr-o-meio-termo/README.md) — `std::pmr` como meio-termo | **medido** |
 
 Os diretórios nascem com o primeiro arquivo real. Diretório vazio é promessa,
 e promessa é o que a seção 5 da norma existe para impedir.

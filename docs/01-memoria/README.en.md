@@ -2,9 +2,9 @@
 
 # 01 — Memory
 
-> **State: two measured topics.** [01.01](01-alocador-arena/README.en.md) and
-> [01.02](02-pool-freelist/README.en.md) have published numbers with archived
-> campaigns; 01.03 has not been started. See [state labelling](../padrao-do-projeto.en.md#5-state-labelling).
+> **State: module complete.** All three topics have published numbers with
+> archived campaigns, and the three decision rules are in
+> [`regras-de-decisao.md`](../regras-de-decisao.en.md). See [state labelling](../padrao-do-projeto.en.md#5-state-labelling).
 
 ## The module's question
 
@@ -31,7 +31,7 @@ before the corresponding `std/` has been measured and published.
 |---|---|
 | [`01-alocador-arena`](01-alocador-arena/README.en.md) — arena allocator | **measured** |
 | [`02-pool-freelist`](02-pool-freelist/README.en.md) — pool with a free list | **measured** |
-| `03-pmr-o-meio-termo` — `std::pmr` as the middle ground | **not started** |
+| [`03-pmr-o-meio-termo`](03-pmr-o-meio-termo/README.en.md) — `std::pmr` as the middle ground | **measured** |
 
 Directories are born with their first real file. An empty directory is a
 promise, and a promise is what section 5 of the standard exists to prevent.
