@@ -21,8 +21,17 @@ suggesting changes, justify the trade-off, the cost, and the scenario where it i
 appropriate.
 
 **The standard wins.** `docs/padrao-do-projeto.md` is normative for method,
-measurement, contracts, architecture, documentation and sources. If anything
-here conflicts with it, the standard is right and this file is stale — say so.
+measurement, contracts, architecture, documentation and sources — 36 sections in
+7 parts. If anything here conflicts with it, the standard is right and this file
+is stale — say so, and fix this file.
+
+**Nothing here requires privilege.** No didactic material in this repository
+asks for root. The only `sudo` in the tree reads firmware
+(`ambiente.sh --cachear-memoria`), and it degrades to a declared "NAO LIDO"
+without it. If a suggestion needs `sudo`, it belongs in an L3 experiment, which
+is optional by construction — or it does not belong here. This promise decided a
+real question: the campaign does **not** pin `governor=performance`, because the
+reader reproducing it will not have root either.
 
 ## Core engineering principles
 
@@ -106,6 +115,25 @@ This is the part that differs most from the sibling projects.
   tail from the machine's.
 - The reference machine has two L3 domains and SMT on: the chosen core pair is a
   variable of the experiment, not an execution detail.
+- **A campaign is run by `scripts/arquivar-medicao.sh <name> <repetitions>`**,
+  never by hand. It refuses a single-run campaign (there is no between-run
+  spread with one run) and refuses anything but `release`, checked against
+  Meson's real configuration rather than the directory name.
+- **Knobs are `HARNESS_SAMPLES`, `HARNESS_ROUNDS`, `HARNESS_TAIL_SAMPLES`.** The
+  prefix names the instrument, not the academy: `lib/` is a candidate for its own
+  repository shared with the sibling projects.
+- **Campaigns show a first-run transient on this machine.** In the archived
+  campaign the clock arm reads ~26% higher on r0 and r1 and then settles to three
+  matching digits. That is ramping frequency, not dispersion — read r0 with
+  suspicion until the warm-up decision in the ROADMAP is settled.
+- **No published number comes from CI.** The runner is virtualized, shared and
+  exposes no governor. CI answers for portability: one job with the reference
+  machine's own compilers (GCC 15.2 + Clang 21.1) and one with the declared floor
+  (GCC 14 + Clang 20).
+- **The compiler minimum is probed, not announced.** `check-env.sh` compiles a
+  real C++23 probe. The standard once claimed "Clang 18+" and CI measured that
+  Clang 18.1.3 cannot compile this project. Trust the probe over any table,
+  including the one in the standard.
 
 ### 6. Software engineering quality bar
 - No number in a document without an archived campaign that produces it.
@@ -115,15 +143,69 @@ This is the part that differs most from the sibling projects.
   false positives are worse than a missing rule.
 - Self-description is verified, not promised: state labels come from the
   standard's section 5, and they are meant to be uncomfortable when accurate.
+- **Correcting a number is an act with a rule.** `verificar-retratacoes.py`
+  requires that a retracted value does not survive outside the block retracting
+  it. When you change a published number, grep the tree for the old one — in both
+  languages — before saying it is fixed.
+- **Run the gate: `./ferramental/qualidade/pre-commit.sh`.** It is the local hook
+  and, as `--rapido`, the CI's first job. Do not work around it; if it is wrong,
+  fix the checker and add a bait to its self-test.
+- **One coupling has no checker yet, so check it by hand:** a number published in
+  a README versus the campaign it cites. Re-running a campaign changes the
+  numbers, and nothing goes red. After any re-run, diff the README table against
+  `tabela.md`. The DPDK Academy has `verificar-medicao.py` for this; porting it
+  is open in the ROADMAP.
 
-### 7. Technical documentation and teaching
+### 7. Test levels, and where a new test goes
+
+| Level | What it is | Examples here |
+|---|---|---|
+| **L1** | pure logic, fast, no privilege, no environment | the documentation checkers, the ruler and contract sanity programs, the script self-tests |
+| **L2** | the binary **as the reader runs it**: output, exit code, warnings | `trilha/08-medicao/01-harness/tests/l2_run.sh` |
+| **L3** | requires privilege — hugepages, core isolation, PMU beyond user scope | **none exists yet**, and it is reserved, never mandatory |
+
+Meson suites carry both labels: `l1+docs`, `l1+contract`, `l1+measurement`,
+`l1+scripts`, `l2+harness`. A new test picks its level by what it needs, not by
+what it tests.
+
+**The suite must count what it verifies.** Today 20 Meson tests hide more than a
+hundred assertions — `tail-sanity` is one test with eleven cases. A regression in
+one of them reports "1 of 20 failed", which understates what broke. Two
+mechanisms fix it, and Meson supports both:
+
+- **GoogleTest for C++ tests**, registered with `protocol: 'gtest'`, so every
+  case is counted and named. **Case names are Portuguese, because they are
+  prose**; the identifiers around them are English. It is the right tool wherever
+  a test has several independent cases, and it becomes unavoidable for the L1
+  suites parameterized by `spec.hpp`, where the same invariants run over `std/`
+  and `custom/` via typed tests.
+- **TAP for shell and Python tests**, registered with `protocol: 'tap'` — it
+  covers what GoogleTest never will: `l2_run.sh`, the script self-tests and the
+  checkers' own self-tests.
+
+**State: decided, not yet in the tree.** There is no `subprojects/gtest.wrap`
+here yet. When you write the first GoogleTest-based test, bring the wrap pinned
+by hash (it is in WrapDB) in the same commit, and register the target with the
+protocol — a framework added without a user is a dependency with no payer.
+
+### 8. Technical documentation and teaching
 - The path of every topic: problem → mechanism → trade-offs → implementation →
   measurement → literature comparison → analysis → architecture decision.
 - "When it goes wrong" is answered with a program, never in prose.
 - "What this measurement does not show" is mandatory wherever there is a
   measurement, and it names what the benchmark removed and whom that favours.
-- Portuguese prose, English identifiers. GoogleTest case names in Portuguese,
-  because they are prose.
+- **Portuguese prose, English code — and the standard's section 3 says exactly
+  where the boundary runs.** English: identifiers, program output, command-line
+  flags, environment variables, and any data schema a program emits. Portuguese:
+  comments, the scripts under `scripts/` and `ferramental/`, the records those
+  scripts emit (`ambiente.json`, `metadata.json`), and commit messages.
+- **Every `.md` has its `.en.md` pair**, with the same stem, the same heading and
+  code-block counts, and no number present in one language and missing from the
+  other. `verificar-paridade.py` enforces it. Three exemptions are declared in
+  the checker itself — `docs/origem/`, `medicoes/` and this file — and a new one
+  costs a line there plus a bait in its self-test.
+- The English version is not an abridged version. If you add a section to one,
+  add it to the other in the same commit.
 
 ## Output expectations
 1. Explain the reasoning behind the recommendation.
@@ -140,6 +222,25 @@ This is the part that differs most from the sibling projects.
    earlier — say what it was, what it produced, and what the check that would
    have caught it looks like. The commit history of this project is written that
    way on purpose.
+
+## Repository conventions
+
+- **The commit subject is the finding**, in Portuguese, declarative, in the past
+  or present tense: *"A primeira campanha arquivada descrevia um braço que não
+  mediu"*. Not "fix bench" and not a category prefix. The body says what broke,
+  what it produced, and which check catches it from now on. The standard's
+  section 3 makes this explicit, against its own origin document, which had
+  listed commit messages among the English items.
+- **A campaign is versioned in part**: `metadata.json`, `tabela.md`/`.en.md` and
+  `ambiente.md` go in; `r*.csv` and `ambiente.json` stay local, because the
+  metadata already carries the full per-run series and duplicating data invites
+  the two copies to diverge.
+- **Skeletons declare themselves skeletons in the first section.** An index that
+  lists a topic that does not exist is the defect the state labels exist to
+  prevent — say "não iniciado" rather than leaving a promise implicit.
+- **`lib/` is the extraction boundary.** It is meant to become a shared
+  repository, so its interface has to stay consumable from C. `ferramental/` is
+  what the project runs against itself; `scripts/` is what the student runs.
 
 ## What was refused here, and stays refused
 Inherited from the sibling project, for the same reasons: FMEA/FTA tables, a

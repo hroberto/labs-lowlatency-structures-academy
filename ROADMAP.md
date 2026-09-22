@@ -161,11 +161,23 @@ repositório em 2026-09-21. Veio o que já era executável:
 - [ ] `docs/regras-de-decisao.md` com esquema de dados e verificador que confira
       cada linha contra um `metadata.json` existente — **só faz sentido a partir
       do primeiro tópico que compara**, e 08.01 não compara
-- [ ] decisão pendente: **GoogleTest**. O documento de origem da trilha previa
-      GTest 1.17.0 fixado por wrap; a fundação absorvida testa com programas de
-      sanidade e `static_assert`, sem dependência. Os testes L1 parametrizados
-      por `spec.hpp` (seção 34) são o primeiro caso em que o GTest pagaria a
-      própria entrada
+- [x] **decidido: GoogleTest onde for necessário, e TAP onde ele não alcança.**
+      A suíte tem 20 testes que escondem mais de cem asserções — `tail-sanity` é
+      um teste com onze casos, e uma regressão em um deles reporta "1 de 20".
+      O déficit não vinha da ausência do GTest: vinha de `protocol: 'exitcode'`,
+      o padrão do Meson, que também aceita `tap` e `gtest`. Então:
+      **GoogleTest** (`protocol: 'gtest'`) para teste de C++ com vários casos,
+      com nome de caso em português porque é prosa; **TAP** (`protocol: 'tap'`)
+      para os testes de shell e Python, que o GTest nunca cobriria — `l2_run.sh`,
+      os autotestes de script e os autotestes dos próprios verificadores
+- [ ] executar a decisão: `subprojects/gtest.wrap` fixado por hash (está no
+      WrapDB), conversão de `tail_sanity` e `contract_sanity`, e saída TAP nos
+      testes de shell e Python. Um framework sem usuário é dependência sem
+      pagador, então o wrap entra no mesmo commit do primeiro teste que o use
+- [ ] portar `verificar-medicao.py` do DPDK Academy — o **13º verificador**, e o
+      único acoplamento hoje sem portão: número publicado num README contra a
+      campanha que ele cita. Refazer uma campanha muda os números e nada fica
+      vermelho
 
 ## Etapas 4 em diante — a trilha
 

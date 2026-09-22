@@ -164,11 +164,24 @@ not started, **zero commits and no remote** — was absorbed by this repository 
 - [ ] `docs/regras-de-decisao.md` with a data schema and a checker that verifies
       each row against an existing `metadata.json` — **it only makes sense from
       the first topic that compares**, and 08.01 does not compare
-- [ ] pending decision: **GoogleTest**. The track's origin document planned GTest
-      1.17.0 pinned by wrap; the absorbed foundation tests with sanity programs
-      and `static_assert`, with no dependency. The L1 tests parameterized by
-      `spec.hpp` (section 34) are the first case where GTest would pay its own
-      way
+- [x] **decided: GoogleTest wherever it is needed, and TAP where it does not
+      reach.** The suite has 20 tests hiding more than a hundred assertions —
+      `tail-sanity` is one test with eleven cases, and a regression in one of
+      them reports "1 of 20". The deficit did not come from the absence of GTest:
+      it came from `protocol: 'exitcode'`, Meson's default, which also accepts
+      `tap` and `gtest`. So: **GoogleTest** (`protocol: 'gtest'`) for C++ tests
+      with several cases, with Portuguese case names because they are prose;
+      **TAP** (`protocol: 'tap'`) for the shell and Python tests, which GTest
+      would never cover — `l2_run.sh`, the script self-tests and the checkers'
+      own self-tests
+- [ ] carry the decision out: `subprojects/gtest.wrap` pinned by hash (it is in
+      WrapDB), converting `tail_sanity` and `contract_sanity`, and TAP output in
+      the shell and Python tests. A framework with no user is a dependency with
+      no payer, so the wrap lands in the same commit as the first test that uses it
+- [ ] port `verificar-medicao.py` from the DPDK Academy — the **13th checker**,
+      and today's only coupling with no gate: a number published in a README
+      against the campaign it cites. Re-running a campaign changes the numbers
+      and nothing goes red
 
 ## Stage 4 onwards — the track
 
