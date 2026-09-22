@@ -93,13 +93,13 @@ de L3, `governor=powersave` com *boost* ativo, e resolução de `steady_clock` d
 
 | Métrica | Mediana entre execuções | Amplitude entre execuções | Unidade |
 |---|---:|---:|---|
-| ler o relógio (mediana) | 16,07 | 29,7% | ns |
-| ler o relógio (mínimo) | 16,06 | 29,3% | ns |
-| registrar amostra (mediana) | 0,12 | 29,8% | ns |
+| ler o relógio (mediana) | 16,80 | 28,2% | ns |
+| ler o relógio (mínimo) | 16,06 | 29,2% | ns |
+| registrar amostra (mediana) | 0,12 | 29,6% | ns |
 | piso por operação p50 | 20,00 | 0,0% | ns |
 | piso por operação p99 | 21,00 | 42,9% | ns |
 | piso por operação p99,9 | 21,00 | 47,6% | ns |
-| piso por operação máximo | 21,00 | 47,6% | ns |
+| piso por operação máximo | 341,00 | 687,4% | ns |
 
 ## O que esta medição não mostra
 
@@ -130,7 +130,7 @@ programa conferia a validade **depois** do `return` do modo `--csv`. O modo
 texto reprovava; o `--csv`, que é justamente o que a campanha arquiva, saía
 zero. Uma campanha foi versionada com procedência completa descrevendo um braço
 que não mediu. Ela foi descartada, e o programa passou a conferir antes de
-qualquer saída. Hoje o braço de controle (`--braco-de-controle`) força o caso e
+qualquer saída. Hoje o braço de controle (`--control-arm`) força o caso e
 o teste L2 exige reprovação nos **dois** modos.
 
 **Publicar percentil que a amostra não sustenta.** p99,9 de 1000 amostras
@@ -146,11 +146,18 @@ aproximadamente o que uma leitura isolada custa em lote, o que é coerente com o
 custo estar na própria chamada e não no que ela mede.
 
 A cauda é outra história. p99 e p99,9 variam **42,9%** e **47,6%** entre
-execuções da **mesma** medição, na mesma máquina, sem nada mudar entre elas. Não
-é defeito do instrumento: é a máquina, com `governor=powersave`, *boost* ativo e
-SMT. E é exatamente por isso que a amplitude entre execuções é campo obrigatório
-da norma — sem ela, qualquer tópico que publicasse uma melhora de 30% no p99
-estaria publicando ruído com nome de resultado.
+execuções da **mesma** medição, na mesma máquina, sem nada mudar entre elas — e
+o **máximo** varia **687,4%**, porque uma única interrupção numa das cinco
+execuções o move sozinha. Não é defeito do instrumento: é a máquina, com
+`governor=powersave`, *boost* ativo e SMT. E é exatamente por isso que a
+amplitude entre execuções é campo obrigatório da norma — sem ela, qualquer
+tópico que publicasse uma melhora de 30% no p99 estaria publicando ruído com
+nome de resultado.
+
+O máximo é o caso extremo dessa lição: ele é **uma amostra**, e publicá-lo sem a
+amplitude ao lado convida a conclusão errada. Fica na tabela porque esconder a
+extensão do que se observou é pior que exibi-la — mas ele não sustenta
+comparação nenhuma.
 
 O custo de registrar amostra, **0,12** ns, é da ordem de uma instrução: o
 coletor não é o que limita a medição por operação. O relógio é.

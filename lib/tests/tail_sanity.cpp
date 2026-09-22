@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Henrique M Roberto
 //
-// Sanidade do coletor de cauda.
+// Sanidade do collector de cauda.
 //
 // ESTE ALVO TEM DUAS FUNÇÕES, E A PRIMEIRA NÃO SE VÊ
 //
@@ -14,7 +14,7 @@
 // A segunda é verificar em runtime o que `static_assert` não alcança: o
 // descarte por buffer cheio, e o teto de percentil publicável.
 //
-// `--violar` existe para provar que o caminho de falha EXISTE. Uma verificação
+// `--violate` existe para provar que o caminho de falha EXISTE. Uma verificação
 // que nunca dispara é indistinguível de uma ausente, e o `should_fail` no
 // meson.build é o que a exercita.
 
@@ -31,23 +31,23 @@ using namespace perf::measurement;
 
 namespace
 {
-int falhas = 0;
+int failures = 0;
 
-void checar(bool condicao, std::string_view descricao)
+void check_case(bool condition, std::string_view description)
 {
-    if (condicao)
+    if (condition)
     {
-        std::println("  ok: {}", descricao);
+        std::println("  ok: {}", description);
         return;
     }
-    std::println("  FALHA: {}", descricao);
-    ++falhas;
+    std::println("  FAILED: {}", description);
+    ++failures;
 }
 } // namespace
 
 int main(int argc, char **argv)
 {
-    const bool violar = argc > 1 && std::string_view{argv[1]} == "--violar";
+    const bool violate = argc > 1 && std::string_view{argv[1]} == "--violate";
 
     // --- o descarte é declarado, não silencioso --------------------------
     {
@@ -57,9 +57,9 @@ int main(int argc, char **argv)
             c.record(1);
         }
         const tail_statistics t = c.summarize();
-        checar(t.samples == 2, "buffer cheio para de gravar na capacidade");
-        checar(t.discarded == 3, "as 3 amostras que nao couberam aparecem em discarded");
-        checar(c.capacity() == 2, "a capacidade e a pedida, nao a que o vetor cresceu");
+        check_case(t.samples == 2, "a full buffer stops recording at the capacity");
+        check_case(t.discarded == 3, "the 3 samples that did not fit show up in discarded");
+        check_case(c.capacity() == 2, "the capacity is the one requested, not the one the vector grew to");
     }
 
     // --- percentis exatos, sem precisão a declarar -----------------------
@@ -70,41 +70,41 @@ int main(int argc, char **argv)
             c.record(v);
         }
         const tail_statistics t = c.summarize();
-        checar(t.minimum == 1 && t.maximum == 10, "minimo e maximo saem da amostra ordenada");
-        checar(t.p50 == 5.5, "p50 de 1..10 e 5,5 -- exato, e nao aproximado por bucket");
-        checar(t.samples == 10 && t.discarded == 0, "dez amostras, nenhum descarte");
+        check_case(t.minimum == 1 && t.maximum == 10, "minimum and maximum come from the sorted sample");
+        check_case(t.p50 == 5.5, "p50 of 1..10 is 5.5 -- exact, not approximated by a bucket");
+        check_case(t.samples == 10 && t.discarded == 0, "ten samples, no discards");
     }
 
     // --- o teto de percentil publicável ----------------------------------
     {
-        tail_collector pequeno{100};
+        tail_collector small{100};
         for (int i = 0; i < 100; ++i)
         {
-            pequeno.record(static_cast<std::uint64_t>(i));
+            small.record(static_cast<std::uint64_t>(i));
         }
-        const tail_statistics t = pequeno.summarize();
-        checar(t.highest_supported < 0.99,
-               "100 amostras nao sustentam p99 (a convencao exige 1000)");
-        checar(t.p999 > 0.0,
-               "o p99,9 e CALCULADO mesmo sem sustentacao -- e o teto que o reprova, "
-               "nao a ausencia do numero");
+        const tail_statistics t = small.summarize();
+        check_case(t.highest_supported < 0.99,
+               "100 samples do not support p99 (the convention requires 1000)");
+        check_case(t.p999 > 0.0,
+               "p99.9 is COMPUTED even without support -- what rejects it is the ceiling, "
+               "not the absence of the number");
     }
     {
-        tail_collector grande{min_samples_for(0.999)};
+        tail_collector large{min_samples_for(0.999)};
         for (std::size_t i = 0; i < min_samples_for(0.999); ++i)
         {
-            grande.record(static_cast<std::uint64_t>(i));
+            large.record(static_cast<std::uint64_t>(i));
         }
-        checar(grande.summarize().highest_supported == 0.999,
-               "10 000 amostras sustentam p99,9");
+        check_case(large.summarize().highest_supported == 0.999,
+               "10,000 samples support p99.9");
     }
 
-    // --- coletor vazio: estado, não lixo ---------------------------------
+    // --- collector empty: estado, não lixo ---------------------------------
     {
-        tail_collector vazio{4};
-        const tail_statistics t = vazio.summarize();
-        checar(t.samples == 0 && t.p50 == 0.0 && t.maximum == 0,
-               "coletor vazio devolve zeros e samples 0, nao valor sentinela");
+        tail_collector empty{4};
+        const tail_statistics t = empty.summarize();
+        check_case(t.samples == 0 && t.p50 == 0.0 && t.maximum == 0,
+               "an empty collector returns zeros and samples 0, not a sentinel value");
     }
 
     // --- as duas fórmulas de percentil concordam em runtime também -------
@@ -116,10 +116,10 @@ int main(int argc, char **argv)
         std::vector<std::uint64_t> u{10, 20, 30, 40};
         const double a = percentile(std::span<const double>{d}, 0.75);
         const double b = percentile_ns(std::span<const std::uint64_t>{u}, 0.75);
-        checar(a == b, "percentile() e percentile_ns() dao o mesmo valor para a mesma amostra");
+        check_case(a == b, "percentile() and percentile_ns() give the same value for the same sample");
     }
 
-    if (violar)
+    if (violate)
     {
         // A violação é pedir publicação de um percentil que a amostra não
         // sustenta. O programa MORRE, e o meson espera que ele morra.
@@ -127,15 +127,15 @@ int main(int argc, char **argv)
         c.record(1);
         const tail_statistics t = c.summarize();
         PERF_EXPECTS(t.highest_supported >= 0.999);
-        std::println("  FALHA: o contrato nao disparou com {} amostra(s)", t.samples);
+        std::println("  FAILED: the contract did not fire with {} sample(s)", t.samples);
         return 1;
     }
 
-    if (falhas == 0)
+    if (failures == 0)
     {
-        std::println("cauda: todas as assercoes passaram");
+        std::println("tail: every assertion passed");
         return 0;
     }
-    std::println("cauda: {} assercao(oes) falharam", falhas);
+    std::println("tail: {} assertion(s) failed", failures);
     return 1;
 }

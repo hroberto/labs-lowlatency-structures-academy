@@ -10,91 +10,77 @@
     "r4.csv"
   ],
   "parametros_do_experimento": {
-    "amostras": 25.0,
     "clock_period": 1.0,
-    "rodadas": 200000.0
+    "rounds": 200000.0,
+    "samples": 25.0
   },
   "build": {
     "configuracao": "build-release (release true)",
     "compilador": "gcc 15.2.0",
     "flags_efetivas": "cpp_std=c++23 warning_level=3 buildtype=release b_ndebug=true"
   },
-  "commit": "fbb93cd8443fb7c4f39033f4ce1d22e6fafbbc93",
+  "commit": "39c1794ee11b320c0ed8feec7dd5ce481319d903",
   "arvore_suja": true,
-  "coletado_em": "2026-09-22T00:07:01-03:00",
+  "coletado_em": "2026-09-22T10:46:05-03:00",
   "duracao_s": null,
   "metricas": {
     "clock_read.disp": {
       "unidade": "percent",
       "por_execucao": [
-        0.19,
-        11.24,
-        0.65,
-        5.03,
-        5.02
+        0.51,
+        0.28,
+        8.61,
+        4.39,
+        4.61
       ],
-      "min": 0.19,
-      "max": 11.24,
-      "mediana": 5.02,
-      "amplitude_pct": 220.11952191235062
+      "min": 0.28,
+      "max": 8.61,
+      "mediana": 4.39,
+      "amplitude_pct": 189.74943052391802
     },
     "clock_read.median": {
       "unidade": "ns",
       "por_execucao": [
-        20.8408,
-        20.2479,
-        16.0631,
-        16.0703,
-        16.0653
+        20.8523,
+        20.854,
+        16.1198,
+        16.7984,
+        16.139
       ],
-      "min": 16.0631,
-      "max": 20.8408,
-      "mediana": 16.0703,
-      "amplitude_pct": 29.729998817694774
+      "min": 16.1198,
+      "max": 20.854,
+      "mediana": 16.7984,
+      "amplitude_pct": 28.182445947233056
     },
     "clock_read.minimum": {
       "unidade": "ns",
       "por_execucao": [
-        20.7511,
-        17.0799,
-        16.0496,
-        16.0505,
-        16.0556
+        20.7368,
+        19.5346,
+        16.0556,
+        16.0542,
+        16.051
       ],
-      "min": 16.0496,
-      "max": 20.7511,
+      "min": 16.051,
+      "max": 20.7368,
       "mediana": 16.0556,
-      "amplitude_pct": 29.28261790278781
+      "amplitude_pct": 29.184832706345457
     },
     "clock_read.p99": {
       "unidade": "ns",
       "por_execucao": [
-        22.21,
-        23.3806,
-        17.0111,
-        17.5439,
-        18.1153
+        23.2757,
+        25.8779,
+        18.995,
+        18.0683,
+        18.4594
       ],
-      "min": 17.0111,
-      "max": 23.3806,
-      "mediana": 18.1153,
-      "amplitude_pct": 35.16088610180346
+      "min": 18.0683,
+      "max": 25.8779,
+      "mediana": 18.995,
+      "amplitude_pct": 41.1139773624638
     },
-    "parametros.amostras": {
-      "unidade": "count",
-      "por_execucao": [
-        25.0,
-        25.0,
-        25.0,
-        25.0,
-        25.0
-      ],
-      "min": 25.0,
-      "max": 25.0,
-      "mediana": 25.0,
-      "amplitude_pct": 0.0
-    },
-    "parametros.clock_period": {
+    "parameters.clock_period": {
       "unidade": "ns",
       "por_execucao": [
         1.0,
@@ -108,7 +94,7 @@
       "mediana": 1.0,
       "amplitude_pct": 0.0
     },
-    "parametros.rodadas": {
+    "parameters.rounds": {
       "unidade": "count",
       "por_execucao": [
         200000.0,
@@ -120,6 +106,20 @@
       "min": 200000.0,
       "max": 200000.0,
       "mediana": 200000.0,
+      "amplitude_pct": 0.0
+    },
+    "parameters.samples": {
+      "unidade": "count",
+      "por_execucao": [
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        25.0
+      ],
+      "min": 25.0,
+      "max": 25.0,
+      "mediana": 25.0,
       "amplitude_pct": 0.0
     },
     "per_op_floor.discarded": {
@@ -153,16 +153,16 @@
     "per_op_floor.maximum": {
       "unidade": "ns",
       "por_execucao": [
-        31.0,
-        21.0,
-        21.0,
+        2154.0,
+        2365.0,
+        341.0,
         21.0,
         21.0
       ],
       "min": 21.0,
-      "max": 31.0,
-      "mediana": 21.0,
-      "amplitude_pct": 47.61904761904762
+      "max": 2365.0,
+      "mediana": 341.0,
+      "amplitude_pct": 687.3900293255132
     },
     "per_op_floor.p50": {
       "unidade": "ns",
@@ -223,58 +223,58 @@
     "record_sample.disp": {
       "unidade": "percent",
       "por_execucao": [
-        0.06,
-        0.2,
+        0.23,
+        0.28,
         0.04,
-        0.08,
-        0.16
+        0.17,
+        0.08
       ],
       "min": 0.04,
-      "max": 0.2,
-      "mediana": 0.08,
-      "amplitude_pct": 200.0
+      "max": 0.28,
+      "mediana": 0.17,
+      "amplitude_pct": 141.1764705882353
     },
     "record_sample.median": {
       "unidade": "ns",
       "por_execucao": [
-        0.1574,
-        0.1278,
-        0.1213,
-        0.1213,
+        0.1575,
+        0.1457,
+        0.1212,
+        0.1227,
         0.1213
       ],
-      "min": 0.1213,
-      "max": 0.1574,
-      "mediana": 0.1213,
-      "amplitude_pct": 29.76092333058533
+      "min": 0.1212,
+      "max": 0.1575,
+      "mediana": 0.1227,
+      "amplitude_pct": 29.584352078239608
     },
     "record_sample.minimum": {
       "unidade": "ns",
       "por_execucao": [
-        0.1573,
-        0.1276,
+        0.1574,
+        0.1455,
         0.1211,
-        0.1212,
+        0.1224,
         0.1212
       ],
       "min": 0.1211,
-      "max": 0.1573,
-      "mediana": 0.1212,
-      "amplitude_pct": 29.867986798679866
+      "max": 0.1574,
+      "mediana": 0.1224,
+      "amplitude_pct": 29.65686274509805
     },
     "record_sample.p99": {
       "unidade": "ns",
       "por_execucao": [
-        1.3375,
-        0.9642,
-        0.8896,
-        0.8812,
-        0.9449
+        1.3963,
+        1.2511,
+        1.0947,
+        1.1941,
+        1.1354
       ],
-      "min": 0.8812,
-      "max": 1.3375,
-      "mediana": 0.9449,
-      "amplitude_pct": 48.29082442586517
+      "min": 1.0947,
+      "max": 1.3963,
+      "mediana": 1.1941,
+      "amplitude_pct": 25.257516120927907
     }
   },
   "ambiente": {
@@ -293,10 +293,10 @@
     "governor": "powersave",
     "turbo_intel": "-",
     "turbo_amd": "1",
-    "pmu_paranoid": "4",
-    "pmu_estado": "BLOQUEADO -- contador de hardware indisponivel",
+    "pmu_paranoid": "2",
+    "pmu_estado": "so o proprio processo, sem eventos de kernel",
     "mem_total": "14,2 GiB",
-    "mem_disponivel": "5,7 GiB",
+    "mem_disponivel": "4,7 GiB",
     "mem_velocidade": "NAO LIDO -- rode: sudo ./scripts/ambiente.sh --cachear-memoria",
     "mem_canais": "NAO LIDO -- idem",
     "hugepages_total": "1024",
@@ -316,9 +316,9 @@
     "ninja": "1.13.2",
     "perf": "perf version 7.0.14",
     "builds_na_arvore": "build-clang-release-checked (release b_ndebug=false); build-debug (debug b_ndebug=false); build-release (release b_ndebug=true); build-release-checked (release b_ndebug=false)",
-    "commit": "fbb93cd",
+    "commit": "39c1794",
     "arvore_suja": "sim",
-    "coletado_em": "2026-09-22T00:07:01-03:00",
+    "coletado_em": "2026-09-22T10:46:05-03:00",
     "campos_nao_coletados": [],
     "topologia": [
       {

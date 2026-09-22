@@ -177,14 +177,14 @@ namespace detail
     std::string_view predicate, std::string_view kind, const std::source_location &where)
 {
     std::print(stderr,
-               "\nCONTRATO VIOLADO ({})\n"
-               "  predicado : {}\n"
-               "  em        : {}:{}\n"
-               "  função    : {}\n\n"
-               "Isto é bug de programador, não condição de ambiente: a porta R\n"
-               "do contrato só protege valor interno. Se este valor veio de\n"
-               "/sys, /proc, arquivo ou linha de comando, ele está na porta\n"
-               "errada -- use a porta E (parse/std::expected).\n",
+               "\nCONTRACT VIOLATED ({})\n"
+               "  predicate : {}\n"
+               "  at        : {}:{}\n"
+               "  function  : {}\n\n"
+               "This is a programmer bug, not an environment condition: gate R\n"
+               "of the contract only protects internal values. If this value came\n"
+               "from /sys, /proc, a file or the command line, it is at the wrong\n"
+               "gate -- use gate E (parse/std::expected).\n",
                kind, predicate, where.file_name(), where.line(), where.function_name());
     std::abort();
 }
@@ -238,11 +238,11 @@ constexpr void check(bool ok, std::string_view predicate, std::string_view kind,
 // verifica -- com o diagnóstico do projeto. Ver a comparação medida no topo.
 #define PERF_EXPECTS(...)                                                                          \
     ::perf::contract::check(static_cast<bool>(__VA_ARGS__), #__VA_ARGS__,                          \
-                            "pré-condição", ::std::source_location::current())
+                            "precondition", ::std::source_location::current())
 
 #define PERF_ENSURES(...)                                                                          \
     ::perf::contract::check(static_cast<bool>(__VA_ARGS__), #__VA_ARGS__,                          \
-                            "pós-condição", ::std::source_location::current())
+                            "postcondition", ::std::source_location::current())
 
 #endif
 

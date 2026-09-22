@@ -38,7 +38,7 @@ Relate como problema de segurança:
 ## O que não está no escopo
 
 - programa **deliberadamente** defeituoso, quando a suíte exige que ele falhe.
-  O braço de controle de `bench-harness` (`--braco-de-controle`) simula coleta
+  O braço de controle de `bench-harness` (`--control-arm`) simula coleta
   inválida de propósito, e o teste L2 exige que o programa a reprove;
 - limitações declaradas: medições de uma máquina só, módulos marcados como
   esqueleto, os doze verificadores ainda não portados e listados no ROADMAP;

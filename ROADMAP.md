@@ -60,8 +60,21 @@ repositório em 2026-09-21. Veio o que já era executável:
       último isento da regra do par por decisão declarada no verificador:
       é configuração de ferramenta, e duas cópias de instrução que divergem em
       silêncio são pior defeito que a ausência de par
-- [ ] prefixo `CPP_ACADEMY_*` das variáveis de ambiente da régua de apuração:
-      mantido na absorção, decidir se acompanha a identidade nova
+- [x] prefixo das variáveis de ambiente resolvido: **`HARNESS_SAMPLES`,
+      `HARNESS_ROUNDS`, `HARNESS_TAIL_SAMPLES`**. O prefixo nomeia o
+      **instrumento**, não a academia, porque `lib/` é candidato a repositório
+      próprio consumido pelos três projetos da família. E o sufixo saiu do
+      português: variável de ambiente é interface de programa, não prosa
+- [x] a fronteira do idioma escrita na norma (seção 3): identificador, saída de
+      programa, flag, variável de ambiente e esquema de dado em inglês;
+      comentário, script e registro emitido por script em português. A ausência
+      dessa fronteira produziu deriva medida — 35 mensagens em português,
+      `custo_do_relogio()` e `--braco-de-controle` no primeiro programa do
+      repositório, tudo corrigido
+- [x] a cláusula "mensagens de commit em inglês", herdada do documento de
+      origem e contrariada por todo o histórico dos dois projetos, passou a
+      dizer **português**, com a razão registrada: o assunto do commit é o
+      achado, e achado é prosa
 - [x] `pre-commit.sh` — sintaxe, os seis verificadores mais os seis autotestes,
       varredura de segredo com escopo declarado, e conferência de que o SHA
       fixado da ação de CI ainda é o topo do major declarado no comentário. O

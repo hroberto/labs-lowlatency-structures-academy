@@ -13,9 +13,9 @@
 //
 // OS TRÊS BRAÇOS, E O QUE CADA UM RESPONDE
 //
-//   1. custo de ler o relógio     - o piso de qualquer medição temporal aqui;
-//   2. custo de registrar amostra - o que o coletor de cauda cobra por amostra;
-//   3. piso por operação          - o intervalo medido entre duas leituras
+//   1. custo de ler o relógio     - o tail_floor de qualquer medição temporal aqui;
+//   2. custo de registrar amostra - o que o collector de cauda cobra por amostra;
+//   3. tail_floor por operação          - o intervalo medido entre duas leituras
 //                                   consecutivas do relógio, COM NADA no meio.
 //
 // O braço 3 é o que fecha o argumento. Ele é a menor latência que este harness
@@ -28,7 +28,7 @@
 //
 //   LOTE      - um par de leituras para N operações. O custo do relógio se
 //               dilui, mas a distribuição se perde: não há p99 de uma média.
-//   POR OPERAÇÃO - um par de leituras por operação. A cauda aparece, e o piso
+//   POR OPERAÇÃO - um par de leituras por operação. A cauda aparece, e o tail_floor
 //               do instrumento entra em cada amostra.
 //
 // A norma publica percentis altos (seção 28), então a trilha precisa do segundo
@@ -65,16 +65,16 @@ template <typename T>
 }
 
 // --- braço 1: custo de ler o relógio --------------------------------------
-double custo_do_relogio(int rodadas) noexcept
+double clock_read_cost(int round_count) noexcept
 {
     const std::uint64_t t0 = now_ns();
-    for (int i = 0; i < rodadas; ++i)
+    for (int i = 0; i < round_count; ++i)
     {
-        const std::uint64_t agora = now_ns();
-        sink(agora);
+        const std::uint64_t now = now_ns();
+        sink(now);
     }
     const std::uint64_t t1 = now_ns();
-    return static_cast<double>(t1 - t0) / static_cast<double>(rodadas);
+    return static_cast<double>(t1 - t0) / static_cast<double>(round_count);
 }
 
 // --- braço 2: custo de registrar uma amostra ------------------------------
@@ -84,54 +84,54 @@ double custo_do_relogio(int rodadas) noexcept
 //
 // Em `-O2` este braço media 0,359 ns. Em `release` (`-O3`) passou a medir
 // 0,000 -- e 0,000 não é "rápido", é "não aconteceu": ninguém observava o
-// estado do coletor depois, então o laço inteiro era removido. A régua trata
+// estado do collector depois, então o laço inteiro era removido. A régua trata
 // mediana zero como `below_resolution`, que é estado legítimo para operação
 // mais rápida que o relógio, e por isso a tabela saiu plausível.
 //
-// Observar `coletor.size()` ao fim torna o efeito do laço visível ao
+// Observar `collector.size()` ao fim torna o efeito do laço visível ao
 // compilador, sem custo dentro dele.
-double custo_do_registro(tail_collector &coletor, int rodadas) noexcept
+double record_sample_cost(tail_collector &collector, int round_count) noexcept
 {
     const std::uint64_t t0 = now_ns();
-    for (int i = 0; i < rodadas; ++i)
+    for (int i = 0; i < round_count; ++i)
     {
-        coletor.record(static_cast<std::uint64_t>(i));
+        collector.record(static_cast<std::uint64_t>(i));
     }
     const std::uint64_t t1 = now_ns();
-    sink(coletor.size());
-    return static_cast<double>(t1 - t0) / static_cast<double>(rodadas);
+    sink(collector.size());
+    return static_cast<double>(t1 - t0) / static_cast<double>(round_count);
 }
 
-// --- braço 3: piso por operação -------------------------------------------
+// --- braço 3: tail_floor por operação -------------------------------------------
 //
 // Mede o intervalo entre duas leituras consecutivas, com nada no meio. Cada
 // intervalo é UMA amostra da cauda: é assim que um tópico de estrutura vai
-// medir, e portanto é assim que o piso tem de ser medido.
-tail_statistics piso_por_operacao(std::size_t amostras)
+// medir, e portanto é assim que o tail_floor tem de ser medido.
+tail_statistics measure_per_op_floor(std::size_t sample_count)
 {
-    tail_collector coletor{amostras};
-    for (std::size_t i = 0; i < amostras; ++i)
+    tail_collector collector{sample_count};
+    for (std::size_t i = 0; i < sample_count; ++i)
     {
         const std::uint64_t a = now_ns();
         const std::uint64_t b = now_ns();
-        coletor.record(b - a);
+        collector.record(b - a);
     }
-    return coletor.summarize();
+    return collector.summarize();
 }
 
-void imprimir_cauda(std::string_view rotulo, const tail_statistics &t)
+void print_tail_row(std::string_view label, const tail_statistics &t)
 {
-    std::println("{:<28} {:>10} {:>10.1f} {:>10.1f} {:>10.1f} {:>12} {:>8}", rotulo, t.samples,
+    std::println("{:<28} {:>10} {:>10.1f} {:>10.1f} {:>10.1f} {:>12} {:>8}", label, t.samples,
                  t.p50, t.p99, t.p999, t.maximum, t.discarded);
 }
 
 // O maior percentil que a contagem sustenta é DADO DA TABELA, não nota de pé de
 // página: sem ele, um p99,9 calculado de amostra insuficiente sai idêntico a um
 // legítimo.
-void imprimir_cabecalho_cauda()
+void print_tail_header()
 {
-    std::println("\n{:<28} {:>10} {:>10} {:>10} {:>10} {:>12} {:>8}", "por operacao (ns)", "n",
-                 "p50", "p99", "p99,9", "max", "descart.");
+    std::println("\n{:<28} {:>10} {:>10} {:>10} {:>10} {:>12} {:>8}", "per operation (ns)", "n",
+                 "p50", "p99", "p99.9", "max", "discarded");
     std::println("{}", dashes(92));
 }
 
@@ -143,48 +143,48 @@ void imprimir_cabecalho_cauda()
 // operação mais rápida que o relógio, mas neste programa ele significa que o
 // laço medido foi removido pelo otimizador -- e um braço removido não é um
 // braço rápido.
-int conferir(const statistics &relogio, const statistics &registro, const tail_statistics &piso,
-             int amostras, std::size_t capacidade)
+int check_collection(const statistics &clock_arm, const statistics &record_arm, const tail_statistics &tail_floor,
+             int sample_count, std::size_t capacity_requested)
 {
-    if (!is_valid(relogio, amostras) || !is_valid(registro, amostras))
+    if (!is_valid(clock_arm, sample_count) || !is_valid(record_arm, sample_count))
     {
-        std::println("FALHA: coleta invalida -- relogio [{}], registro [{}].", badge(relogio),
-                     badge(registro));
-        std::println("       mediana zero aqui significa laco removido pelo otimizador,");
-        std::println("       nao operacao mais rapida que o relogio. Nada disto e publicavel.");
+        std::println("FAILED: invalid collection -- clock [{}], record [{}].", badge(clock_arm),
+                     badge(record_arm));
+        std::println("        a zero median here means the loop was removed by the optimizer,");
+        std::println("        not an operation faster than the clock. None of this is publishable.");
         return 1;
     }
-    if (piso.samples != capacidade || piso.discarded != 0)
+    if (tail_floor.samples != capacity_requested || tail_floor.discarded != 0)
     {
-        std::println("FALHA: a cauda coletou {} de {} amostras, {} descartadas.", piso.samples,
-                     capacidade, piso.discarded);
+        std::println("FAILED: the tail collected {} of {} samples, {} discarded.",
+                     tail_floor.samples, capacity_requested, tail_floor.discarded);
         return 1;
     }
     return 0;
 }
 
-int csv(const statistics &relogio, const statistics &registro, const tail_statistics &piso,
-        int amostras, int rodadas)
+int csv(const statistics &clock_arm, const statistics &record_arm, const tail_statistics &tail_floor,
+        int sample_count, int round_count)
 {
-    std::println("braco,metrica,valor,unidade");
-    std::println("clock_read,median,{:.4f},ns", relogio.median);
-    std::println("clock_read,minimum,{:.4f},ns", relogio.minimum);
-    std::println("clock_read,p99,{:.4f},ns", relogio.p99);
-    std::println("clock_read,disp,{:.2f},percent", relogio.disp);
-    std::println("record_sample,median,{:.4f},ns", registro.median);
-    std::println("record_sample,minimum,{:.4f},ns", registro.minimum);
-    std::println("record_sample,p99,{:.4f},ns", registro.p99);
-    std::println("record_sample,disp,{:.2f},percent", registro.disp);
-    std::println("per_op_floor,p50,{:.1f},ns", piso.p50);
-    std::println("per_op_floor,p99,{:.1f},ns", piso.p99);
-    std::println("per_op_floor,p999,{:.1f},ns", piso.p999);
-    std::println("per_op_floor,maximum,{},ns", piso.maximum);
-    std::println("per_op_floor,samples,{},count", piso.samples);
-    std::println("per_op_floor,discarded,{},count", piso.discarded);
-    std::println("per_op_floor,highest_supported,{:.4f},percentile", piso.highest_supported);
-    std::println("parametros,amostras,{},count", amostras);
-    std::println("parametros,rodadas,{},count", rodadas);
-    std::println("parametros,clock_period,{:.4f},ns", clock_period_ns());
+    std::println("arm,metric,value,unit");
+    std::println("clock_read,median,{:.4f},ns", clock_arm.median);
+    std::println("clock_read,minimum,{:.4f},ns", clock_arm.minimum);
+    std::println("clock_read,p99,{:.4f},ns", clock_arm.p99);
+    std::println("clock_read,disp,{:.2f},percent", clock_arm.disp);
+    std::println("record_sample,median,{:.4f},ns", record_arm.median);
+    std::println("record_sample,minimum,{:.4f},ns", record_arm.minimum);
+    std::println("record_sample,p99,{:.4f},ns", record_arm.p99);
+    std::println("record_sample,disp,{:.2f},percent", record_arm.disp);
+    std::println("per_op_floor,p50,{:.1f},ns", tail_floor.p50);
+    std::println("per_op_floor,p99,{:.1f},ns", tail_floor.p99);
+    std::println("per_op_floor,p999,{:.1f},ns", tail_floor.p999);
+    std::println("per_op_floor,maximum,{},ns", tail_floor.maximum);
+    std::println("per_op_floor,samples,{},count", tail_floor.samples);
+    std::println("per_op_floor,discarded,{},count", tail_floor.discarded);
+    std::println("per_op_floor,highest_supported,{:.4f},percentile", tail_floor.highest_supported);
+    std::println("parameters,samples,{},count", sample_count);
+    std::println("parameters,rounds,{},count", round_count);
+    std::println("parameters,clock_period,{:.4f},ns", clock_period_ns());
     return 0;
 }
 
@@ -192,36 +192,36 @@ int csv(const statistics &relogio, const statistics &registro, const tail_statis
 
 int main(int argc, char **argv)
 {
-    bool modo_csv = false;
-    bool controle = false;
+    bool csv_mode = false;
+    bool control_arm = false;
     for (int i = 1; i < argc; ++i)
     {
         const std::string_view arg{argv[i]};
-        modo_csv = modo_csv || arg == "--csv";
-        controle = controle || arg == "--braco-de-controle";
+        csv_mode = csv_mode || arg == "--csv";
+        control_arm = control_arm || arg == "--control-arm";
     }
 
-    const int amostras = samples();
-    const int rodadas = rounds(200'000);
+    const int sample_count = samples();
+    const int round_count = rounds(200'000);
 
     // Capacidade da cauda: o mínimo que sustenta p99,9 pela convenção de
     // `tail.hpp`, salvo se o ambiente pedir mais. Não é número redondo
     // escolhido por gosto -- é o termo de aceite do percentil que a tabela
     // publica.
-    std::size_t capacidade = min_samples_for(0.999);
-    if (const char *env = std::getenv("CPP_ACADEMY_CAUDA"))
+    std::size_t capacity_requested = min_samples_for(0.999);
+    if (const char *env = std::getenv("HARNESS_TAIL_SAMPLES"))
     {
-        const long pedido = std::strtol(env, nullptr, 10);
-        if (pedido > 0)
+        const long requested = std::strtol(env, nullptr, 10);
+        if (requested > 0)
         {
-            capacidade = static_cast<std::size_t>(pedido);
+            capacity_requested = static_cast<std::size_t>(requested);
         }
     }
 
-    // O coletor do braço 2 é criado FORA da medição, e com capacidade para
-    // todas as rodadas: se ele enchesse no meio, `record` passaria a contar
+    // O collector do braço 2 é criado FORA da medição, e com capacity_requested para
+    // todas as round_count: se ele enchesse no meio, `record` passaria a contar
     // descarte em vez de gravar, e o braço mediria o ramo barato.
-    tail_collector coletor_registro{static_cast<std::size_t>(rodadas)};
+    tail_collector record_collector{static_cast<std::size_t>(round_count)};
 
     // BRAÇO DE CONTROLE: simula o braço que o otimizador removeu.
     //
@@ -231,12 +231,12 @@ int main(int argc, char **argv)
     // caminho de reprovação passou a ser exercitável de fora -- e o teste L2 o
     // exercita nos DOIS modos, porque o defeito era exatamente a diferença
     // entre eles.
-    const statistics relogio =
-        controle ? collect([] { return 0.0; }, amostras)
-                 : collect([&] { return custo_do_relogio(rodadas); }, amostras);
-    const statistics registro =
-        collect([&] { return custo_do_registro(coletor_registro, rodadas); }, amostras);
-    const tail_statistics piso = piso_por_operacao(capacidade);
+    const statistics clock_arm =
+        control_arm ? collect([] { return 0.0; }, sample_count)
+                 : collect([&] { return clock_read_cost(round_count); }, sample_count);
+    const statistics record_arm =
+        collect([&] { return record_sample_cost(record_collector, round_count); }, sample_count);
+    const tail_statistics tail_floor = measure_per_op_floor(capacity_requested);
 
     // O PORTÃO DE VALIDADE VEM ANTES DE QUALQUER SAÍDA, e a ordem foi corrigida
     // depois de uma campanha arquivada com um braço inválido.
@@ -246,38 +246,40 @@ int main(int argc, char **argv)
     // a campanha arquiva -- saía zero. O resultado foi um `metadata.json`
     // versionado, com procedência completa, descrevendo uma medição que não
     // mediu: exatamente o defeito que este tópico existe para expor.
-    if (const int problema = conferir(relogio, registro, piso, amostras, capacidade))
+    if (const int problem = check_collection(clock_arm, record_arm, tail_floor, sample_count, capacity_requested))
     {
-        return problema;
+        return problem;
     }
 
-    if (modo_csv)
+    if (csv_mode)
     {
-        return csv(relogio, registro, piso, amostras, rodadas);
+        return csv(clock_arm, record_arm, tail_floor, sample_count, round_count);
     }
 
-    std::println("Harness medindo a si mesmo");
-    std::println("  resolucao do steady_clock ... {:.1f} ns", clock_period_ns());
-    std::println("  amostras x rodadas ......... {} x {}", amostras, rodadas);
-    std::println("  capacidade da cauda ........ {} (minimo para p99,9: {})", capacidade,
+    std::println("The harness measuring itself");
+    std::println("  steady_clock resolution .... {:.1f} ns", clock_period_ns());
+    std::println("  samples x rounds ........... {} x {}", sample_count, round_count);
+    std::println("  tail capacity .............. {} (minimum for p99.9: {})", capacity_requested,
                  min_samples_for(0.999));
 
     print_header();
-    print_row("ler o relogio", relogio);
-    print_row("registrar amostra", registro);
+    print_row("reading the clock", clock_arm);
+    print_row("recording a sample", record_arm);
 
-    imprimir_cabecalho_cauda();
-    imprimir_cauda("piso do par de leituras", piso);
+    print_tail_header();
+    print_tail_row("floor of the read pair", tail_floor);
 
-    std::println("\nO que estes numeros autorizam:");
-    std::println("  medicao POR OPERACAO nao distingue custo abaixo de ~{:.0f} ns (p50 do piso).",
-                 piso.p50);
-    std::println("  abaixo disso, a tabela descreve o instrumento -- o caminho e medir em LOTE.");
-    if (piso.highest_supported < 0.999)
+    std::println("\nWhat these numbers license:");
+    std::println("  PER-OPERATION measurement cannot separate a cost below ~{:.0f} ns "
+                 "(the floor's p50).",
+                 tail_floor.p50);
+    std::println("  below that, the table describes the instrument -- the way out is BATCH "
+                 "measurement.");
+    if (tail_floor.highest_supported < 0.999)
     {
-        std::println("  ATENCAO: {} amostras nao sustentam p99,9 (minimo {}). O p99,9 acima",
-                     piso.samples, min_samples_for(0.999));
-        std::println("  esta calculado, mas NAO e publicavel -- ver tail.hpp.");
+        std::println("  WARNING: {} samples do not support p99.9 (minimum {}). The p99.9 above",
+                     tail_floor.samples, min_samples_for(0.999));
+        std::println("  is computed, but is NOT publishable -- see tail.hpp.");
     }
 
     return 0;

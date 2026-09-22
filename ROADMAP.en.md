@@ -61,8 +61,21 @@ not started, **zero commits and no remote** — was absorbed by this repository 
       exempt from the pair rule by a decision declared in the checker: it is tool
       configuration, and two copies of instructions diverging silently are a
       worse defect than a missing pair
-- [ ] the `CPP_ACADEMY_*` prefix on the measurement ruler's environment
-      variables: kept as-is during absorption, to be decided against the new identity
+- [x] the environment-variable prefix settled: **`HARNESS_SAMPLES`,
+      `HARNESS_ROUNDS`, `HARNESS_TAIL_SAMPLES`**. The prefix names the
+      **instrument**, not the academy, because `lib/` is a candidate for its own
+      repository consumed by the three projects in the family. And the suffix
+      left Portuguese: an environment variable is a program interface, not prose
+- [x] the language boundary written into the standard (section 3): identifiers,
+      program output, flags, environment variables and emitted data schemas in
+      English; comments, scripts and script-emitted records in Portuguese. The
+      absence of that boundary produced measured drift — 35 Portuguese messages,
+      `custo_do_relogio()` and `--braco-de-controle` in the repository's first
+      program, all corrected
+- [x] the "commit messages in English" clause, inherited from the origin
+      document and contradicted by the entire history of both projects, now says
+      **Portuguese**, with the reason recorded: the commit subject is the
+      finding, and a finding is prose
 - [x] `pre-commit.sh` — syntax, the six checkers plus their six self-tests, a
       secret scan with a declared scope, and a check that the pinned CI action
       SHA is still the top of the major declared in the comment. The `--rapido`

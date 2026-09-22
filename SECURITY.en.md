@@ -39,7 +39,7 @@ Report as a security problem:
 ## What is out of scope
 
 - a **deliberately** defective program, when the suite requires it to fail. The
-  control arm of `bench-harness` (`--braco-de-controle`) simulates an invalid
+  control arm of `bench-harness` (`--control-arm`) simulates an invalid
   collection on purpose, and the L2 test requires the program to reject it;
 - declared limitations: measurements from one machine only, modules marked as
   skeletons, the twelve checkers not yet ported and listed in the ROADMAP;

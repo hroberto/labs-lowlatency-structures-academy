@@ -84,7 +84,7 @@ struct domain_error
 
     [[nodiscard]] std::string describe() const
     {
-        return std::format("valor {} recusado pelo domínio '{}'", offending, domain_name);
+        return std::format("value {} rejected by domain '{}'", offending, domain_name);
     }
 };
 
@@ -173,7 +173,7 @@ public:
     template <value_type V>
     [[nodiscard]] static constexpr checked of() noexcept
     {
-        static_assert(D::accepts(V), "valor fora dos termos de aceite do domínio");
+        static_assert(D::accepts(V), "value outside the domain's acceptance terms");
         return checked{V};
     }
 

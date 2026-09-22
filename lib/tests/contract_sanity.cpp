@@ -23,9 +23,9 @@
 //
 // O TERCEIRO CASO SÓ FAZ SENTIDO COM O CONTRATO LIGADO
 //
-// Com `NDEBUG`, `PERF_EXPECTS` vira `[[assume]]`: violar o predicado é
+// Com `NDEBUG`, `PERF_EXPECTS` vira `[[assume]]`: violate o predicado é
 // comportamento INDEFINIDO, não abort. Um teste que esperasse falha ali estaria
-// esperando um comportamento que o padrão não promete. Por isso `--violar`
+// esperando um comportamento que o padrão não promete. Por isso `--violate`
 // PULA com código 77 em release, em vez de passar ou de falhar: o que não foi
 // verificado não pode ser reportado como verificado.
 
@@ -48,129 +48,129 @@ using namespace perf::contract::measurement;
 // `volatile` impede que ele seja propagado como constante e que o caso vire,
 // sem aviso, um teste de compilação disfarçado de teste de runtime.
 template <typename T>
-T do_ambiente(T simulado)
+T from_env(T simulado)
 {
     volatile T opaco = simulado;
     return opaco;
 }
 
-int porta_e()
+int gate_e()
 {
-    int falhas = 0;
+    int failures = 0;
 
     // Valor válido vindo "de fora".
-    const auto bom = sample_count::parse(do_ambiente(25));
-    if (!bom.has_value())
+    const auto accepted = sample_count::parse(from_env(25));
+    if (!accepted.has_value())
     {
-        std::print(stderr, "  FALHA: porta E recusou 25, que esta no dominio\n");
-        ++falhas;
+        std::print(stderr, "  FAILED: gate E rejected 25, which is inside the domain\n");
+        ++failures;
     }
-    else if (bom->get() != 25)
+    else if (accepted->get() != 25)
     {
-        std::print(stderr, "  FALHA: porta E alterou o valor aceito\n");
-        ++falhas;
+        std::print(stderr, "  FAILED: gate E altered the accepted value\n");
+        ++failures;
     }
 
     // Valor inválido vindo "de fora": tem de ser recusado em TODA configuração,
     // inclusive em release. É a regra que a norma chama de "a porta E nunca é
     // compilada fora".
     //
-    // O 2 é o caso realista: `CPP_ACADEMY_AMOSTRAS=2` é o que alguém escreveria
+    // O 2 é o caso realista: `HARNESS_SAMPLES=2` é o que alguém escreveria
     // para acelerar a CI, e duas amostras não sustentam quartil nenhum.
-    const auto ruim = sample_count::parse(do_ambiente(2));
-    if (ruim.has_value())
+    const auto rejected = sample_count::parse(from_env(2));
+    if (rejected.has_value())
     {
-        std::print(stderr, "  FALHA: porta E aceitou 2 amostras, fora do dominio."
+        std::print(stderr, "  FAILED: gate E accepted 2 samples, outside the domain."
                            " A validacao externa foi compilada fora?\n");
-        ++falhas;
+        ++failures;
     }
     else
     {
-        const auto texto = ruim.error().describe();
+        const auto text = rejected.error().describe();
         // A mensagem precisa identificar o PARAMETRO, nao so a faixa: num log
         // de diagnostico, "valor fora de faixa" obriga quem le a descobrir de
         // qual dos seis parametros se fala.
-        if (texto.find("contagem de amostras") == std::string::npos)
+        if (text.find("sample count") == std::string::npos)
         {
-            std::print(stderr, "  FALHA: mensagem da porta E nao nomeia o parametro: {}\n", texto);
-            ++falhas;
+            std::print(stderr, "  FAILED: the gate E message does not name the parameter: {}\n", text);
+            ++failures;
         }
         else
         {
-            std::print("  porta E: 2 recusado -- {}\n", texto);
+            std::print("  gate E: 2 rejected -- {}\n", text);
         }
     }
 
     // Outro domínio: o erro precisa mudar de nome junto. Um `domain_name`
     // fixo passaria no caso acima e falharia aqui.
-    const auto rodadas = rounds_per_sample::parse(do_ambiente(999));
-    if (rodadas.has_value() || rodadas.error().domain_name != "rodadas por amostra")
+    const auto rounds_value = rounds_per_sample::parse(from_env(999));
+    if (rounds_value.has_value() || rounds_value.error().domain_name != "rounds per sample")
     {
-        std::print(stderr, "  FALHA: porta E de rodadas nao identificou o dominio\n");
-        ++falhas;
+        std::print(stderr, "  FAILED: gate E for rounds did not identify the domain\n");
+        ++failures;
     }
 
-    return falhas;
+    return failures;
 }
 
-int portas_t_e_r()
+int gates_t_and_r()
 {
-    int falhas = 0;
+    int failures = 0;
 
     // Porta T: já validada em compilação; aqui só se confirma que o valor
     // atravessa intacto até o runtime.
     if (sample_count::of<25>().get() != 25 || alignment::of<64>().get() != 64)
     {
-        std::print(stderr, "  FALHA: porta T alterou o valor\n");
-        ++falhas;
+        std::print(stderr, "  FAILED: gate T altered the value\n");
+        ++failures;
     }
 
     // Porta R com valor válido: não deve disparar em nenhuma configuração.
-    if (rounds_per_sample::trusted(do_ambiente(200'000)).get() != 200'000)
+    if (rounds_per_sample::trusted(from_env(200'000)).get() != 200'000)
     {
-        std::print(stderr, "  FALHA: porta R alterou o valor\n");
-        ++falhas;
+        std::print(stderr, "  FAILED: gate R altered the value\n");
+        ++failures;
     }
 
     // Orçamento declarado.
     using feed = perf::contract::workload_contract<5'000'000>;
     if (feed::budget_ns != 200.0 || !feed::fits(200.0) || feed::fits(200.1))
     {
-        std::print(stderr, "  FALHA: orcamento declarado nao confere\n");
-        ++falhas;
+        std::print(stderr, "  FAILED: the declared budget does not check out\n");
+        ++failures;
     }
-    std::print("  orcamento: {} eventos/s -> {:.1f} ns por evento\n", feed::events_per_second,
+    std::print("  budget: {} events/s -> {:.1f} ns per event\n", feed::events_per_second,
                feed::budget_ns);
 
-    return falhas;
+    return failures;
 }
 
 } // namespace
 
 int main(int argc, char **argv)
 {
-    const bool violar = argc > 1 && std::string_view{argv[1]} == "--violar";
+    const bool violate = argc > 1 && std::string_view{argv[1]} == "--violate";
 
-    if (violar)
+    if (violate)
     {
 #ifdef NDEBUG
-        std::print("  PULADO - violacao de contrato em release e comportamento\n"
-                   "  INDEFINIDO, nao abort: `PERF_EXPECTS` virou `[[assume]]`.\n"
-                   "  Este caso NAO passou: ele nao roda nesta configuracao.\n"
-                   "  Ele roda em build-debug e em build-release-checked.\n");
+        std::print("  SKIPPED - a contract violation in release is UNDEFINED\n"
+                   "  behaviour, not abort: `PERF_EXPECTS` became `[[assume]]`.\n"
+                   "  This case did NOT pass: it does not run in this configuration.\n"
+                   "  It runs in build-debug and in build-release-checked.\n");
         return 77;
 #else
-        std::print("  disparando violacao deliberada da porta R"
-                   " (2 amostras, abaixo do piso de 3)\n");
+        std::print("  firing a deliberate gate R violation"
+                   " (2 samples, below the floor of 3)\n");
         // Esperado: mensagem de contrato violado em stderr, e abort.
-        const auto v = sample_count::trusted(do_ambiente(2));
-        std::print(stderr, "  FALHA: a violacao NAO abortou; valor devolvido: {}\n", v.get());
+        const auto v = sample_count::trusted(from_env(2));
+        std::print(stderr, "  FAILED: the violation did NOT abort; value returned: {}\n", v.get());
         return 1;
 #endif
     }
 
-    std::print("  sanidade das tres portas de contrato\n\n");
-    const int falhas = portas_t_e_r() + porta_e();
-    std::print("\n  {} falha(s)\n", falhas);
-    return falhas == 0 ? 0 : 1;
+    std::print("  sanity of the three contract gates\n\n");
+    const int failures = gates_t_and_r() + gate_e();
+    std::print("\n  {} failure(s)\n", failures);
+    return failures == 0 ? 0 : 1;
 }

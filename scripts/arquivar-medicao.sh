@@ -74,11 +74,11 @@ mkdir -p "$DESTINO"
 printf 'Campanha: %s\n  destino: %s\n  repeticoes: %s\n\n' "$CAMPANHA" "$DESTINO" "$REPETICOES"
 
 # Parâmetros da campanha: publicáveis, e portanto NÃO os tetos que a suíte usa.
-# Ver o comentário do meson.build sobre CPP_ACADEMY_AMOSTRAS na suíte -- lá o
+# Ver o comentário do meson.build sobre HARNESS_SAMPLES na suíte -- lá o
 # objetivo é verificar que o programa executa.
-export CPP_ACADEMY_AMOSTRAS=${CPP_ACADEMY_AMOSTRAS:-25}
-export CPP_ACADEMY_RODADAS=${CPP_ACADEMY_RODADAS:-200000}
-export CPP_ACADEMY_CAUDA=${CPP_ACADEMY_CAUDA:-10000}
+export HARNESS_SAMPLES=${HARNESS_SAMPLES:-25}
+export HARNESS_ROUNDS=${HARNESS_ROUNDS:-200000}
+export HARNESS_TAIL_SAMPLES=${HARNESS_TAIL_SAMPLES:-10000}
 
 INICIO=$(date +%s)
 for i in $(seq 0 $((REPETICOES - 1))); do

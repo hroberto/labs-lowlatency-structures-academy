@@ -190,7 +190,7 @@ test('l1 - contratos: as tres portas em runtime', sanidade_contrato,
 # comportamento indefinido, nao abort, e um teste que esperasse falha ali
 # esperaria algo que o padrao nao promete.
 test('l1 - contratos: violacao da porta R aborta', sanidade_contrato,
-     args : ['--violar'],
+     args : ['--violate'],
      should_fail : true,
      suite : ['l1', 'contract'], timeout : 60)
 
@@ -199,7 +199,7 @@ test('l1 - regua de apuracao coleta resultado publicavel', sanidade_medicao,
      # Teto de amostras e de rodadas: na CI o objetivo é verificar que o
      # programa EXECUTA, não coletar estatística que ninguém vai ler. Medição
      # publicável não define estas variáveis.
-     env : {'CPP_ACADEMY_AMOSTRAS': '5', 'CPP_ACADEMY_RODADAS': '20000'})
+     env : {'HARNESS_SAMPLES': '5', 'HARNESS_ROUNDS': '20000'})
 
 # ---------------------------------------------------------------------------
 # Scripts de ambiente, na suite `l1+scripts`.
@@ -245,7 +245,7 @@ test('l1 - cauda: descarte declarado e percentil exato', sanidade_cauda,
 # release o programa devolve 77 e o Meson reporta PULADO, pela mesma razao do
 # alvo de contratos: violar `[[assume]]` e comportamento indefinido, nao abort.
 test('l1 - cauda: publicar percentil sem sustentacao aborta', sanidade_cauda,
-     args : ['--violar'],
+     args : ['--violate'],
      should_fail : true,
      suite : ['l1', 'measurement'], timeout : 60)
 

@@ -64,7 +64,7 @@ def ler_csv(caminho):
     fora = {}
     with open(caminho, encoding="utf-8") as f:
         cabecalho = next(f).strip()
-        if cabecalho != "braco,metrica,valor,unidade":
+        if cabecalho != "arm,metric,value,unit":
             sys.exit(f"ERRO: {caminho} nao tem o cabecalho esperado: {cabecalho!r}")
         for n, linha in enumerate(f, start=2):
             linha = linha.strip()
@@ -134,8 +134,12 @@ def main():
         metricas[f"{braco}.{metrica}"] = {"unidade": unidade, "por_execucao": valores,
                                           **(variacao(valores) or {})}
 
+    # `parameters.*` em inglês: o CSV é SAÍDA DE PROGRAMA, e a seção 3 da norma
+    # põe saída de programa em inglês junto com os identificadores. A estrutura
+    # do `metadata.json`, essa, segue o idioma do ferramental que a compõe --
+    # como `ambiente.json`, que é português.
     params = {k.split(".")[1]: v["mediana"] for k, v in metricas.items()
-              if k.startswith("parametros.")}
+              if k.startswith("parameters.")}
 
     meta = {
         "campanha": os.path.basename(os.path.abspath(destino)),

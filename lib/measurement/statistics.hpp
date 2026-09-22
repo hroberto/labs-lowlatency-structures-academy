@@ -124,7 +124,7 @@ namespace detail
 // Leitura de teto numérico em variável de ambiente, sem `atoi`.
 //
 // `atoi` não distingue "0" de entrada inválida, e o cabeçalho de origem o usava
-// -- um `CPP_ACADEMY_AMOSTRAS=abc` virava 0 em silêncio e depois era elevado ao
+// -- um `HARNESS_SAMPLES=abc` virava 0 em silêncio e depois era elevado ao
 // piso. `from_chars` devolve o erro, e aqui a entrada inválida é IGNORADA em
 // favor do padrão, não silenciosamente convertida em outro número.
 [[nodiscard]] inline int env_ceiling(const char *name, int fallback, int floor_value) noexcept
@@ -153,7 +153,7 @@ namespace detail
 // estatística que ninguém vai ler. Medição de verdade usa o padrão.
 [[nodiscard]] inline int samples(int fallback = default_samples_fixed) noexcept
 {
-    return detail::env_ceiling("CPP_ACADEMY_AMOSTRAS", fallback, min_samples);
+    return detail::env_ceiling("HARNESS_SAMPLES", fallback, min_samples);
 }
 
 // Teto de RODADAS por amostra, análogo ao de amostras acima.
@@ -169,7 +169,7 @@ namespace detail
 // da medida, então quem quer número publicável não define a variável.
 [[nodiscard]] inline int rounds(int fallback) noexcept
 {
-    return detail::env_ceiling("CPP_ACADEMY_RODADAS", fallback, min_rounds);
+    return detail::env_ceiling("HARNESS_ROUNDS", fallback, min_rounds);
 }
 
 // Percentil por interpolação linear sobre a sequência JÁ ORDENADA.
@@ -384,8 +384,8 @@ static_assert(dashes(92).size() == 92, "a regua nao cobre a tabela de cauda do t
 
 inline void print_header()
 {
-    std::print("  {:<34} {:>9}  {:<15} {:<17} {:>5} {:>5}\n", "medicao", "mediana",
-               "p25-p75 (IQR)", "amplitude min-max", "disp", "CV");
+    std::print("  {:<34} {:>9}  {:<15} {:<17} {:>5} {:>5}\n", "measurement", "median",
+               "p25-p75 (IQR)", "min-max range", "disp", "CV");
     std::print("  {:<34} {:>9}  {:<15} {:<17} {:>5} {:>5}\n", dashes(34), dashes(9), dashes(15),
                dashes(17), dashes(5), dashes(5));
 }
@@ -404,8 +404,8 @@ inline void print_row(std::string_view label, const statistics &e)
 // rápido porque o clock subiu" de "ficou mais rápido de verdade".
 inline void print_header_cycles()
 {
-    std::print("  {:<34} {:>9}  {:<15} {:>8}      {:>5}\n", "medicao", "mediana",
-               "p25-p75 (IQR)", "ciclos", "disp");
+    std::print("  {:<34} {:>9}  {:<15} {:>8}      {:>5}\n", "measurement", "median",
+               "p25-p75 (IQR)", "cycles", "disp");
 }
 
 inline void print_row_cycles(std::string_view label, const statistics &e, double period_ns)
@@ -424,8 +424,8 @@ inline void print_row_cycles(std::string_view label, const statistics &e, double
 // isolado é uma amostra só -- informa menos do que parece.
 inline void print_header_tail()
 {
-    std::print("  {:<30} {:>9} {:>9} {:>9} {:>9}  {:>7}\n", "medicao", "minimo", "mediana", "p75",
-               "p99", "amostras");
+    std::print("  {:<30} {:>9} {:>9} {:>9} {:>9}  {:>7}\n", "measurement", "minimum", "median",
+               "p75", "p99", "samples");
 }
 
 inline void print_row_tail(std::string_view label, const statistics &e)

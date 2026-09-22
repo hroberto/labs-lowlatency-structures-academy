@@ -113,9 +113,42 @@ void processar_evento();
 ```
 
 This applies to classes, functions, variables, namespaces, tests, benchmark
-names, log messages, commit messages and CI identifiers. The goal is to keep the
-code compatible with the vocabulary of the literature, the tooling and the
-international C++ community.
+names, log messages and CI identifiers. The goal is to keep the code compatible
+with the vocabulary of the literature, the tooling and the international C++
+community.
+
+### Where the boundary runs, and why it had to be stated
+
+The rule above did not say where **English** stops, and the omission produced
+measured drift: this repository's first measurement program was born with
+`custo_do_relogio()`, 35 messages in Portuguese and the flag
+`--braco-de-controle`. None of that contradicts the letter of the rule; it
+contradicts what the rule meant.
+
+| Layer | Language | Examples |
+|---|---|---|
+| C++ identifiers | English | `clock_read_cost`, `tail_collector`, `sample_count` |
+| **program output** | English | `"reading the clock"`, `"CONTRACT VIOLATED (precondition)"`, table headers |
+| **command-line flags** | English | `--csv`, `--violate`, `--control-arm` |
+| **environment variables** | English, prefixed by the INSTRUMENT | `HARNESS_SAMPLES`, `HARNESS_ROUNDS`, `HARNESS_TAIL_SAMPLES` |
+| **data schema emitted by a program** | English | the CSV `arm,metric,value,unit` |
+| code comments | Portuguese | they are prose, and prose is Portuguese |
+| scripts under `scripts/` and `ferramental/` | Portuguese | they are automation for whoever studies and whoever publishes, and the file names are already Portuguese |
+| records emitted by scripts | Portuguese | `ambiente.json`, `metadata.json` — a Portuguese structure, with English metric identifiers inside |
+| commit messages | **Portuguese** | see below |
+
+**The environment-variable prefix names the instrument, not the academy.**
+`HARNESS_*` and not `CPP_ACADEMY_*`: the measurement ruler is a candidate for
+its own repository, consumed by this project, by the DPDK Academy and by the
+Messaging Academy (section 33). A shared ruler that reads `CPP_ACADEMY_*` in one
+repository and `DPDK_ACADEMY_*` in another is not shared — it is copied.
+
+**Commit messages are the exception, and it is deliberate.** This standard's
+origin document listed "commit messages" among the English items, and the
+history of this repository and of the DPDK Academy is entirely in Portuguese.
+The rule follows the practice, not the other way round: the commit subject is
+the **finding** — what broke, what it produced, and which check would have
+caught it — and a finding is prose. Prose is Portuguese.
 
 ### Directories: the per-layer rule
 

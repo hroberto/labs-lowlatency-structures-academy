@@ -106,9 +106,41 @@ void processar_evento();
 ```
 
 Vale para classes, funções, variáveis, namespaces, testes, nomes de benchmark,
-mensagens de log, mensagens de commit e identificadores de CI. O objetivo é
-manter o código compatível com o vocabulário da literatura, das ferramentas e da
-comunidade internacional de C++.
+mensagens de log e identificadores de CI. O objetivo é manter o código
+compatível com o vocabulário da literatura, das ferramentas e da comunidade
+internacional de C++.
+
+### Onde a fronteira passa, e por que ela precisava ser dita
+
+A regra acima não dizia onde o **inglês** para, e a omissão produziu deriva
+medida: o primeiro programa de medição deste repositório nasceu com
+`custo_do_relogio()`, 35 mensagens em português e a flag `--braco-de-controle`.
+Nada disso contraria a letra da regra; contraria o que ela quis dizer.
+
+| Camada | Idioma | Exemplos |
+|---|---|---|
+| identificadores de C++ | inglês | `clock_read_cost`, `tail_collector`, `sample_count` |
+| **saída de programa** | inglês | `"reading the clock"`, `"CONTRACT VIOLATED (precondition)"`, cabeçalho de tabela |
+| **flags de linha de comando** | inglês | `--csv`, `--violate`, `--control-arm` |
+| **variáveis de ambiente** | inglês, com prefixo do INSTRUMENTO | `HARNESS_SAMPLES`, `HARNESS_ROUNDS`, `HARNESS_TAIL_SAMPLES` |
+| **esquema de dado emitido por programa** | inglês | o CSV `arm,metric,value,unit` |
+| comentário de código | português | é prosa, e prosa é português |
+| script de `scripts/` e de `ferramental/` | português | é automação de quem estuda e de quem publica, e o nome do arquivo já é português |
+| registro emitido por script | português | `ambiente.json`, `metadata.json` — estrutura em português, com identificadores de métrica em inglês dentro |
+| mensagem de commit | **português** | ver abaixo |
+
+**O prefixo de variável de ambiente nomeia o instrumento, não a academia.**
+`HARNESS_*` e não `CPP_ACADEMY_*`: a régua de apuração é candidata a
+repositório próprio, consumido por este projeto, pelo DPDK Academy e pelo
+Messaging Academy (seção 33). Uma régua compartilhada que lê `CPP_ACADEMY_*`
+num repositório e `DPDK_ACADEMY_*` noutro não é compartilhada — é copiada.
+
+**A mensagem de commit é a exceção, e ela é deliberada.** O documento de origem
+desta norma listava "mensagens de commit" entre os itens em inglês, e o
+histórico deste repositório e do DPDK Academy é inteiro em português. A regra
+segue a prática, e não o contrário: o assunto do commit é o **achado** — o que
+quebrou, o que aquilo produziu, e qual verificação o teria pegado —, e achado é
+prosa. Prosa é português.
 
 ### Diretórios: a regra por camada
 

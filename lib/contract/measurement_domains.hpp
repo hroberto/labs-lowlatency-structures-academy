@@ -59,7 +59,7 @@ namespace perf::contract::measurement
 struct sample_count_domain
     : closed_range<int, perf::measurement::min_samples, 1'000'000>
 {
-    static constexpr std::string_view name = "contagem de amostras";
+    static constexpr std::string_view name = "sample count";
 };
 
 // --- Rodadas por amostra --------------------------------------------------
@@ -69,7 +69,7 @@ struct sample_count_domain
 struct rounds_per_sample_domain
     : closed_range<int, perf::measurement::min_rounds, 1'000'000'000>
 {
-    static constexpr std::string_view name = "rodadas por amostra";
+    static constexpr std::string_view name = "rounds per sample";
 };
 
 // --- Percentil ------------------------------------------------------------
@@ -184,7 +184,7 @@ static_assert(rounds_per_sample::trusted(200'000).get() == 200'000);
 static_assert(sample_count::parse(25).has_value());
 static_assert(!sample_count::parse(2).has_value());
 static_assert(sample_count::parse(2).error().offending == 2);
-static_assert(sample_count::parse(2).error().domain_name == "contagem de amostras");
+static_assert(sample_count::parse(2).error().domain_name == "sample count");
 
 // A SEPARAÇÃO DE TIPOS: `sample_count` e `rounds_per_sample` compartilham o
 // tipo subjacente e têm faixas que se sobrepõem. Sem tipos distintos, o

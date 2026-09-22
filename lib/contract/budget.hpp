@@ -56,7 +56,7 @@ struct workload_contract
     // Carga nula não define orçamento: dividiria por zero e produziria um
     // orçamento infinito, contra o qual qualquer resultado "cabe". Um orçamento
     // que aceita tudo é pior que nenhum, porque parece um critério.
-    static_assert(EventsPerSecond > 0, "carga nula nao define orcamento");
+    static_assert(EventsPerSecond > 0, "a null workload does not define a budget");
 
     static constexpr std::uint64_t events_per_second = EventsPerSecond;
 
