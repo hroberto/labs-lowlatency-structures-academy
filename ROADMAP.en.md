@@ -186,6 +186,11 @@ not started, **zero commits and no remote** — was absorbed by this repository 
       WrapDB), converting `tail_sanity` and `contract_sanity`, and TAP output in
       the shell and Python tests. A framework with no user is a dependency with
       no payer, so the wrap lands in the same commit as the first test that uses it
+- [ ] **`CITATION.cff` is a blind spot of `verificar-autodescricao.py`**, which
+      only reads `.md`. Three of its counts aged silently and were fixed by hand
+      on 2026-09-22 — "twelve checkers" became ten, "eight modules" became nine
+      of ten. Either the checker starts reading `.cff` and `.yml`, or the file
+      stays outside the gate and says so (it does)
 - [ ] port `verificar-medicao.py` from the DPDK Academy — the **13th checker**,
       and today's only coupling with no gate: a number published in a README
       against the campaign it cites. Re-running a campaign changes the numbers

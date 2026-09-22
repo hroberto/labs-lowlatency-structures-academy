@@ -180,6 +180,11 @@ repositório em 2026-09-21. Veio o que já era executável:
       WrapDB), conversão de `tail_sanity` e `contract_sanity`, e saída TAP nos
       testes de shell e Python. Um framework sem usuário é dependência sem
       pagador, então o wrap entra no mesmo commit do primeiro teste que o use
+- [ ] **`CITATION.cff` é ponto cego do `verificar-autodescricao.py`**, que só
+      confere `.md`. Três contagens dele envelheceram em silêncio e foram
+      corrigidas à mão em 2026-09-22 — "doze verificadores" virou dez, "oito
+      módulos" virou nove de dez. Ou o verificador passa a ler `.cff` e `.yml`,
+      ou o arquivo continua fora do portão e isso fica dito nele (está)
 - [ ] portar `verificar-medicao.py` do DPDK Academy — o **13º verificador**, e o
       único acoplamento hoje sem portão: número publicado num README contra a
       campanha que ele cita. Refazer uma campanha muda os números e nada fica

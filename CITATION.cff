@@ -16,7 +16,8 @@
 #            o histórico acadêmico do autor, nos dois sentidos. Acrescentar
 #            depois é trivial; a ligação, uma vez colhida, não é retirável.
 #   doi    — um DOI é permanente por construção, e arquivar hoje carimbaria um
-#            repositório com UM tópico medido e oito módulos não escritos.
+#            repositório com UM tópico medido de vinte e três, e nove dos dez
+#            módulos não escritos.
 #            Entra quando o estado for um que não se queira corrigir na semana
 #            seguinte.
 #
@@ -27,9 +28,17 @@
 # fecharem.
 #
 # `verificar-citacao.py`, que confere este `version` contra a tag mais recente,
-# é um dos doze verificadores ainda não portados do DPDK Academy — está no
+# é um dos dez verificadores ainda não portados do DPDK Academy — está no
 # ROADMAP. Até ele existir, este campo é promessa de autor, e esta nota é o
 # lugar onde isso fica dito em vez de ficar implícito.
+#
+# E ESTE ARQUIVO É PONTO CEGO DO PORTÃO, o que vale dizer aqui.
+#
+# O `verificar-autodescricao.py` confere censo contra o disco em todo `.md` do
+# repositório — e este arquivo é `.cff`. As três contagens acima envelheceram
+# em silêncio entre 2026-09-22 e a primeira revisão: "doze verificadores" virou
+# dez, "oito módulos" virou nove de dez. Foram corrigidas à mão, que é
+# exatamente o mecanismo que o verificador existe para substituir.
 
 cff-version: 1.2.0
 message: >-
