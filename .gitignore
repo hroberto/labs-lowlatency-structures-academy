@@ -42,9 +42,27 @@ __pycache__/
 # `medicoes/historico/<AAAA-MM-DD>-<campanha>/`, com o ambiente ao lado e uma
 # saída por repetição, e essa é a regra aqui.
 #
-# O que se ignora é só o rascunho que a campanha ainda NÃO promoveu a histórico.
+# O QUE SE VERSIONA DA CAMPANHA, E O QUE FICA LOCAL
+#
+# Versionado -- é o registro auditável:
+#   metadata.json   parâmetros, build, commit, ambiente embutido, E A SÉRIE
+#                   COMPLETA POR EXECUÇÃO de cada métrica
+#   tabela.md/.en   o que entra nos dois READMEs do tópico
+#   ambiente.md     a coleta legível, que se confere a olho
+#
+# Local -- é intermediário, e a informação dele já está no metadata:
+#   r*.csv          a saída crua de cada repetição. Medido: todas as 18
+#                   métricas têm `por_execucao` no metadata, com um valor por
+#                   repetição. Versionar as duas coisas guarda o mesmo dado duas
+#                   vezes, e a segunda em formato que ninguém lê
+#   ambiente.json   duplica ambiente.md, e o metadata.json já embute o ambiente
+#                   inteiro
+#
+# Quem mediu continua com as duas na máquina; quem audita tem o que precisa.
 bench/medicoes/rascunho/
 **/medicoes/rascunho/
+**/medicoes/**/r*.csv
+**/medicoes/**/ambiente.json
 
 # Configuração local do Claude Code: o sufixo `.local` marca o que é pessoal e
 # não deve ser compartilhado. O CLAUDE.md, esse sim, é versionado -- ele carrega

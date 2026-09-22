@@ -10,7 +10,7 @@
 | TSC invariante | sim (constant_tsc e nonstop_tsc) |
 | Governor / turbo | powersave / intel_no_turbo=- amd_boost=1 |
 | PMU | perf_event_paranoid=2 — so o proprio processo, sem eventos de kernel |
-| Memória | 14,2 GiB (disponível: 4,7 GiB) |
+| Memória | 14,2 GiB (disponível: 4,5 GiB) |
 | Velocidade da memória | NAO LIDO -- rode: sudo ./scripts/ambiente.sh --cachear-memoria |
 | Pentes / canais | NAO LIDO -- idem |
 | Hugepages | 1024 de 2048 kB (1024 livres) |
@@ -26,5 +26,5 @@
 | Meson / Ninja | 1.10.1 / 1.13.2 |
 | perf | perf version 7.0.14 |
 | Configurações de build na árvore | build-clang-release-checked (release b_ndebug=false); build-debug (debug b_ndebug=false); build-release (release b_ndebug=true); build-release-checked (release b_ndebug=false) |
-| Commit / árvore suja | 39c1794 / sim |
-| Coletado em | 2026-09-22T10:46:05-03:00 |
+| Commit / árvore suja | 7e609cd / sim |
+| Coletado em | 2026-09-22T11:06:56-03:00 |

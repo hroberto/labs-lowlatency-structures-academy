@@ -95,13 +95,13 @@ domains, `governor=powersave` with boost on, and a `steady_clock` resolution of
 
 | Metric | Median across runs | Spread across runs | Unit |
 |---|---:|---:|---|
-| reading the clock (median) | 16.80 | 28.2% | ns |
-| reading the clock (minimum) | 16.06 | 29.2% | ns |
-| recording a sample (median) | 0.12 | 29.6% | ns |
+| reading the clock (median) | 16.81 | 28.4% | ns |
+| reading the clock (minimum) | 16.75 | 28.6% | ns |
+| recording a sample (median) | 0.13 | 28.7% | ns |
 | per-operation floor p50 | 20.00 | 0.0% | ns |
 | per-operation floor p99 | 21.00 | 42.9% | ns |
 | per-operation floor p99.9 | 21.00 | 47.6% | ns |
-| per-operation floor maximum | 341.00 | 687.4% | ns |
+| per-operation floor maximum | 201.00 | 772.1% | ns |
 
 ## What this measurement does not show
 
@@ -152,7 +152,7 @@ the cost being in the call itself rather than in what it measures.
 
 The tail is another story. p99 and p99.9 vary by **42.9%** and **47.6%** across
 runs of the **same** measurement, on the same machine, with nothing changed
-between them — and the **maximum** varies by **687.4%**, because a single
+between them — and the **maximum** varies by **772.1%**, because a single
 interrupt in one of the five runs moves it on its own. This is not an instrument
 defect: it is the machine, with `governor=powersave`, boost on and SMT. And it is
 exactly why the spread across runs is a mandatory field of the standard —
@@ -164,7 +164,7 @@ publishing it without the spread beside it invites the wrong conclusion. It
 stays in the table because hiding the extent of what was observed is worse than
 showing it — but it sustains no comparison at all.
 
-The cost of recording a sample, **0.12** ns, is on the order of one instruction:
+The cost of recording a sample, **0.13** ns, is on the order of one instruction:
 the collector is not what limits per-operation measurement. The clock is.
 
 ## Literature comparison

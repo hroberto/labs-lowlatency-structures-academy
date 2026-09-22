@@ -191,10 +191,21 @@ publishes:
 > project's asset is the **provenance** of the number, and provenance that lives
 > outside the repository is not provenance.
 
-Therefore: the campaign history **is versioned**; what `.gitignore` excludes is
-only the run scratch that the campaign has not yet promoted to history. A
-promoted campaign carries `metadata.json`, the output of each repetition, the
-publishable table and the generated environment record (section 29).
+Therefore: the campaign history **is versioned**. What goes in is the auditable
+record, not everything the campaign produces:
+
+| File | Versioned | Why |
+|---|---|---|
+| `metadata.json` | **yes** | parameters, build, commit, embedded environment, and **the full per-run series** of every metric |
+| `tabela.md` / `tabela.en.md` | **yes** | it is what goes into both of the topic's READMEs |
+| `ambiente.md` | **yes** | the readable collection, the one checked by eye |
+| `r*.csv` | no | an intermediate: measured that **every** metric already carries `por_execucao` in the metadata |
+| `ambiente.json` | no | it duplicates the `.md`, and the metadata already embeds the whole environment |
+
+Keeping the same data twice does not increase provenance; it increases the
+chance of the two copies diverging. Whoever measured still has the raw output on
+their machine; whoever audits has, in `metadata.json`, the same series it
+contains.
 
 ## 4. Language navigation
 

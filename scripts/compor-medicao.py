@@ -145,7 +145,18 @@ def main():
         "campanha": os.path.basename(os.path.abspath(destino)),
         "programa": "trilha/08-medicao/01-harness/bench/bench_harness.cpp",
         "repeticoes": len(execucoes),
-        "arquivos_por_execucao": [os.path.basename(c) for c in csvs],
+        # OS CSVs SAO LOCAIS, E O METADATA DIZ ISSO.
+        #
+        # Listar `r0.csv` sem mais nada faria quem clona procurar um arquivo que
+        # o repositorio nao tem. A serie completa de cada metrica esta em
+        # `metricas[].por_execucao`, aqui dentro -- versionar as duas coisas
+        # guardaria o mesmo dado duas vezes, e a segunda em formato que ninguem
+        # le.
+        "saida_crua_por_execucao": {
+            "arquivos": [os.path.basename(c) for c in csvs],
+            "versionados": False,
+            "onde_esta_o_dado": "metricas[].por_execucao, neste arquivo",
+        },
         "parametros_do_experimento": params,
         "build": {
             "configuracao": os.environ.get("MEDICAO_CONFIGURACAO"),

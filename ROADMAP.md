@@ -144,8 +144,10 @@ repositório em 2026-09-21. Veio o que já era executável:
       p99,9 —, e `tail_statistics` carregando o percentil máximo sustentado para
       que publicar acima dele seja erro visível
 - [x] `trilha/08-medicao/01-harness/`: compila, roda, e arquiva campanha de 5
-      execuções com `metadata.json`, `ambiente.json`, tabela publicável nos dois
-      idiomas e a saída crua de cada repetição
+      execuções, versionando `metadata.json` — com a série completa por
+      execução —, a tabela publicável nos dois idiomas e `ambiente.md`. A saída
+      crua por repetição e o `ambiente.json` ficam locais: guardar o mesmo dado
+      duas vezes não aumenta procedência, aumenta a chance de divergirem
 - [x] `scripts/arquivar-medicao.sh` e `scripts/compor-medicao.py`: exigem
       `release` conferido na configuração real do Meson (não no nome do
       diretório), recusam campanha de uma execução só, e publicam a **amplitude

@@ -179,10 +179,20 @@ A regra vigente é a do DPDK Academy, e a razão é o que este projeto publica:
 > projeto é a **procedência** do número, e procedência que mora fora do
 > repositório não é procedência.
 
-Portanto: o histórico de campanha **é versionado**; o que o `.gitignore` exclui
-é apenas o rascunho de execução que a campanha ainda não promoveu a histórico.
-Uma campanha promovida traz `metadata.json`, a saída de cada repetição, a tabela
-publicável e o registro de ambiente gerado (seção 29).
+Portanto: o histórico de campanha **é versionado**. O que entra é o registro
+auditável, e não tudo o que a campanha produz:
+
+| Arquivo | Versionado | Por quê |
+|---|---|---|
+| `metadata.json` | **sim** | parâmetros, build, *commit*, ambiente embutido, e **a série completa por execução** de cada métrica |
+| `tabela.md` / `tabela.en.md` | **sim** | é o que entra nos dois READMEs do tópico |
+| `ambiente.md` | **sim** | a coleta legível, que se confere a olho |
+| `r*.csv` | não | intermediário: medido que **todas** as métricas já trazem `por_execucao` no metadata |
+| `ambiente.json` | não | duplica o `.md`, e o metadata já embute o ambiente inteiro |
+
+Guardar o mesmo dado duas vezes não aumenta procedência; aumenta a chance de as
+duas cópias divergirem. Quem mediu continua com a saída crua na máquina; quem
+audita tem, no `metadata.json`, a mesma série que ela contém.
 
 ## 4. Navegação entre idiomas
 

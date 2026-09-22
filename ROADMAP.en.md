@@ -145,8 +145,10 @@ not started, **zero commits and no remote** — was absorbed by this repository 
       samples for p99, 10,000 for p99.9 — and `tail_statistics` carrying the
       highest supported percentile so that publishing above it is a visible error
 - [x] `trilha/08-medicao/01-harness/`: it builds, runs, and archives a campaign
-      of 5 runs with `metadata.json`, `ambiente.json`, a publishable table in
-      both languages and the raw output of every repetition
+      of 5 runs, versioning `metadata.json` — with the full per-run series —,
+      the publishable table in both languages and `ambiente.md`. The raw
+      per-repetition output and `ambiente.json` stay local: keeping the same data
+      twice does not increase provenance, it increases the chance they diverge
 - [x] `scripts/arquivar-medicao.sh` and `scripts/compor-medicao.py`: they require
       `release` checked against Meson's real configuration (not the directory
       name), refuse a single-run campaign, and publish the **spread across runs**

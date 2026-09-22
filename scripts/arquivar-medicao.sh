@@ -11,11 +11,14 @@
 #
 # Uma campanha promovida a histórico traz, num diretório com a data no nome:
 #
-#   r0.csv ... rN.csv   a saída de CADA repetição, crua
-#   ambiente.json       a coleta de ambiente, gerada
-#   ambiente.md         a mesma coleta, em tabela para colar no documento
-#   metadata.json       parâmetros, build, commit, variação entre execuções
-#   tabela.md           a tabela publicável
+#   metadata.json       VERSIONADO -- parâmetros, build, commit, ambiente
+#                       embutido, variação entre execuções, e a série completa
+#                       por execução de cada métrica
+#   tabela.md/.en.md    VERSIONADO -- a tabela publicável, nos dois idiomas
+#   ambiente.md         VERSIONADO -- a coleta legível
+#   r0.csv ... rN.csv   local -- a saída crua de cada repetição, cujo conteúdo
+#                       já está resumido no metadata (ver .gitignore)
+#   ambiente.json       local -- duplica ambiente.md, e o metadata já o embute
 #
 # POR QUE RELEASE, E POR QUE ELE É EXIGIDO E NÃO ESCOLHIDO
 #

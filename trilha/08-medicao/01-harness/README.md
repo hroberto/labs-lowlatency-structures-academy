@@ -93,13 +93,13 @@ de L3, `governor=powersave` com *boost* ativo, e resolução de `steady_clock` d
 
 | Métrica | Mediana entre execuções | Amplitude entre execuções | Unidade |
 |---|---:|---:|---|
-| ler o relógio (mediana) | 16,80 | 28,2% | ns |
-| ler o relógio (mínimo) | 16,06 | 29,2% | ns |
-| registrar amostra (mediana) | 0,12 | 29,6% | ns |
+| ler o relógio (mediana) | 16,81 | 28,4% | ns |
+| ler o relógio (mínimo) | 16,75 | 28,6% | ns |
+| registrar amostra (mediana) | 0,13 | 28,7% | ns |
 | piso por operação p50 | 20,00 | 0,0% | ns |
 | piso por operação p99 | 21,00 | 42,9% | ns |
 | piso por operação p99,9 | 21,00 | 47,6% | ns |
-| piso por operação máximo | 341,00 | 687,4% | ns |
+| piso por operação máximo | 201,00 | 772,1% | ns |
 
 ## O que esta medição não mostra
 
@@ -147,7 +147,7 @@ custo estar na própria chamada e não no que ela mede.
 
 A cauda é outra história. p99 e p99,9 variam **42,9%** e **47,6%** entre
 execuções da **mesma** medição, na mesma máquina, sem nada mudar entre elas — e
-o **máximo** varia **687,4%**, porque uma única interrupção numa das cinco
+o **máximo** varia **772,1%**, porque uma única interrupção numa das cinco
 execuções o move sozinha. Não é defeito do instrumento: é a máquina, com
 `governor=powersave`, *boost* ativo e SMT. E é exatamente por isso que a
 amplitude entre execuções é campo obrigatório da norma — sem ela, qualquer
@@ -159,7 +159,7 @@ amplitude ao lado convida a conclusão errada. Fica na tabela porque esconder a
 extensão do que se observou é pior que exibi-la — mas ele não sustenta
 comparação nenhuma.
 
-O custo de registrar amostra, **0,12** ns, é da ordem de uma instrução: o
+O custo de registrar amostra, **0,13** ns, é da ordem de uma instrução: o
 coletor não é o que limita a medição por operação. O relógio é.
 
 ## Confronto com a literatura
