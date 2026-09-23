@@ -56,7 +56,7 @@ message: >-
 # O bilinguismo da obra não se perde: fica declarado em `languages`, que é o
 # campo do esquema para isso, e no `abstract`, que é metadado de agregador e NÃO
 # entra na citação -- ali os dois idiomas dobram a cobertura de termos de graça.
-title: "Low-Latency Structures Academy: where the C++ standard library stops and the hot path begins"
+title: "Low-Latency Structures Academy: measuring where abstraction stops paying off"
 
 abstract: >-
   Estudo experimental de onde a biblioteca padrão de C++ para. Cada tópico mede

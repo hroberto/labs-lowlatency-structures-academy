@@ -208,6 +208,26 @@ repositório em 2026-09-21. Veio o que já era executável:
 
 ## Etapa 3.5 — Dívida de ferramental, declarada
 
+- [ ] **os dois banners de `docs/assets/` precisam ser regerados**, e o motivo é
+      factual: o rodapé do banner em inglês afirma *"prose in English • code in
+      English"*, e a regra do projeto é **prosa em português, código em inglês**,
+      com par em inglês (norma, seções 1 e 2). O texto correto é
+      *"bilingual prose • code in English"*.
+      Junto, sai o slogan *"Melhor software, um dia de cada vez"* / *"Better
+      software, one day at a time"*: a seção 32 da norma é uma lista de
+      afirmações verificáveis, e um slogan inverificável na capa contradiz o tom
+      que o material inteiro sustenta.
+      Nenhum dos dois é editável aqui — é raster. O que **foi** aplicado: nome
+      na convenção do repositório (`social.jpg` / `social.en.jpg`), entrada no
+      git, texto alternativo descrevendo a cena nos dois idiomas, e a regra 5 do
+      `verificar-paridade.py` estendida a `assets/`
+- [ ] decidir se a arte vira **desenho técnico** da mesma metáfora — agulha,
+      três destinos e a cadeia de procedência — em vez de ilustração
+      fotorrealista. O desenho sobreviveria ao *downscale* do cartão social, em
+      que hoje o desvio de três vias some antes do gato; e resolveria a tensão
+      com a seção 18 da norma, que legisla sobre conteúdo gerado por IA. Perde
+      o encanto, que é real. **Decisão editorial, não técnica**
+
 Estes quatro eram **prometidos pelo material e não rastreados aqui** — a norma e
 os READMEs os citavam como se fossem trabalho conhecido, e não eram item de
 nenhuma etapa. Uma dívida que só existe em prosa não é dívida: é esquecimento

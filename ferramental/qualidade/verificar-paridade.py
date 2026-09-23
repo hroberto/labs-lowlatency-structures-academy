@@ -28,10 +28,16 @@ AS CINCO REGRAS
      português e `99.9` em inglês -- e `6.827` em português é `6,827` em inglês.
      Sem essa normalização a regra acusaria todo número de todo documento, o que
      é o mesmo que não acusar nada.
-  5. IMAGENS. Todo `.svg` de `imagens/` tem par `.en.svg`. A seção 31 da norma
-     diz que "a paridade PT/EN vale para as imagens", e até agora essa frase não
-     era verificada: um gráfico com rótulo em português entregue ao leitor de
-     inglês é uma figura pela metade, e nada acusava.
+  5. IMAGENS. Toda imagem com texto tem par em inglês: `.svg` em `imagens/` e
+     `.jpg`/`.png` em `assets/`. A seção 31 da norma diz que "a paridade PT/EN
+     vale para as imagens", e até agora essa frase não era verificada: um
+     gráfico com rótulo em português entregue ao leitor de inglês é uma figura
+     pela metade, e nada acusava.
+
+     `assets/` entrou depois de `imagens/`, e entrou por uma lacuna medida: os
+     dois banners do repositório chegaram com sufixo `-BR`/`-EN`, uma terceira
+     convenção de nome, **fora** do alcance da regra. Nada acusou, porque a
+     regra só conhecia um diretório e uma extensão.
 
 O QUE ELE NÃO FAZ
 
@@ -154,21 +160,30 @@ def preservado(caminho):
     return ORIGEM_PRESERVADA in partes or ARQUIVO_DE_MEDICAO in partes
 
 
+# Onde mora imagem com texto, e que extensões contam.
+#
+# `imagens/` guarda figura gerada por `ferramental/graficos/`; `assets/` guarda
+# a arte do repositório. As duas carregam texto, e texto tem idioma.
+DIRS_DE_IMAGEM = {"imagens", "assets"}
+EXT_DE_IMAGEM = (".svg", ".jpg", ".jpeg", ".png", ".webp")
+
+
 def coletar_imagens(raiz):
-    """(sem par em inglês, sem par em português), para `.svg` de `imagens/`."""
+    """(sem par em inglês, sem par em português), para imagem com texto."""
     pt, en = {}, {}
     for base, dirs, arquivos in os.walk(raiz):
         dirs[:] = [d for d in dirs if d not in IGNORAR and not d.startswith("build-")]
-        if os.path.basename(base) != "imagens":
+        if os.path.basename(base) not in DIRS_DE_IMAGEM:
             continue
         for nome in sorted(arquivos):
-            if not nome.endswith(".svg"):
+            ext = next((e for e in EXT_DE_IMAGEM if nome.endswith(e)), None)
+            if ext is None:
                 continue
             caminho = os.path.join(base, nome)
-            if nome.endswith(".en.svg"):
-                en[caminho[: -len(".en.svg")]] = caminho
+            if nome.endswith(".en" + ext):
+                en[caminho[: -len(".en" + ext)]] = caminho
             else:
-                pt[caminho[: -len(".svg")]] = caminho
+                pt[caminho[: -len(ext)]] = caminho
     return pt, en
 
 
@@ -411,6 +426,17 @@ def autoteste():
     caso("12f", "par de imagem completo acusado",
          {"d.md": PT, "d.en.md": EN,
           "t/imagens/g-claro.svg": "<svg/>", "t/imagens/g-claro.en.svg": "<svg/>"}, False)
+
+    # 12g. A arte de `assets/` também tem idioma. Os dois banners do repositório
+    #      chegaram com sufixo `-BR`/`-EN` -- uma terceira convenção -- e a
+    #      regra, que só conhecia `imagens/*.svg`, não acusou nada.
+    caso("12g", "banner sem par em ingles nao acusado",
+         {"d.md": PT, "d.en.md": EN, "docs/assets/social.jpg": "x"}, True)
+
+    # 12h. E o par correto, na convenção do repositório, passa.
+    caso("12h", "par de banner na convencao correta acusado",
+         {"d.md": PT, "d.en.md": EN,
+          "docs/assets/social.jpg": "x", "docs/assets/social.en.jpg": "x"}, False)
 
     # 12d. `CLAUDE.md` é configuração de ferramenta, não material do leitor, e
     #      fica fora da regra do par por decisão declarada.

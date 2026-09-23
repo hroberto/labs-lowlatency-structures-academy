@@ -2,9 +2,12 @@
 
 # Low-Latency Structures Academy
 
-*Beyond the Standard Library.* Onde a biblioteca padrão de C++ para e o caminho
-crítico começa. Todo número publicado tem um programa que o produz, medido numa
-máquina nomeada.
+<img alt="Uma estação de trem com um desvio de três vias. A locomotiva, marcada std::, chega da plataforma Terra conhecida. À frente, a estação STL basta; à direita, a placa Custom compensa; e uma terceira via termina num para-choque com a placa Inconclusivo. No ponto de divergência há uma agulha com um cronômetro ao lado. Placas menores ao longo do leito trazem source.cpp, commit, máquina e metadata.json." src="docs/assets/social.jpg">
+
+**Medir onde a abstração deixa de compensar.** Todo número publicado tem um
+programa que o produz, medido numa máquina nomeada. Os três resultados
+possíveis por tópico são publicados — inclusive aquele em que a biblioteca
+padrão basta.
 
 ## Estado do projeto
 

@@ -215,6 +215,27 @@ not started, **zero commits and no remote** — was absorbed by this repository 
 
 ## Stage 3.5 — Tooling debt, declared
 
+- [ ] **both banners in `docs/assets/` need regenerating**, for a factual
+      reason: the English banner's footer claims *"prose in English • code in
+      English"*, and the project's rule is **Portuguese prose, English code**,
+      with an English pair (standard, sections 1 and 2). The correct text is
+      *"bilingual prose • code in English"*.
+      Along with it goes the slogan *"Better software, one day at a time"*:
+      section 32 of the standard is a list of verifiable statements, and an
+      unverifiable slogan on the cover contradicts the tone the whole material
+      sustains.
+      Neither is editable here — it is raster. What **was** applied: names in the
+      repository's convention (`social.jpg` / `social.en.jpg`), entry into git,
+      alt text describing the scene in both languages, and rule 5 of
+      `verificar-paridade.py` extended to `assets/`
+- [ ] decide whether the art becomes a **technical drawing** of the same
+      metaphor — the switch, three destinations and the provenance chain —
+      instead of a photorealistic illustration. A drawing would survive the
+      social card's downscale, where today the three-way junction disappears
+      before the cat does; and it would settle the tension with section 18 of the
+      standard, which legislates on AI-generated content. It loses the charm,
+      which is real. **An editorial decision, not a technical one**
+
 These four were **promised by the material and tracked nowhere** — the standard
 and the READMEs cited them as known work, and they were items of no stage. A debt
 that exists only in prose is not a debt: it is forgetting with a date on it.

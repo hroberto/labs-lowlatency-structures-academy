@@ -2,9 +2,12 @@
 
 # Low-Latency Structures Academy
 
-*Beyond the Standard Library.* Where the C++ standard library stops and the hot
-path begins. Every published number has a program that produces it, measured on
-a named machine.
+<img alt="A railway station with a three-way junction. The locomotive, marked std::, arrives from the Known territory platform. Straight ahead, the STL is enough station; to the right, a sign reading Custom pays off; and a third track ends at a buffer stop marked Inconclusive. At the junction there is a switch lever with a stopwatch beside it. Smaller signs along the track bed read source.cpp, commit, machine and metadata.json." src="docs/assets/social.en.jpg">
+
+**Measure where abstraction stops paying off.** Every published number has a
+program that produces it, measured on a named machine. All three possible
+outcomes per topic get published — including the one where the standard library
+is enough.
 
 ## Project state
 
