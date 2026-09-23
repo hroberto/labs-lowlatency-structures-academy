@@ -38,7 +38,7 @@ jobs:
       #
       # Para atualizar dentro do mesmo major:
       #   gh api repos/actions/checkout/git/ref/tags/v5 --jq '.object.sha'
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       # As regras de consistencia rodam ANTES do build, e num job proprio: uma
       # falha de documentacao nao deve gastar quatro configuracoes de compilacao
@@ -105,7 +105,7 @@ jobs:
 
     name: "build-e-testes (${{ matrix.compilador }}: gcc-${{ matrix.gcc }} + clang-${{ matrix.clang }})"
     steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       # ESTE PROJETO NAO TEM DEPENDENCIA DE SISTEMA, e a lista curta e a prova.
       #
